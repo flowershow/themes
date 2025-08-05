@@ -1,0 +1,101 @@
+/*
+ * Inspired by the visual style of "Glide" Ghost theme
+ * https://ghost.org/themes/glide/
+ *
+ * No Glide source code has been reused; this stylesheet is an
+ * original work authored from scratch.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&family=Ovo&display=swap');
+
+:root {
+    /* Default theme variable overrides */
+    --font-body: 'Nata Sans', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    --font-heading: 'Ovo', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    
+    /* Custom variables */
+    --c-dark: #09090b;
+}
+
+.site-navbar {
+    background-color: var(--c-dark);
+    position: static;
+}
+
+.site-navbar * {
+    color: #ffffff;
+}
+
+.site-navbar-site-name {
+    font-size: 1.5rem;
+}
+
+.site-sidebar, .site-navbar, .mobile-nav, .page-toc, .site-footer {
+    font-family: var(--font-body); 
+}
+
+.page-hero-container {
+    background-color: var(--c-dark);
+}
+
+.page-hero * {
+    color: #ffffff;
+}
+
+.page-hero {
+    max-width: 80rem;
+}
+
+.page-hero-content-container {
+    grid-column: span 8 / span 8;
+}
+
+.page-hero-image-container {
+    grid-column: span 4 / span 4;
+}
+
+.page-hero-image {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 100%;
+    margin: auto;
+}
+
+@media (max-width: 1024px) {
+    .page-hero-image-container {
+        padding-bottom: 5rem;
+    }
+}
+
+.list-component {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; 
+}
+
+@media (max-width: 640px) {
+    .list-component {
+        grid-template-columns: 1fr;
+    }
+}
+
+.list-component-pagination {
+    grid-column: 1 / -1;
+}
+
+.list-component-item-title {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.list-component-item-text,
+.list-component-item-eyebrow,
+.page-header-date,
+.page-header-author,
+.page-header-description {
+    font-family: var(--font-body);
+}
+
+.page-toc-heading {
+    font-family: var(--font-heading)
+}
