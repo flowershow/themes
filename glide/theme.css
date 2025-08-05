@@ -8,14 +8,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&family=Ovo&display=swap');
 
-/* Apply the serif font to headings */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Ovo', serif !important;
+body {
+    font-family: 'Nata Sans', sans-serif !important;
 }
 
-/* Apply the sans-serif font to the body text */
-:not(h1, h2, h3, h4, h5, h6) {
-    font-family: 'Nata Sans', sans-serif !important;
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Ovo', serif !important;
 }
 
 #navbar {
@@ -38,11 +36,22 @@ h1, h2, h3, h4, h5, h6 {
     color: #ffffff !important;
 }
 
+#hero div:nth-child(1) {
+    grid-column: span 8 / span 8 !important;
+}
+#hero div:nth-child(2) {
+    grid-column: span 4 / span 4 !important;
+}
+
 #hero img {
     width: 20rem !important;
     height: 20rem !important;
     border-radius: 100% !important;
     margin: auto !important;
+}
+
+#hero div {
+    max-width: 80rem !important;
 }
 
 @media (max-width: 1024px) {
@@ -66,8 +75,17 @@ article section p:first-of-type ::first-letter {
 
 @media (max-width: 640px) {
     #list-component {
-    grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
     }
+}
+
+#list-component nav {
+    grid-column: 1 / -1;
+}
+
+#list-component article h3 {
+    font-size: 2rem !important;
+    line-height: 1 !important;
 }
 
 #list-component nav {
