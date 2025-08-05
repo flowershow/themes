@@ -16,78 +16,68 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Ovo', serif !important;
 }
 
-#navbar {
+.navbar {
     background-color: #09090b !important;
     color: #ffffff !important;
     position: static !important;
 }
 
-#navbar * {
+.navbar * {
     color: #ffffff !important;
     font-family: 'Nata Sans', serif !important;
     font-size: 1.5rem;
 }
 
-#hero {
+.hero {
     background-color: #09090b !important;
 }
 
-#hero * {
+.hero * {
     color: #ffffff !important;
 }
 
-#hero div:nth-child(1) {
+.hero-inner {
+    max-width: 80rem !important;
+}
+
+.hero-text-wrapper {
     grid-column: span 8 / span 8 !important;
 }
-#hero div:nth-child(2) {
+
+.hero-image-wrapper {
     grid-column: span 4 / span 4 !important;
 }
 
-#hero img {
+.hero-image {
     width: 20rem !important;
     height: 20rem !important;
     border-radius: 100% !important;
     margin: auto !important;
 }
 
-#hero div {
-    max-width: 80rem !important;
-}
-
 @media (max-width: 1024px) {
-    #hero img {
+    .hero-image {
         margin: 0 auto 5rem !important;
     }
 }
 
-article section p:first-of-type ::first-letter {
-    font-size: 4rem;
-    padding: 6px 3px;
-    margin-right: 6px;
-    float: left;
-}
-
-#list-component {
+.list-component {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem; 
 }
 
 @media (max-width: 640px) {
-    #list-component {
+    .list-component {
         grid-template-columns: 1fr;
     }
 }
 
-#list-component nav {
+.list-component-pagination {
     grid-column: 1 / -1;
 }
 
-#list-component article h3 {
+.list-component-item-title {
     font-size: 2rem !important;
     line-height: 1 !important;
-}
-
-#list-component nav {
-    grid-column: 1 / -1;
 }
