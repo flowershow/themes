@@ -1,0 +1,75 @@
+/*
+ * Inspired by the visual style of "Glide" Ghost theme
+ * https://ghost.org/themes/glide/
+ *
+ * No Glide source code has been reused; this stylesheet is an
+ * original work authored from scratch.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&family=Ovo&display=swap');
+
+/* Apply the serif font to headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Ovo', serif !important;
+}
+
+/* Apply the sans-serif font to the body text */
+:not(h1, h2, h3, h4, h5, h6) {
+    font-family: 'Nata Sans', sans-serif !important;
+}
+
+#navbar {
+    background-color: #09090b !important;
+    color: #ffffff !important;
+    position: static !important;
+}
+
+#navbar * {
+    color: #ffffff !important;
+    font-family: 'Nata Sans', serif !important;
+    font-size: 1.5rem;
+}
+
+#hero {
+    background-color: #09090b !important;
+}
+
+#hero * {
+    color: #ffffff !important;
+}
+
+#hero img {
+    width: 20rem !important;
+    height: 20rem !important;
+    border-radius: 100% !important;
+    margin: auto !important;
+}
+
+@media (max-width: 1024px) {
+    #hero img {
+        margin: 0 auto 5rem !important;
+    }
+}
+
+article section p:first-of-type ::first-letter {
+    font-size: 4rem;
+    padding: 6px 3px;
+    margin-right: 6px;
+    float: left;
+}
+
+#list-component {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; 
+}
+
+@media (max-width: 640px) {
+    #list-component {
+    grid-template-columns: 1fr;
+    }
+}
+
+#list-component nav {
+    grid-column: 1 / -1;
+}
