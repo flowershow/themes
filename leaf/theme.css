@@ -1,0 +1,116 @@
+/* Authored by Garance Rohart  */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Infant:ital,wght@0,300..700;1,300..700&family=Luxurious+Roman&family=Modern+Antiqua&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Viaoda+Libre&family=Yeon+Sung&display=swap');
+
+body {
+    background: #f9f2e2 !important;
+}
+
+body * {
+    color: #363607 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Infant' !important;
+}
+
+.navbar {
+    background-color: #a2a454 !important;
+}
+
+.navbar * {
+    color: #363607 !important;
+}
+
+.navbar-site-title, .hero-title, .list-component-item-date {
+    font-family: 'Cinzel Decorative' !important;
+    font-weight: 400 !important;
+}
+
+.hero {
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    background-color: #a2a454 !important;
+    /* Adjust the url to match your hero imgae file path */
+    background-image: url("https://r2-assets.flowershow.app/botany-theme-hero.jpg") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: cover !important;
+    font-family: 'Cormorant Infant' !important;
+}
+
+hr {
+    border-color: #a2a454 !important;
+}
+
+@media (min-width: 768px) {
+    .list-component {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 1.5rem !important;
+    }
+}
+
+.list-component-pagination {
+    grid-column: 1 / -1 !important;
+}
+
+.list-component-item {
+    border: 1px solid #ccc!important;
+    border-radius: 16px !important;
+    border-color: #a2a454 !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 0 !important;
+    transition-property: all !important;
+    transition-duration: 300ms !important;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+    gap: 0.5rem;
+}
+
+.list-component-item:hover {
+  background-color: #dad6b0;
+}
+
+.list-component-item-title {
+    font-size: 1.5rem !important;
+    line-height: 1 !important;
+}
+
+.list-component-item-description {
+    font-family: 'Cormorant Infant';
+    line-height: 1.2;
+}
+
+.list-component-item-image-wrapper {
+    width: 100% !important;
+}
+
+@media (min-width: 768px) {
+    .list-component-item-image-wrapper {
+        aspect-ratio: 3 / 2 !important;
+    }
+}
+
+.list-component-item-image {
+    border-radius: 16px 16px 0 0 !important;
+}
+
+.list-component-item-metadata-wrapper {
+    padding: 1rem !important;
+}
+
+.list-component-item-date {
+    font-family: 'Cinzel Decorative' !important;
+    font-size: 1rem;
+}
+
+.blog-date {
+    font-family: 'Cinzel Decorative' !important;
+}
+
+.blog-header {
+    border-color: #a2a454 !important;
+}
