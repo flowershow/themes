@@ -1,4 +1,4 @@
-# Flowershow Themes
+# Official Flowershow Themes 💐
 
 Official collection of themes for [Flowershow](https://flowershow.app) websites.
 
