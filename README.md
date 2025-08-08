@@ -5,15 +5,14 @@ Official collection of themes for [Flowershow](https://flowershow.app) websites.
 ## Available Themes
 
 ### Letterpress
-![Letterpress Theme Preview](letterpress/preview.png)
-![Letterpress Theme Preview](letterpress/preview.png)
+![Letterpress Theme Preview](letterpress/preview1.png)
+[(More previews)](/letterpress)
 
 A clean, modern theme with balanced typography and whitespace.
 
 ### Leaf
-![Leaf Theme Preview](leaf/preview.png)
-![Leaf Theme Preview](leaf/preview1.png)
 ![Leaf Theme Preview](leaf/preview2.png)
+[(More previews)](/leaf)
 
 A nature-inspired theme with subtle green colors.
 
