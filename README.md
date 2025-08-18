@@ -62,11 +62,8 @@ theme-name/
 ### CSS Best Practices
 
 - Use semantic class names
-- Follow BEM naming convention
 - Ensure responsive design
 - Test across major browsers
-- Document any required HTML structure
-- Minimize specificity conflicts
 
 ### Theme Distribution
 
