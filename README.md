@@ -32,7 +32,7 @@ You can use Flowershow themes by configuring them in your site's `config.json` f
 
 ```json
 {
-  "theme": "letterpress@0.0.1"
+  "theme": "letterpress@0.0.2"
 }
 ```
 
