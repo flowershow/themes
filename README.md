@@ -8,7 +8,8 @@ Official collection of themes for [Flowershow](https://flowershow.app) websites.
 ![Letterpress Theme Preview](letterpress/preview1.png)
 
 [More previews](/letterpress)
-[Demo](https://my.flowershow.app/@olayway/demo-letterpress)
+
+[Demo](https://letterpress.flowershow.app/)
 
 A clean, modern theme with balanced typography and whitespace.
 
@@ -16,7 +17,8 @@ A clean, modern theme with balanced typography and whitespace.
 ![Leaf Theme Preview](leaf/preview2.png)
 
 [More previews](/leaf)
-[Demo](https://my.flowershow.app/@olayway/demo-leaf)
+
+[Demo](https://leaf.flowershow.app/)
 
 A nature-inspired theme with subtle green colors.
 
