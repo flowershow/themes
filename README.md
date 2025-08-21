@@ -10,6 +10,7 @@ Official collection of themes for [Flowershow](https://flowershow.app) websites.
 [👀 Demo](https://letterpress.flowershow.app/)
 
 A clean, modern theme with balanced typography and whitespace.
+Inspired by the visual style of "Glide" Ghost theme https://ghost.org/themes/glide/
 
 ### Leaf
 ![Leaf Theme Preview](leaf/preview2.png)
