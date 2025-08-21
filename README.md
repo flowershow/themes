@@ -5,19 +5,23 @@ Official collection of themes for [Flowershow](https://flowershow.app) websites.
 ## Available Themes
 
 ### Letterpress
+
+A clean, modern theme with balanced typography and whitespace.
+
 ![Letterpress Theme Preview](letterpress/preview1.png)
 
 [👀 Demo](https://letterpress.flowershow.app/)
 
-A clean, modern theme with balanced typography and whitespace.
 Inspired by the visual style of "Glide" Ghost theme https://ghost.org/themes/glide/
 
 ### Leaf
+
+A nature-inspired theme with subtle green colors.
+
 ![Leaf Theme Preview](leaf/preview2.png)
 
 [👀 Demo](https://leaf.flowershow.app/)
 
-A nature-inspired theme with subtle green colors.
 
 ## Usage
 
