@@ -6,13 +6,17 @@ Official collection of themes for [Flowershow](https://flowershow.app) websites.
 
 ### Letterpress
 ![Letterpress Theme Preview](letterpress/preview1.png)
-[(More previews)](/letterpress)
+
+[More previews](/letterpress)
+[Demo](https://my.flowershow.app/@olayway/demo-letterpress)
 
 A clean, modern theme with balanced typography and whitespace.
 
 ### Leaf
 ![Leaf Theme Preview](leaf/preview2.png)
-[(More previews)](/leaf)
+
+[More previews](/leaf)
+[Demo](https://my.flowershow.app/@olayway/demo-leaf)
 
 A nature-inspired theme with subtle green colors.
 
