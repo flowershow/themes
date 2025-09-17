@@ -73,31 +73,31 @@
   background-color: var(--c-light-green);
 }
 
-.list-component-item-title {
+.list-component-item-headline {
     font-size: 1.5rem;
     line-height: 1;
 }
 
-.list-component-item-text {
+.list-component-item-summary {
     font-family: var(--font-heading);
     line-height: 1.2;
 }
 
-.list-component-item-image-container {
+.list-component-item-media {
     width: 100%;
 }
 
 @media (min-width: 768px) {
-    .list-component-item-image-container {
+    .list-component-item-media {
         aspect-ratio: 3 / 2;
     }
 }
 
-.list-component-item-image {
+.list-component-item-media {
     border-radius: 16px 16px 0 0;
 }
 
-.list-component-item-metadata-container {
+.list-component-item-content {
     padding: 1rem;
 }
 
