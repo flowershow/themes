@@ -22,7 +22,7 @@
     position: static;
 }
 
-.site-navbar * {
+.site-navbar-site-name, .site-navbar-link, .site-navbar-social-link {
     color: #ffffff;
 }
 
