@@ -6,7 +6,7 @@ Official collection of themes for [Flowershow](https://flowershow.app) websites.
 
 ### Lessflowery
 
-![Lessflowery Theme Preview](lessflowery/preview1.png)
+![Lessflowery Theme Preview](lessflowery/fs-lessflowery-page-light.jpg)
 
 [👀 Demo](https://lessflowery.flowershow.app/)
 
