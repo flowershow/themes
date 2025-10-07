@@ -4,6 +4,14 @@ Official collection of themes for [Flowershow](https://flowershow.app) websites.
 
 ## Available Themes
 
+### Lessflowery
+
+![Lessflowery Theme Preview](lessflowery/preview1.png)
+
+[👀 Demo](https://lessflowery.flowershow.app/)
+
+Inspired by the visual style of LessWrong https://www.lesswrong.com/
+
 ### Letterpress
 
 A clean, modern theme with balanced typography and whitespace.
@@ -13,6 +21,14 @@ A clean, modern theme with balanced typography and whitespace.
 [👀 Demo](https://letterpress.flowershow.app/)
 
 Inspired by the visual style of "Glide" Ghost theme https://ghost.org/themes/glide/
+
+### Superstack
+
+![Superstack Theme Preview](superstack/preview1.png)
+
+[👀 Demo](https://superstack.flowershow.app/)
+
+Inspired by the visual style of Substack.
 
 ### Leaf
 
