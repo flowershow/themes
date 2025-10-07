@@ -24,7 +24,7 @@ Inspired by the visual style of "Glide" Ghost theme https://ghost.org/themes/gli
 
 ### Superstack
 
-![Superstack Theme Preview](superstack/preview1.png)
+![Superstack Theme Preview](superstack/fs-superstack-page-light.jpg)
 
 [👀 Demo](https://superstack.flowershow.app/)
 
