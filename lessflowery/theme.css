@@ -764,7 +764,7 @@ h4,
 }
 
 .rendered-mdx:not(.is-plain) :where(pre) {
-    color: var(--color-foreground-100);
+    color: light-dark(var(--color-foreground-900), var(--color-foreground-100));
     background-color: var(--color-background-surface);
     overflow-x: auto;
     margin-top: 1.7142857em;
@@ -1468,7 +1468,7 @@ body {
 .search-modal-input {
     border-style: none;
     background-color: transparent;
-    font-size: var(--font-size-caption);
+    font-size: var(--font-size-body);
     line-height: var(--font-line-height-headings);
 }
 
@@ -1623,6 +1623,7 @@ body {
 }
 
 .search-modal-hit-title {
+    font-size: var(--font-size-h4);
     font-weight: var(--font-weight-body);
 }
 
@@ -1978,7 +1979,8 @@ body {
 .page-header {
     border-color: var(--color-foreground-100);
     border-bottom-width: 0px;
-    padding-bottom: 6rem;
+    /*padding-bottom: 6rem;*/
+    padding-bottom: 0;
     font-family: var(--font-heading)
 }
 
