@@ -786,7 +786,7 @@ h4,
 }
 
 .rendered-mdx:not(.is-plain) .pre-copy-button {
-    border-color: var(--color-foreground-300);
+    border-color: var(--color-foreground-600);
     background-color: var(--color-foreground-100);
     color: var(--color-foreground-700);
 }
