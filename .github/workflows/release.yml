@@ -1,0 +1,103 @@
+name: Release and Purge CDN Cache
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on semantic version tags like v1.0.0, v1.2.3, etc.
+
+permissions:
+  contents: write  # Required for creating releases
+
+jobs:
+  release:
+    name: Create Release and Purge Cache
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for changelog generation
+      
+      - name: Get version from tag
+        id: get_version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "version_without_v=${VERSION#v}" >> $GITHUB_OUTPUT
+      
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get the previous tag
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          
+          if [ -z "$PREV_TAG" ]; then
+            echo "changelog=Initial release" >> $GITHUB_OUTPUT
+          else
+            # Get commits between previous tag and current tag
+            CHANGELOG=$(git log ${PREV_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+            
+            # Use a delimiter to handle multiline output
+            echo "changelog<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGELOG" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ steps.get_version.outputs.version }}
+          body: |
+            ## Changes in ${{ steps.get_version.outputs.version }}
+            
+            ${{ steps.changelog.outputs.changelog }}
+            
+            ## Installation
+            
+            Use this version in your Flowershow `config.json`:
+            
+            ```json
+            {
+              "theme": "themename@${{ steps.get_version.outputs.version_without_v }}"
+            }
+            ```
+            
+            ## CDN Links
+            
+            The themes are available via jsDelivr CDN:
+            
+            - Leaf: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ github.ref_name }}/leaf/theme.css`
+            - LessFlowery: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ github.ref_name }}/lessflowery/theme.css`
+            - Letterpress: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ github.ref_name }}/letterpress/theme.css`
+            - Superstack: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ github.ref_name }}/superstack/theme.css`
+          draft: false
+          prerelease: false
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Purge jsDelivr Cache
+        run: node .github/scripts/purge-jsdelivr-cache.js
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+      
+      - name: Summary
+        run: |
+          echo "## Release Complete! 🎉" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ steps.get_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Release URL:** ${{ steps.create_release.outputs.html_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### CDN Cache" >> $GITHUB_STEP_SUMMARY
+          echo "✅ jsDelivr cache has been purged for all theme files." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The new version should be available on the CDN within a few seconds." >> $GITHUB_STEP_SUMMARY
