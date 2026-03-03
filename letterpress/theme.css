@@ -776,7 +776,6 @@ h4,
     border-radius: 0;
     padding: 0;
     font-weight: inherit;
-    color: inherit;
     font-size: inherit;
     font-family: inherit;
     line-height: inherit
@@ -1385,12 +1384,10 @@ body {
 ========================== */
 
 .search-button {
-    color: var(--color-l-background);
     font-size: var(--font-size-caption);
 }
 
 .search-button:is(:hover, :active, :focus) {
-    color: var(--color-l-background);
     opacity: 0.7;
 }
 
