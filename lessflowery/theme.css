@@ -217,7 +217,7 @@ font-family: 'Wittgenstein', serif;
 
 :root {
     --width-content: 42.5rem; /* 680px */
-    --width-content-toc: 62.5rem; /* 1000px*/
+    --width-content-toc: 75rem;
     --width-content-toc-sidebar: 82.5rem; /* 1320px */
     --width-sidebar: 14rem;
     --width-toc: 14rem;
@@ -1695,6 +1695,7 @@ body {
 @media (min-width: 1280px) {
     .layout-inner.has-toc {
         grid-template-columns: minmax(0,1fr) var(--width-toc);
+        padding-left: calc(var(--width-toc) + 4rem);
     }
 }
 
