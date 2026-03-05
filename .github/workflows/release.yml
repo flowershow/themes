@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - 'v*.*.*'  # Triggers on semantic version tags like v1.0.0, v1.2.3, etc.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release (for example v1.2.3)'
+        required: true
+        type: string
 
 permissions:
   contents: write  # Required for creating releases
@@ -12,17 +18,20 @@ jobs:
   release:
     name: Create Release and Purge Cache
     runs-on: ubuntu-latest
+    env:
+      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Fetch all history for changelog generation
+          ref: refs/tags/${{ env.RELEASE_TAG }}
       
       - name: Get version from tag
         id: get_version
         run: |
-          VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=${{ env.RELEASE_TAG }}
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
           echo "version_without_v=${VERSION#v}" >> $GITHUB_OUTPUT
       
@@ -50,7 +59,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: ${{ env.RELEASE_TAG }}
           release_name: Release ${{ steps.get_version.outputs.version }}
           body: |
             ## Changes in ${{ steps.get_version.outputs.version }}
@@ -71,10 +80,10 @@ jobs:
             
             The themes are available via jsDelivr CDN:
             
-            - Leaf: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ github.ref_name }}/leaf/theme.css`
-            - LessFlowery: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ github.ref_name }}/lessflowery/theme.css`
-            - Letterpress: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ github.ref_name }}/letterpress/theme.css`
-            - Superstack: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ github.ref_name }}/superstack/theme.css`
+            - Leaf: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.RELEASE_TAG }}/leaf/theme.css`
+            - LessFlowery: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.RELEASE_TAG }}/lessflowery/theme.css`
+            - Letterpress: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.RELEASE_TAG }}/letterpress/theme.css`
+            - Superstack: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.RELEASE_TAG }}/superstack/theme.css`
           draft: false
           prerelease: false
       
@@ -87,7 +96,7 @@ jobs:
         run: node .github/scripts/purge-jsdelivr-cache.js
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_REF_NAME: ${{ env.RELEASE_TAG }}
       
       - name: Summary
         run: |
