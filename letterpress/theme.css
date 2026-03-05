@@ -215,9 +215,9 @@ font-family: 'Nata Sans', sans-serif;
 ============================================== */
 
 :root {
-    --width-content: 40rem; /* 640px */
-    --width-content-toc: 60rem; /* 960px*/
-    --width-content-toc-sidebar: 80rem; /* 1280px */
+    --width-content: 40rem;
+    --width-content-toc: 75rem;
+    --width-content-toc-sidebar: 80rem;
     --width-sidebar: 14rem;
     --width-toc: 14rem;
     --width-hero-no-img: 40rem;

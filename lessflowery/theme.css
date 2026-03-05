@@ -216,9 +216,9 @@ font-family: 'Wittgenstein', serif;
 ============================================== */
 
 :root {
-    --width-content: 42.5rem; /* 680px */
+    --width-content: 40rem;
     --width-content-toc: 75rem;
-    --width-content-toc-sidebar: 82.5rem; /* 1320px */
+    --width-content-toc-sidebar: 80rem;
     --width-sidebar: 14rem;
     --width-toc: 14rem;
     --width-hero-no-img: 42.5rem;

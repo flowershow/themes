@@ -229,9 +229,9 @@ font-family: 'Spectral', serif;
 ============================================== */
 
 :root {
-    --width-content: 45.5rem; /* 728px */
-    --width-content-toc: 65.5rem; /* 1048px*/
-    --width-content-toc-sidebar: 85.5rem; /* 1368px */
+    --width-content: 40rem;
+    --width-content-toc: 75rem;
+    --width-content-toc-sidebar: 80rem;
     --width-sidebar: 14rem;
     --width-toc: 14rem;
     --width-hero-no-img: 45.5rem;
