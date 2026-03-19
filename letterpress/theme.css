@@ -1466,6 +1466,7 @@ body {
     background-color: transparent;
     font-size: var(--font-size-caption);
     line-height: var(--font-line-height-headings);
+    color: var(--color-foreground);
 }
 
 .search-modal-input,.search-modal-input:focus {
@@ -1620,6 +1621,8 @@ body {
 
 .search-modal-hit-title {
     font-weight: var(--font-weight-body);
+    color: var(--color-foreground);
+    font-size: var(--font-size-h3);
 }
 
 .search-modal-hit-content {
