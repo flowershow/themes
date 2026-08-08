@@ -24,15 +24,16 @@ themes:
       demo_site_responds: null
     demo_url: https://material-theme-demo-rufuspollock.flowershow.me
     landing_repro: _repro/material-landing.html
-    landing_demo_url: https://material-landing-demo-rufuspollock.flowershow.me
+    landing_demo_url: https://material-landing-v2-rufuspollock.flowershow.me
+    landing_demo_url_stale: https://material-landing-demo-rufuspollock.flowershow.me  # raw index.html stuck on an old CDN copy; see plan doc
     fidelity: unreviewed     # unreviewed | reviewed-close | reviewed-off
     fidelity_notes: >
-      Stage-1 landing repro is close on composition, type and color (all
-      measured from the live site). Known deltas: foreground parallax layers
-      frame smaller than the reference; the blend gradient washes the sky
-      more than it should. The theme.css itself (used for the non-landing
-      pages) is still the pre-method-change draft and has NOT been redone
-      against the measured reference — expect it to look wrong.
+      Landing repro now matches the reference numerically on every element
+      profiled (hero h1 700 vs section h1 300+dimmed, 2-col feature grid,
+      44px text-coloured icons, 700 buttons, spotlight gap/mb 64). theme.css
+      for the non-landing pages has also been redone against measured values.
+      Remaining known delta: foreground parallax layers frame slightly
+      smaller than the reference. Still unreviewed by a human.
     known_gaps:
       - "no tabbed-content-block clone (feature doesn't exist in Flowershow)"
       - "no prev/next page footer pagination (feature doesn't exist in Flowershow)"
