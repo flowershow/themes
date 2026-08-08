@@ -6,6 +6,11 @@
 # `fidelity` is a separate, human/LLM-judged field for "does this actually
 # look like the site it clones" — it is never a gate in verify.sh and never
 # implies `passes`. See CLAUDE.md "Judgement vs structure".
+#
+# NOTE: verify.sh does NOT write back to this file. `passes` / `checks` /
+# `last_verified` are updated by hand after running it, and must reflect what
+# it actually reported. If they look stale, re-run `scripts/verify.sh` and
+# trust its output over this file.
 
 version: 1
 generated_by: loop-engineering audit, 2026-08-08
@@ -15,13 +20,14 @@ themes:
     kind: theme
     inspiration: "https://squidfunk.github.io/mkdocs-material/"
     dir: material-draft
-    passes: null            # not yet run through verify.sh
+    passes: true             # structural only — see fidelity, which is separate
+    last_verified: 2026-08-08
     checks:
-      css_parses: null
-      required_tokens_defined: null
-      dark_mode_defined: null
-      preview_asset_present: false   # known gap: no preview.png yet
-      demo_site_responds: null
+      css_parses: true
+      required_tokens_defined: true
+      dark_mode_defined: true
+      preview_asset_present: false   # known gap: no preview.png yet (WARN, not a gate)
+      demo_site_responds: true
     demo_url: https://material-theme-demo-rufuspollock.flowershow.me
     landing_repro: _repro/material-landing.html
     landing_demo_url: https://material-landing-v2-rufuspollock.flowershow.me
@@ -47,13 +53,14 @@ themes:
     kind: theme
     inspiration: "https://code.storage/"
     dir: codestorage-draft
-    passes: null
+    passes: true             # structural only; the CSS itself is pre-method-change, see notes
+    last_verified: 2026-08-08
     checks:
-      css_parses: null
-      required_tokens_defined: null
-      dark_mode_defined: null
+      css_parses: true
+      required_tokens_defined: true
+      dark_mode_defined: true
       preview_asset_present: false
-      demo_site_responds: null
+      demo_site_responds: true
     demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
     fidelity: unreviewed
     known_gaps:
@@ -97,6 +104,10 @@ structural_findings:
     summary: "className=\"... .is-linked\" leading dot makes the hook untargetable; Tailwind utilities leak into semantic markup; several classes emitted but never styled."
     status: filed
     issue: flowershow/flowershow#1343
+  - id: raw-html-query-string-404
+    summary: "Raw .html pages 404 when the URL carries any query string; Markdown pages are fine. Breaks shared links carrying utm_/fbclid params."
+    status: filed
+    issue: flowershow/flowershow#1345
   - id: no-content-tabs
     summary: "No tabbed-content-block component exists; mkdocs-material-style themes can't clone it."
     status: found-not-filed

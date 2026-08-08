@@ -126,6 +126,32 @@ PYEOF
     warning "no demo_url recorded yet — live smoke check skipped, not failed"
   fi
 
+  # The landing demo is a separate site (raw .html index). Check it too — it's
+  # the primary artifact for stage-1 work, and leaving it unchecked is how a
+  # stale copy went unnoticed.
+  #
+  # NOTE: hit the bare root, NOT /index.html. Raw .html paths 404 when given
+  # any query string (flowershow/flowershow#1345), so the usual cache-busting
+  # trick breaks them. The bare root serves the same file and tolerates ?cb=.
+  landing_url=$(python3 - "$REPO_ROOT/docs/features.yaml" "$id" <<'PYEOF'
+import re, sys
+text = open(sys.argv[1]).read()
+target = sys.argv[2]
+m = re.search(rf'- id: {re.escape(target)}\n(?:.*\n)*?\s+landing_demo_url: (\S+)', text)
+url = m.group(1) if m else "null"
+print("" if url == "null" else url)
+PYEOF
+  )
+
+  if [ -n "$landing_url" ]; then
+    lcode=$(curl -sL -o /tmp/verify-landing-body.html -w "%{http_code}" --max-time 20 "${landing_url}/?cb=$RANDOM" || echo "000")
+    if [ "$lcode" = "200" ] && grep -qi "<html" /tmp/verify-landing-body.html; then
+      pass "landing demo responds 200 ($landing_url)"
+    else
+      bad "landing demo smoke check failed (HTTP $lcode) ($landing_url)"
+    fi
+  fi
+
   echo ""
 done <<< "$theme_ids"
 

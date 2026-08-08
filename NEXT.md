@@ -75,3 +75,4 @@ Full method, measurements and gotchas:
 | [#1342](https://github.com/flowershow/flowershow/issues/1342) | forced inline-code backticks need `!important` |
 | [#1343](https://github.com/flowershow/flowershow/issues/1343) | `.is-linked` dot bug, Tailwind leak, unstyled classes |
 | [#1344](https://github.com/flowershow/flowershow/issues/1344) | code.storage theme |
+| [#1345](https://github.com/flowershow/flowershow/issues/1345) | raw `.html` pages 404 with any query string |

@@ -13,13 +13,21 @@ Two-stage method (see
 
 ## Running
 
+Serve **from this directory** — `_repro/`:
+
 ```sh
-python3 -m http.server 8899
+cd _repro && python3 -m http.server 8899
 # then open http://localhost:8899/material-landing.html
 ```
 
-`file://` URLs don't work with the browser automation tooling — serve over
-localhost.
+Two traps, both of which cost time already:
+
+- `file://` URLs don't work with the browser automation tooling. Serve over
+  localhost.
+- If a server is already running on 8899 from a *different* directory, you
+  will silently get that directory's files and think your edits did nothing.
+  Check with `lsof -ti:8899` and kill it first. Always append a
+  cache-busting `?v=N` when reloading, too.
 
 ## Method note
 
