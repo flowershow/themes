@@ -46,19 +46,40 @@ if [ ! -f "$REPO_ROOT/$THEME_DIR/theme.css" ]; then
 fi
 
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+SHA="$(git rev-parse HEAD)"
 SITE_NAME="${SITE_NAME:-${THEME_DIR%-draft}-theme-demo}"
-THEME_URL="https://cdn.jsdelivr.net/gh/flowershow/themes@${BRANCH}/${THEME_DIR}/theme.css"
+
+# Pin to the COMMIT SHA, not the branch name.
+#
+# Branch-pinned jsDelivr URLs (@draft/new-themes/...) are mutable, and their
+# edge nodes update unevenly: after pushing + purging, one edge served the new
+# CSS while another still served a stale copy — even with cache:'reload' and a
+# cache-busting query string. That silently makes a theme look unchanged and
+# wastes a lot of time chasing a non-existent CSS bug.
+#
+# A SHA-pinned URL is immutable, so every commit produces a fresh URL that
+# cannot be stale. Cost: the site must be republished to pick up new CSS,
+# which is exactly what this script does.
+THEME_URL="https://cdn.jsdelivr.net/gh/flowershow/themes@${SHA}/${THEME_DIR}/theme.css"
 
 echo "== demo site: $SITE_NAME =="
 echo "   theme:  $THEME_DIR"
 echo "   branch: $BRANCH"
+echo "   commit: ${SHA:0:8}"
 echo "   css:    $THEME_URL"
 
-# Warn if the branch isn't pushed — jsDelivr can only see what's on GitHub.
-if ! git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+# jsDelivr can only serve commits that are on GitHub.
+if ! git branch -r --contains "$SHA" 2>/dev/null | grep -q .; then
   echo ""
-  echo "WARNING: branch '$BRANCH' is not on origin. jsDelivr cannot serve the"
-  echo "theme CSS until you push it. Run: git push -u origin $BRANCH"
+  echo "ERROR: commit ${SHA:0:8} is not on any remote branch. jsDelivr cannot"
+  echo "serve it. Push first:  git push -u origin $BRANCH"
+  exit 1
+fi
+
+if [ -n "$(git status --porcelain -- "$THEME_DIR")" ]; then
+  echo ""
+  echo "WARNING: $THEME_DIR has uncommitted changes. The demo will be built"
+  echo "from commit ${SHA:0:8}, NOT your working tree. Commit and push first."
 fi
 
 BUILD_DIR="$(mktemp -d)"
