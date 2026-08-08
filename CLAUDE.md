@@ -5,6 +5,10 @@ distributed via jsDelivr off git tags. See README.md for the user-facing
 theme format. This file is for anyone (human or agent) doing unattended or
 semi-unattended work in this repo.
 
+> **Start with [NEXT.md](./NEXT.md)** — it's the source of truth for current
+> state and what to pick up. Keep it current as work lands; don't leave
+> status only in GitHub issue comments.
+
 ## The done condition
 
 ```
