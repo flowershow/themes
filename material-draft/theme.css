@@ -1,0 +1,263 @@
+/*
+ * FLOWERSHOW THEME (DRAFT): MATERIAL
+ *
+ * Inspired by the visual style of Material for MkDocs
+ * https://squidfunk.github.io/mkdocs-material/
+ *
+ * Color values, font sizes, and typography scale are taken from the
+ * open-source mkdocs-material source (palette/_colors.scss, main/_typeset.scss,
+ * MIT licensed, https://github.com/squidfunk/mkdocs-material). No CSS was
+ * copied — values were read and re-expressed against Flowershow's own
+ * token/class API.
+ *
+ * NOT YET CLONABLE (see docs/plans note): tabbed content blocks, prev/next
+ * page footer pagination, version selector. These require Flowershow core
+ * features that don't exist yet, not just CSS.
+ */
+
+/* =======================
+    IMPORTS
+========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Roboto+Mono:wght@400;500;700&display=swap');
+
+/* =======================
+    ROOT TOKENS
+========================== */
+
+:root {
+  color-scheme: light dark;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+:root {
+  --font-heading: 'Roboto', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  --font-body: 'Roboto', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  --font-mono: 'Roboto Mono', SFMono-Regular, Consolas, Menlo, monospace;
+
+  --font-size-base: 1rem; /* mkdocs .md-typeset is 16px */
+
+  /* Material indigo-500 / indigo-400 / indigo-700 / indigo-A200 */
+  --md-primary: #3f51b5;
+  --md-primary-light: #5c6bc0;
+  --md-primary-dark: #303f9f;
+  --md-accent: #536dfe;
+
+  --radius: 0.125rem; /* Material's inputs/cards are close to square */
+  --navbar-height: 3rem; /* mkdocs header is compact, 48px */
+}
+
+:root,
+:root[data-theme="light"] {
+  --color-l-background: #ffffff;
+  --color-l-foreground: rgba(0, 0, 0, 0.87); /* --md-default-fg-color */
+  --color-l-accent: var(--md-primary);
+
+  --color-background: var(--color-l-background);
+  --color-foreground: var(--color-l-foreground);
+  --color-accent: var(--color-l-accent);
+}
+
+:root[data-theme="dark"] {
+  /* mkdocs "slate" scheme: hue 225, near-black bg */
+  --color-d-background: hsl(225, 15%, 14%);
+  --color-d-foreground: hsla(225, 15%, 90%, 0.82);
+  --color-d-accent: var(--md-accent);
+
+  --color-background: var(--color-d-background);
+  --color-foreground: var(--color-d-foreground);
+  --color-accent: var(--color-d-accent);
+}
+
+/* =======================
+    TYPOGRAPHY
+    mkdocs .md-typeset scale: h1 32px/300, h2 25px/300, h3 20px/400,
+    body 16px/1.6, letter-spacing -0.01em on headings
+========================== */
+
+.rendered-mdx {
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+.rendered-mdx h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--color-foreground-700);
+}
+
+.rendered-mdx h2 {
+  font-size: 1.5625rem;
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.rendered-mdx h3 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.rendered-mdx h4 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.rendered-mdx h5,
+.rendered-mdx h6 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-foreground-700);
+}
+
+.rendered-mdx a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+.rendered-mdx a:hover {
+  text-decoration: underline;
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--font-mono);
+}
+
+/* =======================
+    NAVBAR
+    mkdocs header: solid primary-color bar, white text, compact height
+========================== */
+
+.site-navbar {
+  background-color: var(--md-primary);
+  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.1), 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+}
+
+.site-navbar-link,
+.site-navbar-site-name,
+.site-navbar-site-title {
+  color: #fff;
+}
+
+.site-navbar-link:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* =======================
+    SIDEBAR TREE
+    mkdocs left nav: no borders, active item gets primary-color left rule + bold
+========================== */
+
+.site-sidebar {
+  border-right: 1px solid var(--color-foreground-50);
+}
+
+.site-tree-item-self {
+  font-size: 0.875rem;
+  border-radius: 0;
+}
+
+.site-tree-item-self.is-current {
+  color: var(--md-primary);
+  font-weight: 700;
+}
+
+/* =======================
+    TABLE OF CONTENTS (right rail)
+========================== */
+
+.toc-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-foreground-500);
+}
+
+.toc-item-self {
+  font-size: 0.75rem;
+  border-left: 2px solid transparent;
+}
+
+.toc-item-self[aria-current="true"] {
+  border-left-color: var(--md-primary);
+  color: var(--md-primary);
+}
+
+/* =======================
+    CODE BLOCKS
+    mkdocs code blocks: light grey bg, no border, visible copy button
+========================== */
+
+.pre-container {
+  background-color: rgba(0, 0, 0, 0.035);
+  border-radius: var(--radius);
+}
+
+:root[data-theme="dark"] .pre-container {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* =======================
+    CALLOUTS / ADMONITIONS
+    mkdocs admonitions: colored left border + tinted header band, not full-tint body
+========================== */
+
+.callout {
+  border-radius: 0.1rem;
+  border-left: 0.2rem solid var(--callout-color, var(--md-primary));
+  background-color: transparent;
+}
+
+.callout-title {
+  background-color: color-mix(in srgb, var(--callout-color, var(--md-primary)) 10%, transparent);
+  font-weight: 700;
+}
+
+.callout-note { --callout-color: #448aff; }
+.callout-tip { --callout-color: #00bfa5; }
+.callout-warning { --callout-color: #ff9100; }
+.callout-danger { --callout-color: #ff5252; }
+.callout-success { --callout-color: #00c853; }
+.callout-example { --callout-color: #7c4dff; }
+.callout-quote { --callout-color: var(--color-foreground-400); }
+
+/* =======================
+    LIST COMPONENT
+    kept close to default; mkdocs itself has no built-in card list, this is
+    Flowershow's own affordance, styled to match the rest of the palette
+========================== */
+
+.list-component-item-headline {
+  font-weight: 500;
+}
+
+.list-component-item-headline a {
+  color: var(--color-foreground);
+}
+
+.list-component-item-headline a:hover {
+  color: var(--md-primary);
+}
+
+/* =======================
+    SEARCH MODAL
+========================== */
+
+.search-modal-input:focus {
+  outline: 2px solid var(--md-primary);
+}
+
+.search-modal-highlight {
+  background-color: color-mix(in srgb, var(--md-primary) 25%, transparent);
+}

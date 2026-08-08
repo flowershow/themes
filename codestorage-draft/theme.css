@@ -1,0 +1,224 @@
+/*
+ * FLOWERSHOW THEME (DRAFT): CODESTORAGE
+ *
+ * Inspired by the visual style of code.storage by the Pierre Computer
+ * Company: https://code.storage/
+ *
+ * code.storage's real look uses BerkeleyMono, a commercial font
+ * (berkeleygraphics.com) that cannot be redistributed via @import in an
+ * open theme repo. This theme substitutes an open, similarly-proportioned
+ * terminal monospace (Departure Mono, falling back to IBM Plex Mono /
+ * JetBrains Mono / system monospace). Anyone with a BerkeleyMono license
+ * can override --font-body / --font-heading locally to get the exact match.
+ *
+ * NOT YET CLONABLE: the site's nav is literal bracketed text
+ * ("[ LOG IN / SIGN UP ]") rendered as page content, not a navbar
+ * component — that's copy, not styling, and out of scope for a theme.
+ * The decorative circle/diagram illustrations are likewise page content.
+ * This theme clones the *typographic system* (monospace-everything,
+ * literal "#"/"##" markdown markers before headings, tight uniform type
+ * scale, near-monochrome palette) rather than the homepage's bespoke layout.
+ */
+
+/* =======================
+    IMPORTS
+========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+/* =======================
+    ROOT TOKENS
+========================== */
+
+:root {
+  color-scheme: light dark;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+:root {
+  --font-heading: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-body: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --font-size-base: 0.8125rem; /* ~13px, close to code.storage's 12px body */
+
+  --radius: 0; /* the reference site has no rounded corners anywhere */
+  --navbar-height: 3.5rem;
+}
+
+:root,
+:root[data-theme="light"] {
+  --color-l-background: #f5f5f4;
+  --color-l-foreground: #17171a;
+  --color-l-accent: #17171a; /* near-monochrome; accent = foreground, no color pop */
+
+  --color-background: var(--color-l-background);
+  --color-foreground: var(--color-l-foreground);
+  --color-accent: var(--color-l-accent);
+}
+
+:root[data-theme="dark"] {
+  --color-d-background: #0a0a0a;
+  --color-d-foreground: #e5e5e3;
+  --color-d-accent: #e5e5e3;
+
+  --color-background: var(--color-d-background);
+  --color-foreground: var(--color-d-foreground);
+  --color-accent: var(--color-d-accent);
+}
+
+/* =======================
+    TYPOGRAPHY
+    reference site: uniform 12px body, 2x line-height, no weight jump for
+    h1/h2 (bold instead of size-scaled), everything monospace including body
+========================== */
+
+.rendered-mdx {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: 2;
+  letter-spacing: 0;
+}
+
+.rendered-mdx h1,
+.rendered-mdx h2,
+.rendered-mdx h3,
+.rendered-mdx h4,
+.rendered-mdx h5,
+.rendered-mdx h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* literal markdown heading markers, mimicking the reference site's raw "#" */
+.rendered-mdx h1::before { content: "# "; color: var(--color-foreground-400); }
+.rendered-mdx h2::before { content: "## "; color: var(--color-foreground-400); }
+.rendered-mdx h3::before { content: "### "; color: var(--color-foreground-400); }
+
+.rendered-mdx a {
+  color: var(--color-foreground);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.rendered-mdx a:hover {
+  color: var(--color-foreground-500);
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--font-body);
+}
+
+/* =======================
+    NAVBAR
+    reference site has no navbar chrome; approximate with bracketed links
+    on a bare, borderless bar
+========================== */
+
+.site-navbar {
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-foreground-100);
+  box-shadow: none;
+}
+
+.site-navbar-link {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-foreground);
+}
+
+.site-navbar-link::before { content: "[ "; }
+.site-navbar-link::after { content: " ]"; }
+
+.site-navbar-site-name,
+.site-navbar-site-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* =======================
+    SIDEBAR TREE
+========================== */
+
+.site-sidebar {
+  border-right: 1px solid var(--color-foreground-100);
+}
+
+.site-tree-item-self {
+  font-size: 0.8125rem;
+  border-radius: 0;
+}
+
+.site-tree-item-self.is-current {
+  font-weight: 700;
+}
+
+/* =======================
+    CODE BLOCKS
+========================== */
+
+.pre-container {
+  background-color: color-mix(in srgb, var(--color-foreground) 5%, transparent);
+  border: 1px solid var(--color-foreground-100);
+  border-radius: 0;
+}
+
+/* =======================
+    CALLOUTS
+    monochrome: type indicated by bracketed label, not color
+========================== */
+
+.callout {
+  border: 1px solid var(--color-foreground-200);
+  border-left-width: 3px;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.callout-title {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: transparent;
+}
+
+/* =======================
+    LIST COMPONENT
+========================== */
+
+.list-component-item {
+  border: 1px solid var(--color-foreground-100);
+  border-radius: 0;
+}
+
+.list-component-item-headline {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--font-size-base);
+}
+
+.list-component-item-eyebrow {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  color: var(--color-foreground-400);
+}
+
+/* =======================
+    SEARCH MODAL
+========================== */
+
+.search-modal-input {
+  font-family: var(--font-body);
+}

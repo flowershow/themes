@@ -1,0 +1,82 @@
+# Ledger for the theme-authoring-pipeline loop. One entry per unit of work.
+# `passes` is the ONLY source of truth for "done" — must match what
+# scripts/verify.sh actually checks. Never hand-edit `passes: true` without
+# the corresponding check passing; that's laundering, not progress.
+#
+# `fidelity` is a separate, human/LLM-judged field for "does this actually
+# look like the site it clones" — it is never a gate in verify.sh and never
+# implies `passes`. See CLAUDE.md "Judgement vs structure".
+
+version: 1
+generated_by: loop-engineering audit, 2026-08-08
+
+themes:
+  - id: material-draft
+    kind: theme
+    inspiration: "https://squidfunk.github.io/mkdocs-material/"
+    dir: material-draft
+    passes: null            # not yet run through verify.sh
+    checks:
+      css_parses: null
+      required_tokens_defined: null
+      dark_mode_defined: null
+      preview_asset_present: false   # known gap: no preview.png yet
+      demo_site_responds: null
+    demo_url: null           # filled in once `fl` publish succeeds
+    fidelity: unreviewed     # unreviewed | reviewed-close | reviewed-off
+    known_gaps:
+      - "no tabbed-content-block clone (feature doesn't exist in Flowershow)"
+      - "no prev/next page footer pagination (feature doesn't exist in Flowershow)"
+      - "no version-selector clone (out of scope, not core to the look)"
+    notes: >
+      Colors/type scale pulled from mkdocs-material's real MIT-licensed
+      SCSS source, not guessed. Class selectors (.is-current, aria-current)
+      checked against Flowershow component source, not assumed.
+
+  - id: codestorage-draft
+    kind: theme
+    inspiration: "https://code.storage/"
+    dir: codestorage-draft
+    passes: null
+    checks:
+      css_parses: null
+      required_tokens_defined: null
+      dark_mode_defined: null
+      preview_asset_present: false
+      demo_site_responds: null
+    demo_url: null
+    fidelity: unreviewed
+    known_gaps:
+      - "BerkeleyMono (reference site's actual font) is commercial; substituted IBM Plex Mono — see theme.css header comment"
+      - "reference site's nav is literal bracketed page copy, not a navbar component; approximated with a bracket-styled navbar instead"
+      - "decorative circle/diagram illustrations on the homepage are bespoke page content, not cloned"
+    notes: >
+      Font/color/spacing values read from the live site via computed-style
+      inspection (closed source, no repo to read from).
+
+docs:
+  - id: theme-authoring-tutorial
+    kind: doc
+    passes: false
+    target: "content/flowershow-app or themes repo README — TBD, see CLAUDE.md open decision"
+    notes: "To be written from the experience of building material-draft and codestorage-draft, not written first."
+
+  - id: ai-theme-cloning-skill
+    kind: skill
+    passes: false
+    target: "TBD — see CLAUDE.md open decision (skills repo vs this repo)"
+    notes: "AI-agent-facing instructions for 'clone the look of <url> into a Flowershow theme', derived from the same two builds."
+
+structural_findings:
+  # L4 (component-tree / placement) gaps found while building the themes
+  # above. These are core-code questions, not theme questions — logged
+  # here so they don't get lost, filed as GitHub issues once triaged.
+  - id: leaf-token-drift
+    summary: "themes/leaf/theme.css references --color-primary / --color-primary-subtle, which don't exist in the public-site token API (dashboard-only tokens). Silently broken on live sites."
+    status: found-not-filed
+  - id: no-content-tabs
+    summary: "No tabbed-content-block component exists; mkdocs-material-style themes can't clone it."
+    status: found-not-filed
+  - id: no-prev-next-pagination
+    summary: "No prev/next page footer pagination in page.tsx; several reference sites use it."
+    status: found-not-filed
