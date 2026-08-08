@@ -50,17 +50,40 @@ without ever touching the official release list.
 
 Every theme gets a demo site, published with `fl` from the shared content
 in `_demo-content/` (a fixed kitchen-sink page + a 3-post blog, so themes
-are compared on identical content, not different content). Per theme:
+are compared on identical content, not different content).
 
-1. Copy `_demo-content/` into a scratch dir, add a `config.json` with
-   `"theme"` pointed at that theme's jsDelivr URL.
-2. `fl <dir> --name <theme-id>-demo --yes`
-3. Record the resulting URL in `docs/features.yaml` as that theme's
-   `demo_url`.
+Use the script — don't do it by hand:
+
+```sh
+scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--name <site-name>]
+
+# theme applied to the shared demo content:
+scripts/demo-site.sh material-draft
+
+# same, but with a stage-1 raw-HTML landing page as index:
+scripts/demo-site.sh material-draft --landing _repro/material-landing.html \
+  --name material-landing-demo
+```
+
+It assembles `_demo-content/` + a `config.json` pointing `theme` at a
+jsDelivr URL pinned to the **current git branch**, then publishes with `fl`.
+Record the printed URL in `docs/features.yaml` and re-run `scripts/verify.sh`.
+
+The branch must be pushed — jsDelivr can only serve what's on GitHub. The
+script warns if it isn't. After changing a theme's CSS on an already-published
+branch, purge the CDN:
+
+```sh
+curl -X POST https://purge.jsdelivr.net/ -H 'Content-Type: application/json' \
+  -d '{"path":["/gh/flowershow/themes@<branch>/<dir>/theme.css"]}'
+```
 
 This is also the answer to "how do you preview a theme without a live
 theme-switcher in the dashboard" — config.json's `theme` field is the only
 switch, so a demo site per theme is the practical substitute.
+
+Raw `.html` files publish as-is (verified), so a stage-1 Tailwind repro can
+live at `index.html` on the same site as the themed Markdown pages.
 
 ## Guard rails — never do these unattended
 
