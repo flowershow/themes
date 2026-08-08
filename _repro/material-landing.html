@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Material for MkDocs — landing repro</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#4051b5',   // --md-primary-fg-color (header, measured)
+        accent:  '#dd2e57',   // landing-page CTA pink (measured, NOT the library default)
+        ink:     '#1e2129',   // dark section bg (measured)
+      },
+      fontFamily: { sans: ['Roboto', 'system-ui', 'Helvetica', 'Arial', 'sans-serif'] },
+      maxWidth: { grid: '1220px' },  // .md-grid max-width (measured)
+    }
+  }
+}
+</script>
+<style>
+  /* measured type scale from .md-typeset */
+  .t-h1 { font-size: 32px; font-weight: 700; line-height: 41.6px; letter-spacing: -0.32px; }
+  .t-h2 { font-size: 25px; font-weight: 700; line-height: 1.4; letter-spacing: -0.25px; }
+  .t-body { font-size: 16px; line-height: 25.6px; }
+  .t-small { font-size: 12.8px; line-height: 1.6; }
+  .dark-fg { color: rgba(226,228,233,0.82); }
+  .light-fg { color: rgba(0,0,0,0.87); }
+  .light-fg-dim { color: rgba(0,0,0,0.54); }
+</style>
+</head>
+<body class="font-sans antialiased">
+
+<!-- ============ HERO GROUP (transparent header over illustration) ============ -->
+<!--
+  NOTE ON ARTWORK: the layer PNGs below are mkdocs-material's own bespoke
+  illustration, referenced here ONLY as a stand-in so the composition can be
+  compared like-for-like during fidelity work. They are NOT ours and must not
+  ship in a Flowershow demo or theme — see docs/plans note. The *reproducible*
+  part is the parallax system: perspective:50px on the scroller, each layer at
+  translateZ(-N) with a compensating scale of (50+N)/50, square layer images
+  with per-layer object-position. That technique is what a theme would reuse
+  with original art.
+-->
+<section class="relative overflow-hidden" style="height:100vh; min-height:700px; perspective:50px; perspective-origin:50% 50%;">
+  <div class="absolute inset-0" style="background:linear-gradient(#4d5eb8 0%, #8a9bd4 60%, #c9b6c4 100%);"></div>
+  <div class="absolute inset-0" style="transform-style:preserve-3d;">
+    <div class="absolute inset-0" style="z-index:2; transform:translateZ(-400px) scale(9);">
+      <img src="https://squidfunk.github.io/mkdocs-material/assets/images/layers/1-landscape.png"
+           class="w-full object-cover" style="height:100vw; object-position:70% 50%;">
+    </div>
+    <div class="absolute inset-0" style="z-index:5; transform:translateZ(-250px) scale(6);">
+      <img src="https://squidfunk.github.io/mkdocs-material/assets/images/layers/2-plateau.png"
+           class="w-full object-cover" style="height:100vw; object-position:25% 50%;">
+    </div>
+    <div class="absolute inset-0" style="z-index:8; transform:translateZ(-100px) scale(3);">
+      <img src="https://squidfunk.github.io/mkdocs-material/assets/images/layers/5-plants-1.png"
+           class="w-full object-cover" style="height:100vw; object-position:40% 50%;">
+    </div>
+    <div class="absolute inset-0" style="z-index:9; transform:translateZ(-50px) scale(2);">
+      <img src="https://squidfunk.github.io/mkdocs-material/assets/images/layers/6-plants-2.png"
+           class="w-full object-cover" style="height:100vw; object-position:50% 50%;">
+    </div>
+  </div>
+  <!-- .mdx-parallax__blend: fade to the next section's dark bg. This is what
+       creates the dark band the hero copy sits on, and what makes the hero
+       blend seamlessly into the following #1e2129 section. -->
+  <div class="absolute inset-0" style="z-index:10; background:linear-gradient(rgba(0,0,0,0), #1e2129);"></div>
+
+  <!-- header: 48px, transparent over hero -->
+  <div class="relative z-20">
+    <header style="height:48px;" class="flex items-center">
+      <div class="mx-auto w-full max-w-grid px-4 flex items-center gap-4">
+        <!-- logo -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white" class="shrink-0">
+          <path d="M12 2 2 7v10l10 5 10-5V7L12 2Zm0 2.2 7.5 3.75-7.5 3.75L4.5 7.95 12 4.2Z"/>
+        </svg>
+        <span class="text-white font-medium" style="font-size:18px;">Material for MkDocs</span>
+
+        <div class="flex-1"></div>
+
+        <!-- link icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)" class="shrink-0">
+          <path d="M3.9 12a5.1 5.1 0 0 1 5.1-5.1h4v1.9H9a3.2 3.2 0 0 0 0 6.4h4V17H9A5.1 5.1 0 0 1 3.9 12Zm5.6-1h5v2h-5v-2Zm5.5-4.1h4a5.1 5.1 0 1 1 0 10.2h-4v-1.9h4a3.2 3.2 0 1 0 0-6.4h-4V6.9Z"/>
+        </svg>
+
+        <!-- search -->
+        <label class="flex items-center gap-2 rounded" style="background:rgba(255,255,255,0.12); width:210px; height:36px; padding:0 12px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.9)"><path d="M9.5 3a6.5 6.5 0 0 1 5.15 10.48l5.44 5.43-1.42 1.42-5.43-5.44A6.5 6.5 0 1 1 9.5 3Zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/></svg>
+          <span style="color:rgba(255,255,255,0.75); font-size:15px;">Search</span>
+        </label>
+
+        <!-- repo -->
+        <div class="flex items-center gap-2 pl-2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="m12 2 9 5.5v9L12 22l-9-5.5v-9L12 2Z"/></svg>
+          <div class="leading-tight">
+            <div class="text-white" style="font-size:13px;">squidfunk/mkdocs-material</div>
+            <div class="flex gap-3" style="color:rgba(255,255,255,0.7); font-size:11px;">
+              <span>◇ 9.7.7</span><span>☆ 27.2k</span><span>⑂ 4.1k</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- tabs -->
+    <nav style="height:32px;" class="flex items-center">
+      <div class="mx-auto w-full max-w-grid px-4 flex items-center gap-6" style="font-size:14px;">
+        <a class="text-white font-medium" href="#">Home</a>
+        <a style="color:rgba(255,255,255,0.7)" href="#">Getting started</a>
+        <a style="color:rgba(255,255,255,0.7)" href="#">Setup</a>
+        <a style="color:rgba(255,255,255,0.7)" href="#">Plugins</a>
+        <a style="color:rgba(255,255,255,0.7)" href="#">Reference</a>
+        <a style="color:rgba(255,255,255,0.7)" href="#">Insiders</a>
+        <a style="color:rgba(255,255,255,0.7)" href="#">Community</a>
+        <a style="color:rgba(255,255,255,0.7)" href="#">Blog</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- hero copy: sits low-left, per reference -->
+  <div class="absolute inset-x-0 z-20" style="bottom:80px;">
+    <div class="mx-auto w-full max-w-grid px-4">
+      <h1 class="t-h1 text-white">Documentation that simply works</h1>
+      <p class="t-body text-white mt-4" style="max-width:530px;">
+        Write your documentation in Markdown and create a professional static site
+        in minutes – searchable, customizable, in 60+ languages, for all devices.
+      </p>
+      <div class="mt-8 flex items-center gap-2">
+        <a href="#" class="inline-flex items-center justify-center font-medium text-white"
+           style="background:#dd2e57; border-radius:2px; padding:10px 32px; font-size:16px;">Get started</a>
+        <a href="#" class="inline-flex items-center justify-center font-medium text-white"
+           style="border-radius:2px; padding:10px 32px; font-size:16px;">Learn more</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- scroll chevron -->
+  <div class="absolute inset-x-0 z-20 flex justify-center" style="bottom:24px;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)"><path d="M12 16 6 10h12l-6 6Z"/></svg>
+  </div>
+</section>
+
+<!-- ============ GROUP 2: dark — "Everything you would expect" ============ -->
+<section style="background:#1e2129;" class="py-24">
+  <div class="mx-auto w-full max-w-grid px-4">
+    <h1 class="t-h1 dark-fg mb-16">Everything you would expect</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style="gap:32px;">
+      <!-- each item: flex row, gap 12px (measured) -->
+      <div class="flex" style="gap:12px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#dd2e57" class="shrink-0"><path d="M3 5h18v14H3V5Zm2 2v10h14V7H5Zm2 2h2l2 3 2-3h2v6h-2v-3l-2 3-2-3v3H7V9Z"/></svg>
+        <div>
+          <h2 class="t-h2 dark-fg mb-2">It's just Markdown</h2>
+          <p class="t-body" style="color:rgba(226,228,233,0.56);">Focus on the content of your documentation and create a professional static site in minutes. No need to know HTML, CSS or JavaScript – let Material for MkDocs do the heavy lifting for you.</p>
+        </div>
+      </div>
+
+      <div class="flex" style="gap:12px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#dd2e57" class="shrink-0"><path d="M4 6h16v9H4V6Zm2 2v5h12V8H6ZM2 18h20v2H2v-2Z"/></svg>
+        <div>
+          <h2 class="t-h2 dark-fg mb-2">Works on all devices</h2>
+          <p class="t-body" style="color:rgba(226,228,233,0.56);">Serve your documentation with confidence – Material for MkDocs automatically adapts to perfectly fit the available screen estate, no matter the type or size of the viewing device.</p>
+        </div>
+      </div>
+
+      <div class="flex" style="gap:12px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#dd2e57" class="shrink-0"><path d="M12 3 3 8v8l9 5 9-5V8l-9-5Zm0 4.2 4.5 2.5-4.5 2.5L7.5 9.7 12 7.2Z"/></svg>
+        <div>
+          <h2 class="t-h2 dark-fg mb-2">Made to measure</h2>
+          <p class="t-body" style="color:rgba(226,228,233,0.56);">Make it yours – change the colors, fonts, language, icons, logo, and more with a few lines of configuration. Material for MkDocs can be easily extended and provides many options to alter appearance and behavior.</p>
+        </div>
+      </div>
+
+      <div class="flex" style="gap:12px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#dd2e57" class="shrink-0"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
+        <div>
+          <h2 class="t-h2 dark-fg mb-2">Fast and lightweight</h2>
+          <p class="t-body" style="color:rgba(226,228,233,0.56);">Don't let your users wait – get incredible value with a small footprint by using one of the smallest self-contained themes available, with excellent performance out of the box.</p>
+        </div>
+      </div>
+
+      <div class="flex" style="gap:12px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#dd2e57" class="shrink-0"><path d="M12 2a5 5 0 0 1 5 5v3h1.5A1.5 1.5 0 0 1 20 11.5v8A1.5 1.5 0 0 1 18.5 21h-13A1.5 1.5 0 0 1 4 19.5v-8A1.5 1.5 0 0 1 5.5 10H7V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v3h6V7a3 3 0 0 0-3-3Z"/></svg>
+        <div>
+          <h2 class="t-h2 dark-fg mb-2">Maintain ownership</h2>
+          <p class="t-body" style="color:rgba(226,228,233,0.56);">Own your documentation's complete sources and outputs, guaranteeing both integrity and security – no need to entrust the backbone of your product knowledge to third-party platforms.</p>
+        </div>
+      </div>
+
+      <div class="flex" style="gap:12px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#dd2e57" class="shrink-0"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 3a3 3 0 1 1-3 3 3 3 0 0 1 3-3Zm0 14a7 7 0 0 1-5.6-2.8c.03-1.85 3.73-2.87 5.6-2.87s5.57 1.02 5.6 2.87A7 7 0 0 1 12 19Z"/></svg>
+        <div>
+          <h2 class="t-h2 dark-fg mb-2">Open Source</h2>
+          <p class="t-body" style="color:rgba(226,228,233,0.56);">You're in good company – trusted by more than 20,000 individuals and organizations. Licensed under MIT, Material for MkDocs is available and free forever.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROUP 3: white — "More than just a static site" ============ -->
+<section style="background:#ffffff;" class="py-24">
+  <div class="mx-auto w-full max-w-grid px-4">
+    <h1 class="t-h1 light-fg mb-16">More than just a static site</h1>
+
+    <div class="space-y-20">
+      <div class="grid md:grid-cols-2 items-center" style="gap:48px;">
+        <div>
+          <h2 class="t-h2 light-fg mb-3">Built-in search</h2>
+          <p class="t-body light-fg-dim">Impress your users with an excellent client-side search implementation – no server needed. Ships with support for more than 60 languages and advanced features like scoring, term highlighting, and lookahead.</p>
+        </div>
+        <div class="rounded" style="background:#f5f5f5; height:230px;"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 items-center" style="gap:48px;">
+        <div class="md:order-2">
+          <h2 class="t-h2 light-fg mb-3">Code annotations</h2>
+          <p class="t-body light-fg-dim">Add anything you like next to your code blocks – text, images, code blocks, call-outs, content tabs, even interactive elements. Code annotations are fully responsive and printable.</p>
+        </div>
+        <div class="rounded md:order-1" style="background:#f5f5f5; height:230px;"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 items-center" style="gap:48px;">
+        <div>
+          <h2 class="t-h2 light-fg mb-3">Social cards</h2>
+          <p class="t-body light-fg-dim">Make an impression when your documentation is shared on social media – generate beautiful preview images automatically for every page, with zero configuration required.</p>
+        </div>
+        <div class="rounded" style="background:#f5f5f5; height:230px;"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 items-center" style="gap:48px;">
+        <div class="md:order-2">
+          <h2 class="t-h2 light-fg mb-3">10,000+ icons and emojis</h2>
+          <p class="t-body light-fg-dim">Bring your documentation to life – choose from over 10,000 icons and emojis, and use them anywhere in your Markdown, with support for custom icon sets.</p>
+        </div>
+        <div class="rounded md:order-1" style="background:#f5f5f5; height:230px;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROUP 4: dark — "Trusted in the industry" ============ -->
+<section style="background:#1e2129;" class="py-24">
+  <div class="mx-auto w-full max-w-grid px-4">
+    <h1 class="t-h1 dark-fg mb-4">Trusted in the industry</h1>
+    <p class="t-body mb-12" style="color:rgba(226,228,233,0.56); max-width:640px;">
+      Material for MkDocs is used by thousands of organizations, from small open source projects to Fortune 500 companies.
+    </p>
+    <div class="grid grid-cols-2 md:grid-cols-4" style="gap:32px;">
+      <div class="rounded flex items-center justify-center" style="background:rgba(255,255,255,0.06); height:80px; color:rgba(226,228,233,0.4);">AWS</div>
+      <div class="rounded flex items-center justify-center" style="background:rgba(255,255,255,0.06); height:80px; color:rgba(226,228,233,0.4);">Google</div>
+      <div class="rounded flex items-center justify-center" style="background:rgba(255,255,255,0.06); height:80px; color:rgba(226,228,233,0.4);">Microsoft</div>
+      <div class="rounded flex items-center justify-center" style="background:rgba(255,255,255,0.06); height:80px; color:rgba(226,228,233,0.4);">Netflix</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROUP 5: white — "What our users say" ============ -->
+<section style="background:#ffffff;" class="py-24">
+  <div class="mx-auto w-full max-w-grid px-4">
+    <h1 class="t-h1 light-fg mb-16">What our users say</h1>
+    <div class="grid md:grid-cols-3" style="gap:32px;">
+      <blockquote class="t-body light-fg-dim border-l-4 pl-5" style="border-color:#dd2e57;">"Material for MkDocs is the best documentation theme I've ever used. It just works."</blockquote>
+      <blockquote class="t-body light-fg-dim border-l-4 pl-5" style="border-color:#dd2e57;">"We migrated our entire docs site in an afternoon. The search alone was worth it."</blockquote>
+      <blockquote class="t-body light-fg-dim border-l-4 pl-5" style="border-color:#dd2e57;">"Beautiful defaults, sensible configuration, and genuinely excellent documentation."</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROUP 6: dark — "Become a sponsor" ============ -->
+<section style="background:#1e2129;" class="py-24">
+  <div class="mx-auto w-full max-w-grid px-4">
+    <h1 class="t-h1 dark-fg mb-4">Become a sponsor</h1>
+    <p class="t-body mb-8" style="color:rgba(226,228,233,0.56); max-width:640px;">
+      Material for MkDocs is free to use, and always will be. If you find it useful, consider supporting its continued development.
+    </p>
+    <a href="#" class="inline-flex items-center justify-center font-medium text-white"
+       style="background:#dd2e57; border-radius:2px; padding:10px 32px; font-size:16px;">Become a sponsor</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer style="background:#1a1c23;" class="py-10">
+  <div class="mx-auto w-full max-w-grid px-4 flex items-center justify-between t-small" style="color:rgba(226,228,233,0.56);">
+    <span>Made with Material for MkDocs</span>
+    <span>© 2026 Martin Donath</span>
+  </div>
+</footer>
+
+</body>
+</html>
