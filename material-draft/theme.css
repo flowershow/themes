@@ -185,13 +185,17 @@ kbd {
   font-weight: 400;
 }
 
-/* Flowershow renders content through @tailwindcss/typography's `prose`,
-   which decorates inline code with literal backtick pseudo-elements. The
-   reference has no backticks, and arguably no theme wants them — but they
-   are NOT in the DOM, so this can only be fixed in CSS. */
+/* Flowershow renders content through @tailwindcss/typography, which
+   decorates inline code with literal backtick pseudo-elements. They are not
+   in the DOM, so only CSS can remove them.
+   !important is required: the generated rule carries !important itself, so
+   a plain `content: none` loses no matter how specific the selector is.
+   Verified in the browser — this is the one place in this theme that needs
+   it, and the theming docs say `overrides` layering should make !important
+   unnecessary. It doesn't here. */
 .rendered-mdx code::before,
 .rendered-mdx code::after {
-  content: none;
+  content: none !important;
 }
 
 .pre-container {
