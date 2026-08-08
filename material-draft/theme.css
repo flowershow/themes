@@ -344,13 +344,24 @@ kbd {
   padding: 0;
 }
 
+/* base applies `space-y-2` on the callout and `mb-2` on the title, which
+   leaves a gap between the title band and the body once the band is
+   full-bleed. Zero both out. */
+.rendered-mdx [data-callout] > * + * {
+  margin-top: 0;
+}
+
 .rendered-mdx [data-callout] > [data-callout-title] {
   background-color: color-mix(in srgb, var(--callout-color) 10%, transparent);
   color: var(--color-foreground);
   font-weight: 700;
   font-size: 0.8rem;
   padding: 0.5rem 0.75rem;
-  margin: 0;
+  margin: 0 0 0 0;
+}
+
+.rendered-mdx [data-callout] > [data-callout-title]:not(:only-child) {
+  margin-bottom: 0;
 }
 
 .rendered-mdx [data-callout] > [data-callout-body] {
