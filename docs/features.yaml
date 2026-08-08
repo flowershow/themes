@@ -22,7 +22,7 @@ themes:
       dark_mode_defined: null
       preview_asset_present: false   # known gap: no preview.png yet
       demo_site_responds: null
-    demo_url: null           # filled in once `fl` publish succeeds
+    demo_url: https://material-theme-demo-rufuspollock.flowershow.me
     fidelity: unreviewed     # unreviewed | reviewed-close | reviewed-off
     known_gaps:
       - "no tabbed-content-block clone (feature doesn't exist in Flowershow)"
@@ -44,7 +44,7 @@ themes:
       dark_mode_defined: null
       preview_asset_present: false
       demo_site_responds: null
-    demo_url: null
+    demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
     fidelity: unreviewed
     known_gaps:
       - "BerkeleyMono (reference site's actual font) is commercial; substituted IBM Plex Mono — see theme.css header comment"
