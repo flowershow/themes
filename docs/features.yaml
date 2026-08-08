@@ -1,0 +1,120 @@
+# Ledger for the theme-authoring-pipeline loop. One entry per unit of work.
+# `passes` is the ONLY source of truth for "done" — must match what
+# scripts/verify.sh actually checks. Never hand-edit `passes: true` without
+# the corresponding check passing; that's laundering, not progress.
+#
+# `fidelity` is a separate, human/LLM-judged field for "does this actually
+# look like the site it clones" — it is never a gate in verify.sh and never
+# implies `passes`. See CLAUDE.md "Judgement vs structure".
+#
+# NOTE: verify.sh does NOT write back to this file. `passes` / `checks` /
+# `last_verified` are updated by hand after running it, and must reflect what
+# it actually reported. If they look stale, re-run `scripts/verify.sh` and
+# trust its output over this file.
+
+version: 1
+generated_by: loop-engineering audit, 2026-08-08
+
+themes:
+  - id: material-draft
+    kind: theme
+    inspiration: "https://squidfunk.github.io/mkdocs-material/"
+    dir: material-draft
+    passes: true             # structural only — see fidelity, which is separate
+    last_verified: 2026-08-08
+    checks:
+      css_parses: true
+      required_tokens_defined: true
+      dark_mode_defined: true
+      preview_asset_present: false   # known gap: no preview.png yet (WARN, not a gate)
+      demo_site_responds: true
+    demo_url: https://material-theme-demo-rufuspollock.flowershow.me
+    landing_repro: _repro/material-landing.html
+    landing_demo_url: https://material-landing-v2-rufuspollock.flowershow.me
+    landing_demo_url_stale: https://material-landing-demo-rufuspollock.flowershow.me  # raw index.html stuck on an old CDN copy; see plan doc
+    fidelity: unreviewed     # unreviewed | reviewed-close | reviewed-off
+    fidelity_notes: >
+      Landing repro now matches the reference numerically on every element
+      profiled (hero h1 700 vs section h1 300+dimmed, 2-col feature grid,
+      44px text-coloured icons, 700 buttons, spotlight gap/mb 64). theme.css
+      for the non-landing pages has also been redone against measured values.
+      Remaining known delta: foreground parallax layers frame slightly
+      smaller than the reference. Still unreviewed by a human.
+    known_gaps:
+      - "no tabbed-content-block clone (feature doesn't exist in Flowershow)"
+      - "no prev/next page footer pagination (feature doesn't exist in Flowershow)"
+      - "no version-selector clone (out of scope, not core to the look)"
+    notes: >
+      Colors/type scale pulled from mkdocs-material's real MIT-licensed
+      SCSS source, not guessed. Class selectors (.is-current, aria-current)
+      checked against Flowershow component source, not assumed.
+
+  - id: codestorage-draft
+    kind: theme
+    inspiration: "https://code.storage/"
+    dir: codestorage-draft
+    passes: true             # structural only; the CSS itself is pre-method-change, see notes
+    last_verified: 2026-08-08
+    checks:
+      css_parses: true
+      required_tokens_defined: true
+      dark_mode_defined: true
+      preview_asset_present: false
+      demo_site_responds: true
+    demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
+    fidelity: unreviewed
+    known_gaps:
+      - "BerkeleyMono (reference site's actual font) is commercial; substituted IBM Plex Mono — see theme.css header comment"
+      - "reference site's nav is literal bracketed page copy, not a navbar component; approximated with a bracket-styled navbar instead"
+      - "decorative circle/diagram illustrations on the homepage are bespoke page content, not cloned"
+    notes: >
+      Font/color/spacing values read from the live site via computed-style
+      inspection (closed source, no repo to read from).
+
+docs:
+  - id: theme-authoring-tutorial
+    kind: doc
+    passes: false
+    target: "content/flowershow-app or themes repo README — TBD, see CLAUDE.md open decision"
+    notes: "To be written from the experience of building material-draft and codestorage-draft, not written first."
+
+  - id: ai-theme-cloning-skill
+    kind: skill
+    passes: false
+    target: "TBD — see CLAUDE.md open decision (skills repo vs this repo)"
+    notes: "AI-agent-facing instructions for 'clone the look of <url> into a Flowershow theme', derived from the same two builds."
+
+structural_findings:
+  # L4 (component-tree / placement) gaps found while building the themes
+  # above. These are core-code questions, not theme questions — logged
+  # here so they don't get lost, filed as GitHub issues once triaged.
+  - id: leaf-token-drift
+    summary: "themes/leaf/theme.css references --color-primary / --color-primary-subtle, which don't exist in the public-site token API (dashboard-only tokens). Silently broken on live sites."
+    status: filed
+    issue: flowershow/flowershow#1340
+  - id: navbar-height-token-unused
+    summary: ".site-navbar-inner hardcodes height:4rem and never reads --navbar-height, despite the token being documented as controlling it."
+    status: filed
+    issue: flowershow/flowershow#1341
+  - id: forced-inline-code-backticks
+    summary: "@tailwindcss/typography adds literal backtick pseudo-elements to inline code, with !important, so themes need !important to remove them — contradicting docs/theming.md."
+    status: filed
+    issue: flowershow/flowershow#1342
+  - id: blog-tsx-class-bugs
+    summary: "className=\"... .is-linked\" leading dot makes the hook untargetable; Tailwind utilities leak into semantic markup; several classes emitted but never styled."
+    status: filed
+    issue: flowershow/flowershow#1343
+  - id: raw-html-query-string-404
+    summary: "Raw .html pages 404 when the URL carries any query string; Markdown pages are fine. Breaks shared links carrying utm_/fbclid params."
+    status: filed
+    issue: flowershow/flowershow#1345
+  - id: no-content-tabs
+    summary: "No tabbed-content-block component exists; mkdocs-material-style themes can't clone it."
+    status: found-not-filed
+  - id: no-prev-next-pagination
+    summary: "No prev/next page footer pagination in page.tsx; several reference sites use it."
+    status: found-not-filed
+  - id: callouts-use-data-attributes
+    summary: "Callouts are styled via [data-callout] / [data-callout-type] attributes, not class names; and bare attribute selectors tie the base rules at 0,1,0 so themes must scope to .rendered-mdx. Needs to be stated in the class reference."
+    status: folded-into
+    issue: flowershow/flowershow#1338
