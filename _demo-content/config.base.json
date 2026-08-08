@@ -1,0 +1,23 @@
+{
+  "title": "Theme Demo",
+  "navTitle": "Theme Demo",
+  "nav": [
+    { "href": "/docs/kitchen-sink", "name": "Kitchen Sink" },
+    { "href": "/blog", "name": "Blog" },
+    {
+      "name": "More",
+      "links": [
+        { "href": "/docs/kitchen-sink", "name": "Kitchen Sink" },
+        { "href": "/blog", "name": "Blog" }
+      ]
+    }
+  ],
+  "social": [
+    { "label": "github", "href": "https://github.com/flowershow/themes" }
+  ],
+  "showSidebar": true,
+  "theme": {
+    "showModeSwitch": true,
+    "defaultMode": "light"
+  }
+}

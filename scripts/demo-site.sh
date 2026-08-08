@@ -99,11 +99,25 @@ if [ -n "$LANDING" ]; then
   echo "   landing: $LANDING -> index.html (raw HTML)"
 fi
 
-cat > "$BUILD_DIR/config.json" <<JSON
-{
-  "theme": "$THEME_URL"
-}
-JSON
+# Merge the theme URL into the shared base config rather than writing a bare
+# config. The base config matters: Flowershow only renders the navbar if a nav
+# title, nav links, CTA, social links, or search is configured — so without it
+# there is no navbar on the demo at all, and a theme's navbar styling is
+# invisible. Same reason the sidebar and mode switch are enabled there.
+rm -f "$BUILD_DIR/config.base.json"
+python3 - "$REPO_ROOT/_demo-content/config.base.json" "$THEME_URL" "$BUILD_DIR/config.json" <<'PYEOF'
+import json, sys
+base_path, theme_url, out_path = sys.argv[1], sys.argv[2], sys.argv[3]
+with open(base_path) as f:
+    cfg = json.load(f)
+theme = cfg.get("theme")
+if isinstance(theme, dict):
+    theme["theme"] = theme_url
+else:
+    cfg["theme"] = theme_url
+with open(out_path, "w") as f:
+    json.dump(cfg, f, indent=2)
+PYEOF
 
 echo ""
 fl "$BUILD_DIR" --name "$SITE_NAME" --yes
