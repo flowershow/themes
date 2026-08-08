@@ -182,6 +182,16 @@ kbd {
   font-size: 0.85em;
   padding: 0 0.25rem;
   border-radius: 2px;
+  font-weight: 400;
+}
+
+/* Flowershow renders content through @tailwindcss/typography's `prose`,
+   which decorates inline code with literal backtick pseudo-elements. The
+   reference has no backticks, and arguably no theme wants them — but they
+   are NOT in the DOM, so this can only be fixed in CSS. */
+.rendered-mdx code::before,
+.rendered-mdx code::after {
+  content: none;
 }
 
 .pre-container {
@@ -204,6 +214,13 @@ kbd {
 .site-navbar {
   background-color: var(--md-primary);
   box-shadow: none;
+}
+
+/* The reference header is 48px. Flowershow hardcodes `height: 4rem` on
+   .site-navbar-inner and does NOT read --navbar-height, so setting that
+   token alone has no effect — the class has to be overridden directly. */
+.site-navbar-inner {
+  height: 3rem;
 }
 
 .site-navbar-link,
