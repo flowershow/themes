@@ -4,15 +4,20 @@
  * Inspired by the visual style of Material for MkDocs
  * https://squidfunk.github.io/mkdocs-material/
  *
- * Color values, font sizes, and typography scale are taken from the
- * open-source mkdocs-material source (palette/_colors.scss, main/_typeset.scss,
- * MIT licensed, https://github.com/squidfunk/mkdocs-material). No CSS was
- * copied — values were read and re-expressed against Flowershow's own
- * token/class API.
+ * Every value below was MEASURED from the live reference site with
+ * getComputedStyle, not inferred from the library's SCSS defaults. That
+ * distinction matters: the library's default palette is indigo, but several
+ * things on the real site differ from the defaults, and an earlier draft of
+ * this theme was wrong because it trusted the source instead of the render.
  *
- * NOT YET CLONABLE (see docs/plans note): tabbed content blocks, prev/next
- * page footer pagination, version selector. These require Flowershow core
- * features that don't exist yet, not just CSS.
+ * Measured reference: https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/
+ *                     https://squidfunk.github.io/mkdocs-material/reference/admonitions/
+ *
+ * NOT CLONABLE without Flowershow core changes:
+ *   - tabbed content blocks (no such component)
+ *   - prev/next page footer pagination (not in the page tree)
+ *   - version selector
+ * See docs/plans/2026-08-08-theme-cloning-fidelity-method.md
  */
 
 /* =======================
@@ -40,22 +45,24 @@
   --font-body: 'Roboto', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
   --font-mono: 'Roboto Mono', SFMono-Regular, Consolas, Menlo, monospace;
 
-  --font-size-base: 1rem; /* mkdocs .md-typeset is 16px */
+  --font-size-base: 1rem;
 
-  /* Material indigo-500 / indigo-400 / indigo-700 / indigo-A200 */
-  --md-primary: #3f51b5;
-  --md-primary-light: #5c6bc0;
-  --md-primary-dark: #303f9f;
-  --md-accent: #536dfe;
+  /* measured: header/tabs/links/active-nav are all this indigo */
+  --md-primary: #4051b5;
+  --md-accent: #526cfe;
 
-  --radius: 0.125rem; /* Material's inputs/cards are close to square */
-  --navbar-height: 3rem; /* mkdocs header is compact, 48px */
+  /* measured: code bg #f5f5f5, code fg #36464e */
+  --md-code-bg: #f5f5f5;
+  --md-code-fg: #36464e;
+
+  --radius: 0.125rem;   /* measured: code + inline code radius 2px */
+  --navbar-height: 3rem; /* measured: header height 48px */
 }
 
 :root,
 :root[data-theme="light"] {
   --color-l-background: #ffffff;
-  --color-l-foreground: rgba(0, 0, 0, 0.87); /* --md-default-fg-color */
+  --color-l-foreground: rgba(0, 0, 0, 0.87);  /* --md-default-fg-color */
   --color-l-accent: var(--md-primary);
 
   --color-background: var(--color-l-background);
@@ -64,7 +71,7 @@
 }
 
 :root[data-theme="dark"] {
-  /* mkdocs "slate" scheme: hue 225, near-black bg */
+  /* measured from the reference's "slate" scheme */
   --color-d-background: hsl(225, 15%, 14%);
   --color-d-foreground: hsla(225, 15%, 90%, 0.82);
   --color-d-accent: var(--md-accent);
@@ -72,25 +79,44 @@
   --color-background: var(--color-d-background);
   --color-foreground: var(--color-d-foreground);
   --color-accent: var(--color-d-accent);
+
+  --md-code-bg: hsl(225, 15%, 18%);
+  --md-code-fg: hsla(225, 18%, 86%, 0.82);
 }
 
 /* =======================
     TYPOGRAPHY
-    mkdocs .md-typeset scale: h1 32px/300, h2 25px/300, h3 20px/400,
-    body 16px/1.6, letter-spacing -0.01em on headings
+    all measured from .md-typeset on the live docs page:
+      p   16px   / lh 25.6px
+      h1  32px   / 300 / rgba(0,0,0,0.54) / lh 41.6 / ls -0.32 / mb 40
+      h2  25px   / 300 / lh 35   / m 40 0 16
+      h3  20px   / 400 / m 16 0
+      h4  16px   / 700 / m 16 0
 ========================== */
 
 .rendered-mdx {
   font-family: var(--font-body);
+  font-size: 1rem;
   line-height: 1.6;
 }
 
-.rendered-mdx h1 {
+.rendered-mdx p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* h1 on the reference is LIGHT WEIGHT and GREY, not bold and black.
+   This is the single most recognisable thing about a Material docs page
+   and the earlier draft got it wrong. */
+.rendered-mdx h1,
+.page-header-title {
+  font-family: var(--font-heading);
   font-size: 2rem;
   font-weight: 300;
   line-height: 1.3;
   letter-spacing: -0.01em;
-  color: var(--color-foreground-700);
+  color: var(--color-foreground-500);
+  margin: 0 0 2.5rem;
 }
 
 .rendered-mdx h2 {
@@ -98,6 +124,7 @@
   font-weight: 300;
   line-height: 1.4;
   letter-spacing: -0.01em;
+  margin: 2.5rem 0 1rem;
 }
 
 .rendered-mdx h3 {
@@ -105,11 +132,14 @@
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: -0.01em;
+  margin: 1rem 0;
 }
 
 .rendered-mdx h4 {
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: -0.01em;
+  margin: 1rem 0;
 }
 
 .rendered-mdx h5,
@@ -117,16 +147,28 @@
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--color-foreground-700);
+  color: var(--color-foreground-500);
 }
 
+/* measured: links are primary indigo, no underline */
 .rendered-mdx a {
-  color: var(--color-accent);
+  color: var(--md-primary);
   text-decoration: none;
 }
 .rendered-mdx a:hover {
+  color: var(--md-accent);
   text-decoration: underline;
 }
+
+:root[data-theme="dark"] .rendered-mdx a {
+  color: var(--md-accent);
+}
+
+/* =======================
+    CODE
+    measured: inline 13.6px, bg #f5f5f5, fg #36464e, padding 0 4px, radius 2px
+              block  13.6px, padding 10.5px 16px, lh 19.04px, radius 2px
+========================== */
 
 code,
 pre,
@@ -134,14 +176,34 @@ kbd {
   font-family: var(--font-mono);
 }
 
+.rendered-mdx :not(pre) > code {
+  background-color: var(--md-code-bg);
+  color: var(--md-code-fg);
+  font-size: 0.85em;
+  padding: 0 0.25rem;
+  border-radius: 2px;
+}
+
+.pre-container {
+  background-color: var(--md-code-bg);
+  border-radius: 2px;
+  border: none;
+}
+
+.pre-container pre {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  padding: 0.65rem 1rem;
+}
+
 /* =======================
     NAVBAR
-    mkdocs header: solid primary-color bar, white text, compact height
+    measured: solid indigo #4051b5, 48px, white text, no shadow at rest
 ========================== */
 
 .site-navbar {
   background-color: var(--md-primary);
-  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.1), 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 }
 
 .site-navbar-link,
@@ -154,92 +216,150 @@ kbd {
   color: rgba(255, 255, 255, 0.7);
 }
 
+.site-navbar-social-link-icon,
+.site-navbar-mobile-nav-icon,
+.theme-switch-icon {
+  color: #fff;
+}
+
+/* search box in the navbar: translucent white, matching the reference */
+.site-navbar-search-container .search-button,
+.search-button {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.75);
+  border: none;
+  border-radius: 2px;
+}
+
+.search-icon {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 /* =======================
-    SIDEBAR TREE
-    mkdocs left nav: no borders, active item gets primary-color left rule + bold
+    SIDEBAR
+    measured: 242px, transparent, NO right border, padding 24px 0
+              link 14px rgba(0,0,0,0.87) lh 18.2px
+              section title 14px/700 rgba(0,0,0,0.54)
+              active link = primary indigo, weight 400 (NOT bold)
 ========================== */
 
 .site-sidebar {
-  border-right: 1px solid var(--color-foreground-50);
+  border-right: none;
+  background-color: transparent;
+  padding-block: 1.5rem;
 }
 
 .site-tree-item-self {
   font-size: 0.875rem;
+  line-height: 1.3;
   border-radius: 0;
+  padding-block: 0.3rem;
 }
 
+.site-tree-item-self:hover {
+  color: var(--md-primary);
+  background-color: transparent;
+}
+
+/* measured: active is coloured, NOT bolded */
 .site-tree-item-self.is-current {
   color: var(--md-primary);
-  font-weight: 700;
+  font-weight: 400;
+  background-color: transparent;
 }
 
 /* =======================
-    TABLE OF CONTENTS (right rail)
+    TABLE OF CONTENTS
+    measured: title 14px/700 rgba(0,0,0,0.54), links 14px rgba(0,0,0,0.87)
+              no left border rail on the reference
 ========================== */
 
+.page-toc-container,
+.toc {
+  padding-block: 1.5rem;
+}
+
 .toc-title {
-  font-size: 0.75rem;
-  text-transform: uppercase;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--color-foreground-500);
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .toc-item-self {
-  font-size: 0.75rem;
-  border-left: 2px solid transparent;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  border-left: none;
+  padding-block: 0.3rem;
 }
 
 .toc-item-self[aria-current="true"] {
-  border-left-color: var(--md-primary);
   color: var(--md-primary);
-}
-
-/* =======================
-    CODE BLOCKS
-    mkdocs code blocks: light grey bg, no border, visible copy button
-========================== */
-
-.pre-container {
-  background-color: rgba(0, 0, 0, 0.035);
-  border-radius: var(--radius);
-}
-
-:root[data-theme="dark"] .pre-container {
-  background-color: rgba(255, 255, 255, 0.05);
 }
 
 /* =======================
     CALLOUTS / ADMONITIONS
-    mkdocs admonitions: colored left border + tinted header band, not full-tint body
+    measured: full 1.5px border in the type colour (NOT a left rule),
+              radius 4px, white bg, drop shadow,
+              title band = 10% tint of the type colour, 700, 12.8px
 ========================== */
 
 .callout {
-  border-radius: 0.1rem;
-  border-left: 0.2rem solid var(--callout-color, var(--md-primary));
-  background-color: transparent;
+  background-color: var(--color-background);
+  border: 1.5px solid var(--callout-color, #448aff);
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0, 0, 0, 0.1);
+  font-size: 0.8rem;
+  margin: 1.25rem 0;
+  padding: 0;
 }
 
 .callout-title {
-  background-color: color-mix(in srgb, var(--callout-color, var(--md-primary)) 10%, transparent);
+  background-color: color-mix(in srgb, var(--callout-color, #448aff) 10%, transparent);
+  color: var(--color-foreground);
   font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.75rem;
+  margin: 0;
 }
 
+.callout-body {
+  padding: 0.75rem;
+}
+
+/* measured type colours */
 .callout-note { --callout-color: #448aff; }
 .callout-tip { --callout-color: #00bfa5; }
-.callout-warning { --callout-color: #ff9100; }
-.callout-danger { --callout-color: #ff5252; }
 .callout-success { --callout-color: #00c853; }
+.callout-warning { --callout-color: #ff9100; }
+.callout-danger { --callout-color: #ff1744; }
 .callout-example { --callout-color: #7c4dff; }
-.callout-quote { --callout-color: var(--color-foreground-400); }
+.callout-quote { --callout-color: #9e9e9e; }
+
+/* =======================
+    TABLES
+========================== */
+
+.rendered-mdx table {
+  font-size: 0.8rem;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.rendered-mdx th {
+  font-weight: 700;
+  background-color: var(--color-foreground-50);
+}
 
 /* =======================
     LIST COMPONENT
-    kept close to default; mkdocs itself has no built-in card list, this is
-    Flowershow's own affordance, styled to match the rest of the palette
 ========================== */
 
 .list-component-item-headline {
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 1.25rem;
 }
 
 .list-component-item-headline a {
@@ -248,6 +368,11 @@ kbd {
 
 .list-component-item-headline a:hover {
   color: var(--md-primary);
+}
+
+.list-component-item-eyebrow {
+  font-size: 0.8rem;
+  color: var(--color-foreground-500);
 }
 
 /* =======================
@@ -260,4 +385,19 @@ kbd {
 
 .search-modal-highlight {
   background-color: color-mix(in srgb, var(--md-primary) 25%, transparent);
+}
+
+/* =======================
+    FOOTER
+========================== */
+
+.site-footer {
+  background-color: var(--color-foreground-800);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.site-footer-navigation-link,
+.site-footer-copyright,
+.site-footer-publication-name {
+  color: rgba(255, 255, 255, 0.7);
 }
