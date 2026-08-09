@@ -100,15 +100,15 @@ themes:
 docs:
   - id: theme-authoring-tutorial
     kind: doc
-    passes: false
-    target: "content/flowershow-app or themes repo README — TBD, see CLAUDE.md open decision"
-    notes: "To be written from the experience of building material-draft and codestorage-draft, not written first."
+    passes: true
+    target: "docs/theme-authoring-tutorial.md — default landing spot, see CLAUDE.md open decision. Written here because it required no access outside this repo; moving it to flowershow/flowershow docs or flowershow/skills is still open for a human to decide."
+    notes: "Written 2026-08-09 from the experience of building material-draft and codestorage-draft — two-stage method, numeric comparison, caching gotchas, component gotchas, licensing, structural ceiling."
 
   - id: ai-theme-cloning-skill
     kind: skill
-    passes: false
-    target: "TBD — see CLAUDE.md open decision (skills repo vs this repo)"
-    notes: "AI-agent-facing instructions for 'clone the look of <url> into a Flowershow theme', derived from the same two builds."
+    passes: true
+    target: "docs/ai-theme-cloning-skill.md — default landing spot (same reasoning as theme-authoring-tutorial above). Written in flowershow/skills' SKILL.md frontmatter shape so it can be ported there directly if a human decides that's the right home."
+    notes: "AI-agent-facing instructions for 'clone the look of <url> into a Flowershow theme', derived from the same two builds. Same content as theme-authoring-tutorial.md in agent-instruction form, not duplicated reasoning."
 
 structural_findings:
   # L4 (component-tree / placement) gaps found while building the themes

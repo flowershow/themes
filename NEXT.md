@@ -32,11 +32,14 @@ Full method, measurements and gotchas:
 
 ## After that
 
-3. **Authoring tutorial + AI cloning skill** — next up this pass, now
-   unblocked (both drafts exist). Default call: park in this repo's `docs/`
-   rather than `flowershow/flowershow` or `flowershow/skills`, since it's
-   self-contained and doesn't require touching another repo unsupervised.
-   Human can move it later.
+3. **Authoring tutorial + AI cloning skill** — DONE this pass. Written to
+   `docs/theme-authoring-tutorial.md` (prose) and
+   `docs/ai-theme-cloning-skill.md` (agent-facing, `flowershow/skills`
+   SKILL.md frontmatter shape so it ports directly if that ends up being
+   the right home). Default call: parked in this repo's `docs/` rather than
+   `flowershow/flowershow` or `flowershow/skills`, since it required no
+   access outside this repo. Human can move it later — see "Open questions"
+   below, still open.
 
 4. **Structural / L4 decision.** Confirmed unclonable without core changes:
    content tabs (no component), prev/next page pagination, version selector.
