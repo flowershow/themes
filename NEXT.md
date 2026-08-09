@@ -11,8 +11,10 @@ Full method, measurements and gotchas:
 
 ## Now (in progress, unattended run 2026-08-09)
 
-1. **Human fidelity review of the Material theme.** Still open — genuinely
-   needs a human look, not self-graded here.
+1. **Human fidelity review of the Material theme.** LLM-judged pass done
+   this run (`fidelity: reviewed-close` in `docs/features.yaml`, screenshot
+   comparison via the Chrome tool) — but that's not a substitute for your
+   own look. Still open for a human.
    - Landing: https://material-landing-v2-rufuspollock.flowershow.me
    - Docs page: https://material-landing-demo-rufuspollock.flowershow.me/docs/kitchen-sink
    - Reference: https://squidfunk.github.io/mkdocs-material/
@@ -42,8 +44,9 @@ Full method, measurements and gotchas:
    honestly (no core-app changes made unsupervised). Slot/block ordering or
    full layout templating remain open for a human to pursue later.
 
-5. **Preview images** for both themes — `verify.sh` warns; required before
-   promoting out of draft.
+5. **Preview images** for both themes — DONE this pass, via
+   `screenshotit.app` (above-the-fold capture of each landing demo,
+   converted webp→png with `sips`). `verify.sh` no longer warns.
 
 6. **`material-landing-demo` retired.** DONE this pass — `fl delete`d it.
    The staleness was Flowershow's own site-serving cache (not jsDelivr;

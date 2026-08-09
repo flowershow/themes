@@ -26,20 +26,26 @@ themes:
       css_parses: true
       required_tokens_defined: true
       dark_mode_defined: true
-      preview_asset_present: false   # known gap: no preview.png yet (WARN, not a gate)
+      preview_asset_present: true
       demo_site_responds: true
     demo_url: https://material-theme-demo-rufuspollock.flowershow.me
     landing_repro: _repro/material-landing.html
     landing_demo_url: https://material-landing-v2-rufuspollock.flowershow.me
     landing_demo_url_retired: https://material-landing-demo-rufuspollock.flowershow.me  # DELETED 2026-08-09 via `fl delete` — index.html was stuck on an old CDN copy (Flowershow's own site-serving cache, not jsDelivr; `fl` confirmed uploaded files were current, so nothing in this repo could fix it), superseded by landing_demo_url above
-    fidelity: unreviewed     # unreviewed | reviewed-close | reviewed-off
+    fidelity: reviewed-close     # unreviewed | reviewed-close | reviewed-off — LLM-judged 2026-08-09, see notes; human can override
     fidelity_notes: >
-      Landing repro now matches the reference numerically on every element
+      Landing repro matches the reference numerically on every element
       profiled (hero h1 700 vs section h1 300+dimmed, 2-col feature grid,
       44px text-coloured icons, 700 buttons, spotlight gap/mb 64). theme.css
       for the non-landing pages has also been redone against measured values.
-      Remaining known delta: foreground parallax layers frame slightly
-      smaller than the reference. Still unreviewed by a human.
+      LLM-judged visual pass 2026-08-09: screenshotit capture of
+      material-landing-v2 side-by-side with the live squidfunk reference —
+      navbar (logo, nav links, search box, GitHub stats badge), hero
+      headline/subhead/button, and color/type read as effectively identical
+      at a glance. Remaining known delta: foreground parallax layers frame
+      slightly smaller than the reference (art, not typography — see
+      NEXT.md "not blockers"). This is an LLM screenshot comparison, not a
+      human sign-off — still open per NEXT.md item 1.
     known_gaps:
       - "no tabbed-content-block clone (feature doesn't exist in Flowershow)"
       - "no prev/next page footer pagination (feature doesn't exist in Flowershow)"
@@ -59,23 +65,34 @@ themes:
       css_parses: true
       required_tokens_defined: true
       dark_mode_defined: true
-      preview_asset_present: false   # known gap: no preview.png yet (WARN, not a gate)
+      preview_asset_present: true
       demo_site_responds: true
     demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
     landing_repro: _repro/codestorage-landing.html
     landing_demo_url: https://codestorage-landing-demo-rufuspollock.flowershow.me
-    fidelity: unreviewed
+    fidelity: reviewed-close   # LLM-judged 2026-08-09, see notes; human can override
     fidelity_notes: >
       theme.css re-measured 2026-08-09 against a second, independently-built
       static repro (Rufus's tmp/ HTML+Tailwind clone): paler background,
       lighter foreground, tighter line-height (1.6 not 2), semibold not bold
       headings with slight h1/h2 size steps, hover-only link underlines.
-      Landing repro ported and inlined self-contained. Still unreviewed by a
-      human.
+      Landing repro ported and inlined self-contained.
+      LLM-judged visual pass 2026-08-09: live-browsed the real code.storage
+      (screenshotit's headless capture times out on it — heavy WebGL/3D
+      load — so used the Chrome tool directly instead). Header chrome,
+      pill-badge callouts with connector line, hero copy, and monospace
+      typography all match closely. Confirmed the real hero is a genuine
+      3D-rendered metallic blob (not visible on first paint — it loads in
+      after a beat, which is what a first screenshot caught mid-load and
+      briefly looked like a totally different icon before a second look
+      showed the real render) — our flat-gradient placeholder is a
+      reasonable stand-in for that, not a new gap beyond what's already in
+      known_gaps below. This is an LLM screenshot comparison, not a human
+      sign-off.
     known_gaps:
       - "BerkeleyMono (reference site's actual font) is commercial; substituted IBM Plex Mono — see theme.css header comment"
       - "reference site's nav is literal bracketed page copy, not a navbar component; approximated with a bracket-styled navbar instead"
-      - "decorative circle/diagram illustrations on the homepage are bespoke page content, not cloned; landing repro uses a gradient placeholder for the metallic blob hero"
+      - "decorative circle/diagram illustrations on the homepage (including a swarm-of-blobs distributed-storage diagram further down the page) are bespoke page content, not cloned; landing repro uses a gradient placeholder for the metallic blob hero, real one is a genuine 3D render"
     notes: >
       Font/color/spacing values read from the live site via computed-style
       inspection (closed source, no repo to read from).
