@@ -9,37 +9,38 @@ Branch: `draft/new-themes`. Tracking issue:
 Full method, measurements and gotchas:
 [the plan doc](https://github.com/flowershow/flowershow/blob/main/docs/plans/2026-08-08-theme-cloning-fidelity-method.md).
 
-## Now
+## Now (in progress, unattended run 2026-08-09)
 
-1. **Human fidelity review of the Material theme.** `fidelity` is
-   `unreviewed` in `docs/features.yaml` and deliberately not self-graded.
-   Both surfaces match the reference numerically; whether they *read* as
-   Material is a human call.
+1. **Human fidelity review of the Material theme.** Still open — genuinely
+   needs a human look, not self-graded here.
    - Landing: https://material-landing-v2-rufuspollock.flowershow.me
    - Docs page: https://material-landing-demo-rufuspollock.flowershow.me/docs/kitchen-sink
    - Reference: https://squidfunk.github.io/mkdocs-material/
 
-2. **code.storage clone** — tracked in
-   [#1344](https://github.com/flowershow/flowershow/issues/1344). Rufus is
-   iterating separately and will bring files over. Drop them in
-   `codestorage-draft/` and `_repro/`, then:
-   ```sh
-   scripts/demo-site.sh codestorage-draft --landing _repro/<file>.html
-   ```
-   Simpler target than Material — near-monochrome, one font, no illustration
-   system.
+2. **code.storage clone** — DONE this pass. Ported Rufus's independent
+   static repro (`tmp/code-storage.html` + `tmp/theme.css` +
+   `tmp/example-text-page.html`) into `_repro/codestorage-landing.html`
+   (self-contained) and re-measured `codestorage-draft/theme.css` against
+   it (paler bg, lighter fg, line-height 1.6 not 2, semibold not bold
+   headings, hover-only link underlines). Both demo sites republished,
+   `verify.sh` passes.
+   - Landing: https://codestorage-landing-demo-rufuspollock.flowershow.me
+   - Docs page: https://codestorage-theme-demo-rufuspollock.flowershow.me/docs/kitchen-sink
+   - Reference: https://code.storage/
 
 ## After that
 
-3. **Authoring tutorial + AI cloning skill**, written from what actually
-   broke. The gotchas list in the plan doc is the spine; "compare
-   numerically, not by eye" is the core method. Open: does this live here, in
-   the main docs, or in `flowershow/skills`?
+3. **Authoring tutorial + AI cloning skill** — next up this pass, now
+   unblocked (both drafts exist). Default call: park in this repo's `docs/`
+   rather than `flowershow/flowershow` or `flowershow/skills`, since it's
+   self-contained and doesn't require touching another repo unsupervised.
+   Human can move it later.
 
 4. **Structural / L4 decision.** Confirmed unclonable without core changes:
    content tabs (no component), prev/next page pagination, version selector.
-   Unresolved: accept the fixed skeleton and document it honestly, add
-   slot/block ordering, or go to full layout templating.
+   Default call for this pass: accept the fixed skeleton and document it
+   honestly (no core-app changes made unsupervised). Slot/block ordering or
+   full layout templating remain open for a human to pursue later.
 
 5. **Preview images** for both themes — `verify.sh` warns; required before
    promoting out of draft.
@@ -47,7 +48,7 @@ Full method, measurements and gotchas:
 6. **Fix or retire `material-landing-demo`.** Its `index.html` is stuck on an
    old CDN copy. `fl` reports all files current and a freshly-named site
    (`material-landing-v2`) picked up new markup immediately, so the upload is
-   fine — it's purely cache.
+   fine — it's purely cache. Fix: `curl -X POST purge.jsdelivr.net`.
 
 ## Not blockers (previously mis-called)
 

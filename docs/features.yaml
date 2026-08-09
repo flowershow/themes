@@ -53,20 +53,29 @@ themes:
     kind: theme
     inspiration: "https://code.storage/"
     dir: codestorage-draft
-    passes: true             # structural only; the CSS itself is pre-method-change, see notes
-    last_verified: 2026-08-08
+    passes: true             # structural only — see fidelity, which is separate
+    last_verified: 2026-08-09
     checks:
       css_parses: true
       required_tokens_defined: true
       dark_mode_defined: true
-      preview_asset_present: false
+      preview_asset_present: false   # known gap: no preview.png yet (WARN, not a gate)
       demo_site_responds: true
     demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
+    landing_repro: _repro/codestorage-landing.html
+    landing_demo_url: https://codestorage-landing-demo-rufuspollock.flowershow.me
     fidelity: unreviewed
+    fidelity_notes: >
+      theme.css re-measured 2026-08-09 against a second, independently-built
+      static repro (Rufus's tmp/ HTML+Tailwind clone): paler background,
+      lighter foreground, tighter line-height (1.6 not 2), semibold not bold
+      headings with slight h1/h2 size steps, hover-only link underlines.
+      Landing repro ported and inlined self-contained. Still unreviewed by a
+      human.
     known_gaps:
       - "BerkeleyMono (reference site's actual font) is commercial; substituted IBM Plex Mono — see theme.css header comment"
       - "reference site's nav is literal bracketed page copy, not a navbar component; approximated with a bracket-styled navbar instead"
-      - "decorative circle/diagram illustrations on the homepage are bespoke page content, not cloned"
+      - "decorative circle/diagram illustrations on the homepage are bespoke page content, not cloned; landing repro uses a gradient placeholder for the metallic blob hero"
     notes: >
       Font/color/spacing values read from the live site via computed-style
       inspection (closed source, no repo to read from).
