@@ -41,9 +41,10 @@ Full method, measurements and gotchas:
    - Landing: https://codestorage-theme-demo-rufuspollock.flowershow.me/landing
    - Docs page: https://codestorage-theme-demo-rufuspollock.flowershow.me/docs/kitchen-sink
    - Reference: https://code.storage/
-   - Not yet re-run: a fresh human/LLM fidelity pass against this revised
-     version — the `reviewed-close` grade in `docs/features.yaml` predates
-     these fixes.
+   - Fidelity reverted to `unreviewed` in `docs/features.yaml` (was
+     `reviewed-close`, but that pass predated these fixes and the
+     landing-page rebuild — carrying it forward would be stale). Needs a
+     fresh pass, human or LLM.
 
 ## After that
 
