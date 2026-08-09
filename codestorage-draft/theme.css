@@ -87,6 +87,35 @@
   letter-spacing: 0;
 }
 
+/* @tailwindcss/typography sets its own explicit font-size on these
+   elements (e.g. p at 1.125rem/18px) — an explicit rule on the element
+   itself, which wins over the inherited size from .rendered-mdx above.
+   Setting font-size on a parent does not override a child's own explicit
+   rule. Found 2026-08-09 after the deployed demo measured 18px body text
+   instead of the intended 13px.
+   !important is deliberate, not sloppy: Tailwind's selector
+   (`.prose :where(p):not(:where([class~="not-prose"] *))`) resolves to
+   the same specificity as `.rendered-mdx p` once :where()'s zero-spec
+   rule is applied throughout, so this is a tie the cascade layer order
+   decides, not specificity — same underlying issue as the inline-code
+   backtick gotcha in the authoring tutorial, where docs/theming.md's
+   claim that themes never need !important already didn't hold. */
+.rendered-mdx :where(p, li, blockquote, dl, dt, dd) {
+  font-size: var(--font-size-base) !important;
+  line-height: 1.6 !important;
+}
+
+.rendered-mdx table,
+.rendered-mdx th,
+.rendered-mdx td {
+  font-size: 0.875rem !important; /* 14px, matches the reference's pricing-table size */
+}
+
+.rendered-mdx pre {
+  font-size: 0.875rem !important; /* 14px, matches the reference's code-block size */
+  line-height: 1.5 !important;
+}
+
 .rendered-mdx h1,
 .rendered-mdx h2,
 .rendered-mdx h3,
