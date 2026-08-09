@@ -41,11 +41,13 @@ Full method, measurements and gotchas:
    access outside this repo. Human can move it later — see "Open questions"
    below, still open.
 
-4. **Structural / L4 decision.** Confirmed unclonable without core changes:
-   content tabs (no component), prev/next page pagination, version selector.
-   Default call for this pass: accept the fixed skeleton and document it
-   honestly (no core-app changes made unsupervised). Slot/block ordering or
-   full layout templating remain open for a human to pursue later.
+4. **Structural / L4 decision.** DONE this pass — documented in
+   [docs/l4-structural-decision.md](docs/l4-structural-decision.md).
+   Default call: accept the fixed skeleton, document gaps honestly, no
+   core-app changes made unsupervised (that's a `flowershow/flowershow`
+   architecture decision, not this repo's to make speculatively).
+   Slot/block ordering or full layout templating remain open for a human
+   to pursue later — the doc lays out what evidence would justify each.
 
 5. **Preview images** for both themes — DONE this pass, via
    `screenshotit.app` (above-the-fold capture of each landing demo,
