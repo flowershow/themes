@@ -92,7 +92,8 @@
 .rendered-mdx h3,
 .rendered-mdx h4,
 .rendered-mdx h5,
-.rendered-mdx h6 {
+.rendered-mdx h6,
+.page-header-title {
   font-family: var(--font-heading);
   font-weight: 600; /* re-measured 2026-08-09; was 700 (bold), reference is semibold */
   font-size: var(--font-size-base);
@@ -101,14 +102,27 @@
 }
 
 /* re-measured 2026-08-09: reference steps h1/h2 slightly rather than holding
-   every level at the body size */
-.rendered-mdx h1 { font-size: 1.0625rem; } /* ~17px */
+   every level at the body size. .page-header-title is the page-title banner
+   Flowershow renders above markdown content (e.g. a site's index page) —
+   added 2026-08-09, it was previously unstyled here and fell back to the
+   default theme's 48px heading, breaking the whole tight monospace scale on
+   any page that uses it. */
+.rendered-mdx h1,
+.page-header-title { font-size: 1.0625rem; } /* ~17px */
 .rendered-mdx h2 { font-size: 1rem; }      /* ~16px */
 
 /* literal markdown heading markers, mimicking the reference site's raw "#" */
-.rendered-mdx h1::before { content: "# "; color: var(--color-foreground-400); }
+.rendered-mdx h1::before,
+.page-header-title::before { content: "# "; color: var(--color-foreground-400); }
 .rendered-mdx h2::before { content: "## "; color: var(--color-foreground-400); }
 .rendered-mdx h3::before { content: "### "; color: var(--color-foreground-400); }
+
+/* same component family as .page-header-title above */
+.page-header-description {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--color-foreground-400);
+}
 
 /* re-measured 2026-08-09: reference underlines on hover only (border-bottom
    on transparent), not permanently underlined */
