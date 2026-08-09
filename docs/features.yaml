@@ -31,7 +31,7 @@ themes:
     demo_url: https://material-theme-demo-rufuspollock.flowershow.me
     landing_repro: _repro/material-landing.html
     landing_demo_url: https://material-landing-v2-rufuspollock.flowershow.me
-    landing_demo_url_stale: https://material-landing-demo-rufuspollock.flowershow.me  # raw index.html stuck on an old CDN copy; see plan doc
+    landing_demo_url_retired: https://material-landing-demo-rufuspollock.flowershow.me  # DELETED 2026-08-09 via `fl delete` — index.html was stuck on an old CDN copy (Flowershow's own site-serving cache, not jsDelivr; `fl` confirmed uploaded files were current, so nothing in this repo could fix it), superseded by landing_demo_url above
     fidelity: unreviewed     # unreviewed | reviewed-close | reviewed-off
     fidelity_notes: >
       Landing repro now matches the reference numerically on every element

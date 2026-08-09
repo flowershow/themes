@@ -45,10 +45,11 @@ Full method, measurements and gotchas:
 5. **Preview images** for both themes — `verify.sh` warns; required before
    promoting out of draft.
 
-6. **Fix or retire `material-landing-demo`.** Its `index.html` is stuck on an
-   old CDN copy. `fl` reports all files current and a freshly-named site
-   (`material-landing-v2`) picked up new markup immediately, so the upload is
-   fine — it's purely cache. Fix: `curl -X POST purge.jsdelivr.net`.
+6. **`material-landing-demo` retired.** DONE this pass — `fl delete`d it.
+   The staleness was Flowershow's own site-serving cache (not jsDelivr;
+   `fl` confirmed uploaded files were current), so no fix was available from
+   this repo. Superseded by `material-landing-v2`, which is current. See
+   `docs/features.yaml` `landing_demo_url_retired`.
 
 ## Not blockers (previously mis-called)
 
