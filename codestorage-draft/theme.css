@@ -52,9 +52,12 @@
 
 :root,
 :root[data-theme="light"] {
-  --color-l-background: #f5f5f4;
-  --color-l-foreground: #17171a;
-  --color-l-accent: #17171a; /* near-monochrome; accent = foreground, no color pop */
+  /* re-measured 2026-08-09 against a fresh static repro (computed-style +
+     screenshot pass) — paler background and lighter foreground than the
+     original estimate below */
+  --color-l-background: oklch(0.99 0 0);   /* ~#fcfcfc */
+  --color-l-foreground: oklch(0.15 0 0);   /* ~#262626 */
+  --color-l-accent: oklch(0.15 0 0); /* near-monochrome; accent = foreground, no color pop */
 
   --color-background: var(--color-l-background);
   --color-foreground: var(--color-l-foreground);
@@ -80,7 +83,7 @@
 .rendered-mdx {
   font-family: var(--font-body);
   font-size: var(--font-size-base);
-  line-height: 2;
+  line-height: 1.6; /* re-measured 2026-08-09; was 2, reference is tighter */
   letter-spacing: 0;
 }
 
@@ -91,25 +94,33 @@
 .rendered-mdx h5,
 .rendered-mdx h6 {
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 600; /* re-measured 2026-08-09; was 700 (bold), reference is semibold */
   font-size: var(--font-size-base);
   text-transform: none;
   letter-spacing: 0;
 }
+
+/* re-measured 2026-08-09: reference steps h1/h2 slightly rather than holding
+   every level at the body size */
+.rendered-mdx h1 { font-size: 1.0625rem; } /* ~17px */
+.rendered-mdx h2 { font-size: 1rem; }      /* ~16px */
 
 /* literal markdown heading markers, mimicking the reference site's raw "#" */
 .rendered-mdx h1::before { content: "# "; color: var(--color-foreground-400); }
 .rendered-mdx h2::before { content: "## "; color: var(--color-foreground-400); }
 .rendered-mdx h3::before { content: "### "; color: var(--color-foreground-400); }
 
+/* re-measured 2026-08-09: reference underlines on hover only (border-bottom
+   on transparent), not permanently underlined */
 .rendered-mdx a {
   color: var(--color-foreground);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
 }
 
 .rendered-mdx a:hover {
-  color: var(--color-foreground-500);
+  border-bottom-color: var(--color-foreground);
 }
 
 code,
