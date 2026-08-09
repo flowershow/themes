@@ -86,3 +86,4 @@ Full method, measurements and gotchas:
 | [#1343](https://github.com/flowershow/flowershow/issues/1343) | `.is-linked` dot bug, Tailwind leak, unstyled classes |
 | [#1344](https://github.com/flowershow/flowershow/issues/1344) | code.storage theme |
 | [#1345](https://github.com/flowershow/flowershow/issues/1345) | raw `.html` pages 404 with any query string |
+| [#1347](https://github.com/flowershow/flowershow/issues/1347) | `fl`-published raw-HTML page can serve stale content while `fl` reports all files current |
