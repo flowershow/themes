@@ -68,9 +68,10 @@ themes:
       preview_asset_present: true
       demo_site_responds: true
     demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
-    landing_repro: _repro/codestorage-landing.html
-    landing_demo_url: https://codestorage-landing-demo-rufuspollock.flowershow.me
-    fidelity: reviewed-close   # LLM-judged 2026-08-09, see notes; human can override
+    landing_repro: _repro/codestorage-landing.html   # stage-1 static reference only (unpublished) — see landing_page for the shipped version
+    landing_page: codestorage-draft/demo-landing.md  # stage-2: layout:plain markdown + codestorage-draft/demo-landing.css, published alongside the rest of the site
+    landing_demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me/landing   # 2026-08-09: moved from a separate codestorage-landing-demo site (deleted) into a /landing page on the main demo site, per Rufus — one site, not two. Uses `layout: plain` (nav/footer kept, prose typography off), see docs/theme-authoring-tutorial.md
+    fidelity: unreviewed   # was reviewed-close (LLM-judged 2026-08-09) but that pass predates two real bugs Rufus then found (page-header + body font-size, see notes) and the landing-page architecture change — needs a fresh pass, not carried forward as still-valid
     fidelity_notes: >
       theme.css re-measured 2026-08-09 against a second, independently-built
       static repro (Rufus's tmp/ HTML+Tailwind clone): paler background,
@@ -89,6 +90,36 @@ themes:
       reasonable stand-in for that, not a new gap beyond what's already in
       known_gaps below. This is an LLM screenshot comparison, not a human
       sign-off.
+
+      2026-08-09 correction: Rufus reported the theme-applied demo (not the
+      landing repro, which was already byte-verified against source) looked
+      off vs. his landing page — font sizes wrong. Root cause:
+      `.page-header-title`/`.page-header-description` (the page-title
+      banner Flowershow renders above markdown content, separate from an
+      in-markdown h1) were never styled here, so every real page (kitchen
+      sink, blog index) fell back to the default theme's 48px heading —
+      completely breaking the tight monospace scale outside the raw-HTML
+      landing repro. material-draft already handled this class;
+      codestorage-draft didn't. Fixed and republished; verified live via
+      getComputedStyle (17px/600, matching the rest of the scale). This is
+      exactly the kind of gap the "LLM-judged" pass above missed — it
+      compared the landing page (correct) and didn't check every themed
+      page against the component list.
+
+      Also found and fixed same day: `.rendered-mdx` set font-size on the
+      container but not on p/li/blockquote/table/pre individually, so
+      @tailwindcss/typography's own explicit per-element font-size (18px on
+      p) won regardless — fixed with :where(...) grouping + !important,
+      same underlying cascade-layer-tie issue as the backtick gotcha.
+
+      2026-08-09 architecture change: the landing page moved from a
+      separate raw-HTML site (codestorage-landing-demo, deleted) to a
+      `layout: plain` markdown page (landing_page above) published at
+      /landing on the main demo site — one site, standard nav/footer kept,
+      Tailwind typography off so hand-authored HTML+CSS has a blank
+      canvas. Plain HTML (`class=`, not JSX `className=`) works fine here;
+      an early draft over-assumed JSX was required from one example file
+      that happened to use it. See docs/theme-authoring-tutorial.md.
     known_gaps:
       - "BerkeleyMono (reference site's actual font) is commercial; substituted IBM Plex Mono — see theme.css header comment"
       - "reference site's nav is literal bracketed page copy, not a navbar component; approximated with a bracket-styled navbar instead"

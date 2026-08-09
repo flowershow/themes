@@ -19,16 +19,31 @@ Full method, measurements and gotchas:
    - Docs page: https://material-landing-demo-rufuspollock.flowershow.me/docs/kitchen-sink
    - Reference: https://squidfunk.github.io/mkdocs-material/
 
-2. **code.storage clone** — DONE this pass. Ported Rufus's independent
-   static repro (`tmp/code-storage.html` + `tmp/theme.css` +
-   `tmp/example-text-page.html`) into `_repro/codestorage-landing.html`
-   (self-contained) and re-measured `codestorage-draft/theme.css` against
-   it (paler bg, lighter fg, line-height 1.6 not 2, semibold not bold
-   headings, hover-only link underlines). Both demo sites republished,
-   `verify.sh` passes.
-   - Landing: https://codestorage-landing-demo-rufuspollock.flowershow.me
+2. **code.storage clone** — DONE this pass, revised twice after Rufus's
+   review caught real gaps (see `docs/features.yaml` `fidelity_notes` for
+   full history):
+   - Ported Rufus's independent static repro (`tmp/code-storage.html` +
+     `tmp/theme.css` + `tmp/example-text-page.html`) into
+     `_repro/codestorage-landing.html` (stage-1 reference, unpublished) and
+     re-measured `codestorage-draft/theme.css` against it.
+   - Fixed two real bugs Rufus caught by checking the live site:
+     `.page-header-title`/`-description` were unstyled (fell back to the
+     default theme's 48px heading on every real page), and `.rendered-mdx`
+     never set font-size on `p`/`li`/`table`/`pre` individually so
+     Tailwind typography's own explicit sizing won (18px body instead of
+     13px). Both needed `!important` — a cascade-layer tie, not a
+     specificity loss, same class of issue as the backtick gotcha.
+   - Moved the *shipped* landing page from a separate raw-HTML site to
+     `codestorage-draft/demo-landing.md` (`layout: plain` — real
+     nav/footer, prose off) + `codestorage-draft/demo-landing.css`,
+     published at `/landing` on the main demo site. One site, not two, per
+     Rufus. See `docs/theme-authoring-tutorial.md`'s new section on this.
+   - Landing: https://codestorage-theme-demo-rufuspollock.flowershow.me/landing
    - Docs page: https://codestorage-theme-demo-rufuspollock.flowershow.me/docs/kitchen-sink
    - Reference: https://code.storage/
+   - Not yet re-run: a fresh human/LLM fidelity pass against this revised
+     version — the `reviewed-close` grade in `docs/features.yaml` predates
+     these fixes.
 
 ## After that
 

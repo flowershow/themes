@@ -99,29 +99,35 @@
    rule is applied throughout, so this is a tie the cascade layer order
    decides, not specificity — same underlying issue as the inline-code
    backtick gotcha in the authoring tutorial, where docs/theming.md's
-   claim that themes never need !important already didn't hold. */
-.rendered-mdx :where(p, li, blockquote, dl, dt, dd) {
+   claim that themes never need !important already didn't hold.
+   :not(.is-plain) throughout this block, matching Flowershow's own
+   default-theme.css convention (`.rendered-mdx:not(.is-plain) { @apply
+   prose ... }`): a `layout: plain` page (used for hand-built Tailwind
+   landing pages — see docs/theme-authoring-tutorial.md) gets no prose
+   styling from Flowershow either, and shouldn't have these !important
+   rules fight custom sizing in bespoke landing markup. */
+.rendered-mdx:not(.is-plain) :where(p, li, blockquote, dl, dt, dd) {
   font-size: var(--font-size-base) !important;
   line-height: 1.6 !important;
 }
 
-.rendered-mdx table,
-.rendered-mdx th,
-.rendered-mdx td {
+.rendered-mdx:not(.is-plain) table,
+.rendered-mdx:not(.is-plain) th,
+.rendered-mdx:not(.is-plain) td {
   font-size: 0.875rem !important; /* 14px, matches the reference's pricing-table size */
 }
 
-.rendered-mdx pre {
+.rendered-mdx:not(.is-plain) pre {
   font-size: 0.875rem !important; /* 14px, matches the reference's code-block size */
   line-height: 1.5 !important;
 }
 
-.rendered-mdx h1,
-.rendered-mdx h2,
-.rendered-mdx h3,
-.rendered-mdx h4,
-.rendered-mdx h5,
-.rendered-mdx h6,
+.rendered-mdx:not(.is-plain) h1,
+.rendered-mdx:not(.is-plain) h2,
+.rendered-mdx:not(.is-plain) h3,
+.rendered-mdx:not(.is-plain) h4,
+.rendered-mdx:not(.is-plain) h5,
+.rendered-mdx:not(.is-plain) h6,
 .page-header-title {
   font-family: var(--font-heading);
   font-weight: 600; /* re-measured 2026-08-09; was 700 (bold), reference is semibold */
@@ -136,15 +142,15 @@
    added 2026-08-09, it was previously unstyled here and fell back to the
    default theme's 48px heading, breaking the whole tight monospace scale on
    any page that uses it. */
-.rendered-mdx h1,
+.rendered-mdx:not(.is-plain) h1,
 .page-header-title { font-size: 1.0625rem; } /* ~17px */
-.rendered-mdx h2 { font-size: 1rem; }      /* ~16px */
+.rendered-mdx:not(.is-plain) h2 { font-size: 1rem; }      /* ~16px */
 
 /* literal markdown heading markers, mimicking the reference site's raw "#" */
-.rendered-mdx h1::before,
+.rendered-mdx:not(.is-plain) h1::before,
 .page-header-title::before { content: "# "; color: var(--color-foreground-400); }
-.rendered-mdx h2::before { content: "## "; color: var(--color-foreground-400); }
-.rendered-mdx h3::before { content: "### "; color: var(--color-foreground-400); }
+.rendered-mdx:not(.is-plain) h2::before { content: "## "; color: var(--color-foreground-400); }
+.rendered-mdx:not(.is-plain) h3::before { content: "### "; color: var(--color-foreground-400); }
 
 /* same component family as .page-header-title above */
 .page-header-description {
@@ -155,14 +161,14 @@
 
 /* re-measured 2026-08-09: reference underlines on hover only (border-bottom
    on transparent), not permanently underlined */
-.rendered-mdx a {
+.rendered-mdx:not(.is-plain) a {
   color: var(--color-foreground);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.15s;
 }
 
-.rendered-mdx a:hover {
+.rendered-mdx:not(.is-plain) a:hover {
   border-bottom-color: var(--color-foreground);
 }
 

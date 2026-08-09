@@ -69,6 +69,32 @@ relationship" reads as correct at a glance but isn't. Instead:
    from its actual source (SCSS variables, tokens file), not from memory
    of what that kind of site "usually" does.
 
+## Publish the shipped landing page as `layout: plain` markdown, not raw HTML
+
+The stage-1 standalone HTML repro is throwaway, for fidelity comparison
+only. For the version you actually publish: use a real Flowershow page
+with `layout: plain` frontmatter, not a second raw-HTML site.
+
+- `layout: plain` still gets Flowershow's standard nav/footer (rendered by
+  the site's layout, not the page) but turns off `@tailwindcss/
+  typography`'s prose styling for that page, leaving a blank canvas.
+- Plain HTML works — `class="..."`, not JSX `className="..."`. Don't
+  assume JSX is required.
+- Page-specific CSS goes in a `custom.css` at the published content root
+  (Flowershow looks for that exact filename and injects it site-wide) —
+  scope every rule under one unique wrapper class so it can't leak onto
+  the site's other pages.
+- Publish it as one page (e.g. `/landing`) on the theme's existing demo
+  site, not a second site.
+- Keep nested HTML consistently indented with no blank lines between
+  indented elements — a blank line can make the markdown parser end the
+  HTML block early.
+
+If the target's chrome is too different from Flowershow's own nav/footer
+to reuse (or you're still in stage-1 comparison), raw HTML with no
+Flowershow chrome at all is still the right call — that's a per-target
+judgement, not a default.
+
 ## Two caching layers that will make correct CSS look broken
 
 Check these before concluding a change "didn't apply":

@@ -1,0 +1,414 @@
+/*
+ * Page-specific layout for codestorage-draft's landing page
+ * (codestorage-draft/demo-landing.md, published at /landing via
+ * `layout: plain`). Published as this demo site's custom.css — see
+ * scripts/demo-site.sh's --landing-page convention.
+ *
+ * Scoped entirely under .cs-landing so it can't leak onto the kitchen-sink
+ * or blog pages of the same demo site. Values are the same ones ported
+ * from tmp/theme.css + tmp/code-storage.html (2026-08-09), just rescoped
+ * from a standalone page's globals into one wrapper class, and with
+ * `--bg`/`--fg`/etc. renamed under a `--cs-` prefix so they can't collide
+ * with the theme's own `--color-*` tokens.
+ */
+
+.cs-landing {
+  --cs-bg: oklch(0.99 0 0);              /* ~#fcfcfc pale background */
+  --cs-surface: oklch(0.97 0 0);         /* ~#f7f7f7 subtle surface */
+  --cs-fg: oklch(0.15 0 0);              /* ~#262626 body text */
+  --cs-muted: oklch(0.45 0 0);           /* ~#737373 secondary text */
+  --cs-border: oklch(0.88 0 0);          /* ~#e0e0e0 light borders */
+  --cs-accent: oklch(0.15 0 0);          /* ~#262626 black for links */
+  --cs-code-bg: oklch(0.97 0 0);         /* light code block background */
+  --cs-highlight: oklch(0.90 0.25 100);  /* ~#ffff00 yellow selection */
+
+  --cs-space-xs: 0.5rem;
+  --cs-space-sm: 0.75rem;
+  --cs-space-md: 1rem;
+  --cs-space-lg: 1.5rem;
+  --cs-space-xl: 2rem;
+  --cs-space-2xl: 3rem;
+  --cs-space-3xl: 4rem;
+
+  --cs-max-width: 70ch;
+
+  background: var(--cs-bg);
+  color: var(--cs-fg);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cs-landing * {
+  box-sizing: border-box;
+}
+
+.cs-landing h1,
+.cs-landing h2,
+.cs-landing h3 {
+  font-family: var(--font-heading);
+  letter-spacing: 0;
+}
+
+.cs-landing h1 {
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 600;
+  margin: 0 0 var(--cs-space-lg);
+}
+
+.cs-landing h2 {
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 600;
+  margin: var(--cs-space-2xl) 0 var(--cs-space-md);
+}
+
+.cs-landing p {
+  margin: 0 0 var(--cs-space-md);
+  color: var(--cs-muted);
+  max-width: var(--cs-max-width);
+}
+
+.cs-landing a {
+  color: var(--cs-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.cs-landing a:hover {
+  border-bottom-color: var(--cs-accent);
+}
+
+.cs-landing pre {
+  background: var(--cs-code-bg);
+  border: 1px solid var(--cs-border);
+  padding: var(--cs-space-md);
+  overflow-x: auto;
+  margin: 0 0 var(--cs-space-lg);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.cs-landing code {
+  font-family: var(--font-body);
+  background: var(--cs-code-bg);
+  padding: 0.125rem 0.25rem;
+  border-radius: 2px;
+}
+
+.cs-landing pre code {
+  padding: 0;
+  background: transparent;
+}
+
+.cs-landing ul {
+  list-style: none;
+  margin: 0 0 var(--cs-space-lg);
+  padding: 0;
+}
+
+.cs-landing li {
+  position: relative;
+  padding-left: var(--cs-space-lg);
+  margin-bottom: var(--cs-space-sm);
+  color: var(--cs-muted);
+}
+
+.cs-landing li::before {
+  content: "\2014";
+  position: absolute;
+  left: 0;
+  color: var(--cs-fg);
+}
+
+.cs-landing table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 14px;
+  margin: 0 0 var(--cs-space-lg);
+  max-width: var(--cs-max-width);
+}
+
+.cs-landing th,
+.cs-landing td {
+  text-align: left;
+  padding: var(--cs-space-sm) var(--cs-space-md);
+  border-bottom: 1px solid var(--cs-border);
+}
+
+.cs-landing th {
+  color: var(--cs-fg);
+  font-weight: 600;
+}
+
+.cs-landing td {
+  color: var(--cs-muted);
+}
+
+.cs-landing ::selection {
+  background: var(--cs-highlight);
+  color: var(--cs-bg);
+}
+
+.cs-landing .cs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--cs-space-2xl) var(--cs-space-lg);
+}
+
+.cs-landing .cs-section {
+  padding: 0 var(--cs-space-xl);
+  margin-bottom: var(--cs-space-3xl);
+  max-width: 800px;
+}
+
+.cs-landing .cs-section h2 {
+  font-size: 16px;
+  margin-bottom: var(--cs-space-md);
+}
+
+.cs-landing .cs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--cs-space-lg) var(--cs-space-xl);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.cs-landing .cs-header-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-landing .cs-header-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-align: right;
+}
+
+.cs-landing .cs-cursor {
+  display: inline-block;
+  width: 0.7em;
+  height: 1em;
+  background: var(--cs-fg);
+  vertical-align: -0.1em;
+  margin-left: 0.25em;
+}
+
+.cs-landing .cs-logo-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--cs-space-xl);
+}
+
+.cs-landing .cs-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--cs-space-3xl);
+  align-items: center;
+  padding: 0 var(--cs-space-xl);
+  margin-bottom: var(--cs-space-3xl);
+  min-height: 70vh;
+}
+
+.cs-landing .cs-hero-text {
+  max-width: 600px;
+}
+
+.cs-landing .cs-hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cs-landing .cs-blob-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 1;
+}
+
+.cs-landing .cs-blob-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,
+    oklch(0.85 0.02 220) 0%,
+    oklch(0.92 0.01 240) 50%,
+    oklch(0.88 0.015 200) 100%);
+  border-radius: 42% 58% 55% 45% / 48% 38% 62% 52%;
+  box-shadow:
+    inset -20px -20px 60px rgba(255,255,255,0.8),
+    inset 20px 20px 60px rgba(0,0,0,0.1),
+    0 20px 60px rgba(0,0,0,0.15);
+}
+
+.cs-landing .cs-pill-badge {
+  position: absolute;
+  background: var(--cs-fg);
+  color: var(--cs-bg);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.cs-landing .cs-pill-badge-1 {
+  top: 10%;
+  right: -5%;
+}
+
+.cs-landing .cs-pill-badge-2 {
+  bottom: 25%;
+  left: -10%;
+}
+
+.cs-landing .cs-connection-line {
+  position: absolute;
+  top: 40%;
+  right: 15%;
+  width: 2px;
+  height: 120px;
+  background: var(--cs-fg);
+  opacity: 0.3;
+}
+
+.cs-landing .cs-connection-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cs-fg);
+  border: 2px solid var(--cs-bg);
+}
+
+.cs-landing .cs-dot-top {
+  top: -4px;
+  left: -3px;
+}
+
+.cs-landing .cs-dot-bottom {
+  bottom: -4px;
+  left: -3px;
+}
+
+.cs-landing .cs-hero h1 {
+  font-size: 17px;
+  margin-bottom: var(--cs-space-lg);
+  max-width: 38ch;
+  font-weight: 600;
+}
+
+.cs-landing .cs-hero h1::before {
+  content: "# ";
+  color: var(--cs-muted);
+}
+
+.cs-landing .cs-code-demo {
+  background: var(--cs-code-bg);
+  border: 1px solid var(--cs-border);
+  padding: var(--cs-space-lg);
+  margin: var(--cs-space-2xl) 0;
+  max-width: 500px;
+  font-size: 13px;
+}
+
+.cs-landing .cs-code-demo code {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.cs-landing .cs-hljs-keyword {
+  color: oklch(0.50 0.20 25);
+  font-weight: 600;
+}
+
+.cs-landing .cs-hljs-string,
+.cs-landing .cs-hljs-title {
+  color: var(--cs-fg);
+}
+
+.cs-landing .cs-hljs-comment {
+  color: var(--cs-muted);
+}
+
+.cs-landing .cs-pricing-grid {
+  display: grid;
+  gap: var(--cs-space-2xl);
+  margin-bottom: var(--cs-space-2xl);
+}
+
+.cs-landing .cs-pricing-table-wrapper h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: var(--cs-space-md);
+}
+
+.cs-landing .cs-ascii-table {
+  font-family: var(--font-body);
+  font-size: 13px;
+  white-space: pre;
+  color: var(--cs-muted);
+  line-height: 1.4;
+  margin-bottom: var(--cs-space-lg);
+}
+
+.cs-landing .cs-footer {
+  margin-top: var(--cs-space-3xl);
+  padding: var(--cs-space-2xl) var(--cs-space-xl);
+  border-top: 1px solid var(--cs-border);
+  color: var(--cs-muted);
+  font-size: 13px;
+}
+
+.cs-landing .cs-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cs-space-sm);
+  margin-bottom: var(--cs-space-md);
+}
+
+.cs-landing .cs-footer-links a {
+  border: none;
+  color: var(--cs-muted);
+}
+
+.cs-landing .cs-footer-links a:hover {
+  color: var(--cs-fg);
+  border-bottom: 1px solid var(--cs-fg);
+}
+
+.cs-landing .cs-copyright {
+  text-align: center;
+  margin-top: var(--cs-space-lg);
+}
+
+@media (max-width: 900px) {
+  .cs-landing .cs-hero {
+    grid-template-columns: 1fr;
+    gap: var(--cs-space-2xl);
+  }
+
+  .cs-landing .cs-hero-visual {
+    order: -1;
+  }
+
+  .cs-landing .cs-pill-badge-1 {
+    right: 5%;
+  }
+
+  .cs-landing .cs-pill-badge-2 {
+    left: 5%;
+  }
+}

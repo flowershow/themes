@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Build and publish a demo site for a theme.
 #
-#   scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--name <site-name>]
+#   scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>]
 #
 # Assembles a site from:
 #   - _demo-content/          the shared kitchen-sink + blog content, so every
@@ -9,8 +9,23 @@
 #   - <theme-dir>/theme.css   applied via a jsDelivr URL pinned to the current
 #                             git branch (no release/tag needed for drafts)
 #   - --landing <file>        optional raw .html landing page, published as
-#                             index.html. Used for the stage-1 Tailwind repros,
-#                             which are plain HTML and don't need the theme.
+#                             index.html, REPLACING the site's home page. Used
+#                             for stage-1 Tailwind repros — plain HTML with no
+#                             theme, no nav/footer, compared like-for-like
+#                             against the target before anything is themed.
+#   - --landing-page <file>   optional `layout: plain` markdown landing page,
+#                             published at /landing ALONGSIDE the rest of the
+#                             site (kitchen sink, blog) rather than replacing
+#                             it — one demo site, not a separate one. Prefer
+#                             this over --landing whenever the target site has
+#                             normal chrome you want: layout:plain still gets
+#                             Flowershow's standard nav/footer (see
+#                             docs/theme-authoring-tutorial.md), just with
+#                             Tailwind typography ("prose") turned off, so the
+#                             page is a blank canvas for hand-built HTML+
+#                             Tailwind inside the markdown file. --landing
+#                             (raw HTML, no nav/footer) is still right for a
+#                             target with materially different/no chrome.
 #
 # then publishes it with `fl` and prints the URL.
 #
@@ -24,19 +39,26 @@ cd "$REPO_ROOT"
 
 THEME_DIR=""
 LANDING=""
+LANDING_PAGE=""
 SITE_NAME=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    --landing) LANDING="$2"; shift 2 ;;
-    --name)    SITE_NAME="$2"; shift 2 ;;
+    --landing)      LANDING="$2"; shift 2 ;;
+    --landing-page) LANDING_PAGE="$2"; shift 2 ;;
+    --name)         SITE_NAME="$2"; shift 2 ;;
     -*) echo "unknown flag: $1" >&2; exit 2 ;;
     *) THEME_DIR="$1"; shift ;;
   esac
 done
 
 if [ -z "$THEME_DIR" ]; then
-  echo "usage: scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--name <site-name>]" >&2
+  echo "usage: scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>]" >&2
+  exit 2
+fi
+
+if [ -n "$LANDING" ] && [ -n "$LANDING_PAGE" ]; then
+  echo "--landing and --landing-page are mutually exclusive — pick one" >&2
   exit 2
 fi
 
@@ -97,6 +119,28 @@ if [ -n "$LANDING" ]; then
   rm -f "$BUILD_DIR/index.md"
   cp "$REPO_ROOT/$LANDING" "$BUILD_DIR/index.html"
   echo "   landing: $LANDING -> index.html (raw HTML)"
+fi
+
+if [ -n "$LANDING_PAGE" ]; then
+  if [ ! -f "$REPO_ROOT/$LANDING_PAGE" ]; then
+    echo "no such landing-page file: $LANDING_PAGE" >&2
+    exit 1
+  fi
+  # published alongside the rest of _demo-content, not replacing it — the
+  # page itself must carry `layout: plain` frontmatter to get Flowershow's
+  # nav/footer without prose typography fighting hand-built Tailwind markup
+  cp "$REPO_ROOT/$LANDING_PAGE" "$BUILD_DIR/landing.md"
+  echo "   landing-page: $LANDING_PAGE -> landing.md (published at /landing)"
+
+  # Convention: a sibling <basename>.css next to the landing-page .md is
+  # published as the site's custom.css (Flowershow looks for exactly that
+  # filename at content root — server/api/routers/site.ts). Site-wide, so
+  # landing-specific rules must be scoped under a wrapper class.
+  LANDING_CSS="${LANDING_PAGE%.md}.css"
+  if [ -f "$REPO_ROOT/$LANDING_CSS" ]; then
+    cp "$REPO_ROOT/$LANDING_CSS" "$BUILD_DIR/custom.css"
+    echo "   landing-page css: $LANDING_CSS -> custom.css"
+  fi
 fi
 
 # Merge the theme URL into the shared base config rather than writing a bare

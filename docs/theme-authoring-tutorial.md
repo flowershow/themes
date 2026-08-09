@@ -63,6 +63,66 @@ icons at 44px inheriting text colour rather than 28px accent, buttons at
 more than font choice.** Get the ratios right before touching anything
 else.
 
+## Publishing the shipped landing page: `layout: plain`, not raw HTML
+
+Stage 1's landing repro (a standalone `.html` file in `_repro/`) is
+deliberately throwaway — it exists to get fidelity right cheaply, outside
+Flowershow. Once it's right, the *shipped* version (added 2026-08-09,
+first done for `codestorage-draft/`) should be a real Flowershow markdown
+page with `layout: plain` frontmatter, not a second raw-HTML site:
+
+```markdown
+---
+title: Your Landing Page
+layout: plain
+showToc: false
+showEditLink: false
+showComments: false
+---
+
+<div class="your-landing-wrapper">
+  ...hand-built HTML...
+</div>
+```
+
+`layout: plain` gets you Flowershow's standard nav/footer (they're
+rendered by the site-wide layout, one level up from the page component)
+while turning off `@tailwindcss/typography`'s "prose" styling for that
+page's content specifically (`default-theme.css`:
+`.rendered-mdx:not(.is-plain) { @apply prose ... }` — `.is-plain` is added
+automatically by `layout: plain`). That leaves the page a blank canvas:
+your own classes, your own CSS, no prose defaults to fight.
+
+**Plain HTML works — you do not need JSX.** `class="..."`, not
+`className="..."`. An early draft of this doc wrongly assumed JSX was
+required, generalizing from one example file in `flowershow/flowershow`'s
+own content that happened to use it; plain HTML attributes render fine.
+
+**Page-specific CSS**: put it in a `custom.css` at the published content
+root — Flowershow looks for that exact filename
+(`server/api/routers/site.ts`) and injects it site-wide. Since it's
+site-wide, not page-scoped, wrap everything in a unique class
+(`codestorage-draft/demo-landing.css` uses `.cs-landing`) so it can't leak
+onto the theme's other demo pages (kitchen sink, blog). `scripts/
+demo-site.sh --landing-page <file.md>` auto-picks up a sibling
+`<same-basename>.css` as `custom.css` — see its `--landing-page` docs.
+
+**One demo site, not two.** Publish the landing page at `/landing`
+alongside the theme's existing kitchen-sink/blog demo content (`scripts/
+demo-site.sh <theme-dir> --landing-page <file.md>`), rather than standing
+up a second site. `--landing <file.html>` (raw HTML, its own site, no
+nav/footer at all) is still the right tool for a target whose chrome is
+too different from Flowershow's own nav/footer to reuse — that's a
+judgement call per target, not a default.
+
+**HTML-in-markdown indentation matters.** Keep nested HTML consistently
+2-space indented with no blank lines between indented elements — a blank
+line inside indented HTML can make the markdown parser treat what follows
+as a new block instead of continuing the same HTML block, breaking the
+page. `content/flowershow-app/uses/digital-gardens.md` in the main
+Flowershow repo is a working example of this pattern to copy the shape
+of.
+
 ## Where to actually get values
 
 Read from the rendered page (`getComputedStyle`) or from the target's own
