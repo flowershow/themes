@@ -7,6 +7,8 @@ This site is an experiment in giving theme users and theme authors one coherent
 home. Work is tracked in
 [flowershow/flowershow#1364](https://github.com/flowershow/flowershow/issues/1364).
 
+Live preview: https://flowershow-themes-preview-rufuspollock.flowershow.me
+
 ## Current boundary
 
 - The [Flowershow themes reference](https://flowershow.app/docs/reference/themes)

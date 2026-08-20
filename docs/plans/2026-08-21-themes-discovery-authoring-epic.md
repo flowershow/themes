@@ -12,6 +12,8 @@ implementation landed in
 The next phase turns those results into a coherent discovery, contribution,
 maintenance, and eventual release experience.
 
+**Live preview:** https://flowershow-themes-preview-rufuspollock.flowershow.me
+
 ## Workstreams
 
 ### 1. Themes preview site
@@ -64,23 +66,23 @@ reference is published and protected against drift.
 
 ## Acceptance criteria
 
-- [ ] `flowershow/themes/site/` builds and deploys through a documented command.
-- [ ] The live preview has equally clear “Choose a theme” and “Build a theme” paths.
-- [ ] All four official themes and both preview themes have accurate status,
+- [x] `flowershow/themes/site/` builds and deploys through a documented command.
+- [x] The live preview has equally clear “Choose a theme” and “Build a theme” paths.
+- [x] All four official themes and both preview themes have accurate status,
       imagery, demo links, and configuration guidance.
-- [ ] Human and AI authoring guides are readable on the published site without
+- [x] Human and AI authoring guides are readable on the published site without
       maintaining divergent source copies.
-- [ ] Contributor instructions cover creation, verification, demo publishing,
+- [x] Contributor instructions cover creation, verification, demo publishing,
       fidelity records, assets, and pull-request review.
-- [ ] Demo-site source/configuration and ownership are discoverable, resolving
+- [x] Demo-site source/configuration and ownership are discoverable, resolving
       the documentation gap tracked in #916.
-- [ ] Maintainer instructions cover preview, promotion, dashboard/gallery
+- [x] Maintainer instructions cover preview, promotion, dashboard/gallery
       updates, release metadata, and the explicit tag/release gate.
-- [ ] Material and code.storage remain visibly marked preview/beta.
+- [x] Material and code.storage remain visibly marked preview/beta.
 - [ ] #1338 is completed or has a concrete implementation path linked here.
-- [ ] The historical #854 epic receives a bounded triage, without importing
+- [x] The historical #854 epic receives a bounded triage, without importing
       unrelated implementation into this issue.
-- [ ] Existing theme and site verification passes, including live smoke checks.
+- [x] Existing theme and site verification passes, including live smoke checks.
 
 ## Related and predecessor issues
 

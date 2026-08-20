@@ -45,6 +45,8 @@ remains unchanged and canonical while the new site is evaluated.
 
 ## Live preview themes
 
+- Themes discovery and authoring site:
+  https://flowershow-themes-preview-rufuspollock.flowershow.me
 - Material: https://material-theme-demo-rufuspollock.flowershow.me
 - code.storage: https://codestorage-theme-demo-rufuspollock.flowershow.me
 
