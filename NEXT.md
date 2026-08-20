@@ -17,16 +17,17 @@ Branch: `main` after integration. Current tracking home:
 - The deployed fix for flowershow/flowershow#1349 was checked and works.
 - The human authoring tutorial and AI theme-cloning workflow currently live in
   [`docs/`](docs/).
+- The parallel themes discovery and authoring site is live at
+  https://flowershow-themes-preview-rufuspollock.flowershow.me with all six
+  themes, full authoring guides, and contributor/maintainer workflows.
 
 ## Now
 
-1. Build and publish the parallel themes preview site from `site/`, with equal
-   “choose a theme” and “build a theme” paths.
-2. Publish the full human and AI authoring workflows through that site and add
-   contributor/maintainer instructions.
-3. Define and run the release-readiness checklist for Material and
+1. Evaluate and iterate on the parallel preview site without changing the
+   canonical Flowershow reference gallery yet.
+2. Run the release-readiness checklist for Material and
    code.storage while keeping both visibly marked preview/beta.
-4. Complete the semantic class reference tracked in
+3. Complete the semantic class reference tracked in
    [flowershow/flowershow#1338](https://github.com/flowershow/flowershow/issues/1338).
 
 The existing
