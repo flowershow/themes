@@ -21,25 +21,57 @@ themes:
     inspiration: "https://squidfunk.github.io/mkdocs-material/"
     dir: material-draft
     passes: true             # structural only — see fidelity, which is separate
-    last_verified: 2026-08-08
+    last_verified: 2026-08-09
     checks:
       css_parses: true
       required_tokens_defined: true
       dark_mode_defined: true
-      preview_asset_present: false   # known gap: no preview.png yet (WARN, not a gate)
+      preview_asset_present: true
       demo_site_responds: true
     demo_url: https://material-theme-demo-rufuspollock.flowershow.me
-    landing_repro: _repro/material-landing.html
-    landing_demo_url: https://material-landing-v2-rufuspollock.flowershow.me
-    landing_demo_url_stale: https://material-landing-demo-rufuspollock.flowershow.me  # raw index.html stuck on an old CDN copy; see plan doc
-    fidelity: unreviewed     # unreviewed | reviewed-close | reviewed-off
+    landing_repro: _repro/material-landing.html   # stage-1 static reference only (unpublished, uses live-hotlinked mkdocs-material art as a comparison stand-in) — see landing_page for the shipped version
+    landing_page: material-draft/demo-landing.md  # stage-2: layout:plain markdown + material-draft/demo-landing.css, published alongside the rest of the site
+    landing_demo_url: https://material-theme-demo-rufuspollock.flowershow.me/landing   # 2026-08-09: moved from a separate material-landing-v2 site (deleted) into a /landing page on the main demo site — one site, not two, same consolidation as codestorage-draft
+    landing_demo_urls_retired:
+      - url: https://material-landing-demo-rufuspollock.flowershow.me
+        reason: "DELETED 2026-08-08 via `fl delete` — index.html stuck on an old CDN copy (Flowershow's own site-serving cache, not jsDelivr; `fl` confirmed uploaded files were current, so nothing in this repo could fix it). Filed as flowershow/flowershow#1347."
+      - url: https://material-landing-v2-rufuspollock.flowershow.me
+        reason: "DELETED 2026-08-09 — superseded by the /landing page on demo_url above (one site, not two)."
+    fidelity: unreviewed     # unreviewed | reviewed-close | reviewed-off — was reviewed-close (LLM-judged 2026-08-09) but that pass predates the landing-page rebuild (dropped hotlinked art for a placeholder, dropped the Tailwind CDN script, added :not(.is-plain) scoping, fixed a stale-nav-config publish bug) — needs a fresh pass
     fidelity_notes: >
-      Landing repro now matches the reference numerically on every element
-      profiled (hero h1 700 vs section h1 300+dimmed, 2-col feature grid,
-      44px text-coloured icons, 700 buttons, spotlight gap/mb 64). theme.css
-      for the non-landing pages has also been redone against measured values.
-      Remaining known delta: foreground parallax layers frame slightly
-      smaller than the reference. Still unreviewed by a human.
+      Landing repro (stage-1, unpublished) matches the reference numerically
+      on every element profiled (hero h1 700 vs section h1 300+dimmed, 2-col
+      feature grid, 44px text-coloured icons, 700 buttons, spotlight gap/mb
+      64). theme.css for the non-landing pages has also been redone against
+      measured values.
+
+      LLM-judged visual pass 2026-08-09 (predates the changes below): screenshotit
+      capture of the then-live material-landing-v2 side-by-side with the live
+      squidfunk reference — navbar (logo, nav links, search box, GitHub stats
+      badge), hero headline/subhead/button, and color/type read as
+      effectively identical at a glance. Remaining known delta: foreground
+      parallax layers frame slightly smaller than the reference (art, not
+      typography — see NEXT.md "not blockers"). This was an LLM screenshot
+      comparison, not a human sign-off — still open per NEXT.md item 1.
+
+      2026-08-09 architecture change (same pass as codestorage-draft, per
+      Rufus): landing page moved from the separate material-landing-v2 site
+      to `layout: plain` markdown (landing_page above) published at
+      /landing on the main demo site. The stage-1 repro's Tailwind CDN
+      script + custom config (bg-primary/text-accent/bg-ink/max-w-grid/
+      font-sans) were dropped — Flowershow generates utility-class CSS from
+      page content itself, no script needed; the only two real dependencies
+      on the custom config were max-w-grid (-> max-w-[1220px] arbitrary
+      value) and font-sans on <body> (dropped; already inherits
+      var(--font-body) = Roboto). The hotlinked mkdocs-material parallax
+      art was replaced with a gradient placeholder — that art was already
+      documented as not ours to ship, just not yet relevant while unpublished.
+      material-draft/theme.css's .rendered-mdx typography rules were scoped
+      to :not(.is-plain) so they can't clash with the landing page's own
+      .t-h1-hero etc classes (same specificity-tie risk as the codestorage
+      fix). Separately: this republish also fixed material-theme-demo
+      serving a stale config.json with no navbar (site hadn't been
+      republished since before an earlier nav-config-shape fix landed).
     known_gaps:
       - "no tabbed-content-block clone (feature doesn't exist in Flowershow)"
       - "no prev/next page footer pagination (feature doesn't exist in Flowershow)"
@@ -53,20 +85,71 @@ themes:
     kind: theme
     inspiration: "https://code.storage/"
     dir: codestorage-draft
-    passes: true             # structural only; the CSS itself is pre-method-change, see notes
-    last_verified: 2026-08-08
+    passes: true             # structural only — see fidelity, which is separate
+    last_verified: 2026-08-09
     checks:
       css_parses: true
       required_tokens_defined: true
       dark_mode_defined: true
-      preview_asset_present: false
+      preview_asset_present: true
       demo_site_responds: true
     demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
-    fidelity: unreviewed
+    landing_repro: _repro/codestorage-landing.html   # stage-1 static reference only (unpublished) — see landing_page for the shipped version
+    landing_page: codestorage-draft/demo-landing.md  # stage-2: layout:plain markdown + codestorage-draft/demo-landing.css, published alongside the rest of the site
+    landing_demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me/landing   # 2026-08-09: moved from a separate codestorage-landing-demo site (deleted) into a /landing page on the main demo site, per Rufus — one site, not two. Uses `layout: plain` (nav/footer kept, prose typography off), see docs/theme-authoring-tutorial.md
+    fidelity: unreviewed   # was reviewed-close (LLM-judged 2026-08-09) but that pass predates two real bugs Rufus then found (page-header + body font-size, see notes) and the landing-page architecture change — needs a fresh pass, not carried forward as still-valid
+    fidelity_notes: >
+      theme.css re-measured 2026-08-09 against a second, independently-built
+      static repro (Rufus's tmp/ HTML+Tailwind clone): paler background,
+      lighter foreground, tighter line-height (1.6 not 2), semibold not bold
+      headings with slight h1/h2 size steps, hover-only link underlines.
+      Landing repro ported and inlined self-contained.
+      LLM-judged visual pass 2026-08-09: live-browsed the real code.storage
+      (screenshotit's headless capture times out on it — heavy WebGL/3D
+      load — so used the Chrome tool directly instead). Header chrome,
+      pill-badge callouts with connector line, hero copy, and monospace
+      typography all match closely. Confirmed the real hero is a genuine
+      3D-rendered metallic blob (not visible on first paint — it loads in
+      after a beat, which is what a first screenshot caught mid-load and
+      briefly looked like a totally different icon before a second look
+      showed the real render) — our flat-gradient placeholder is a
+      reasonable stand-in for that, not a new gap beyond what's already in
+      known_gaps below. This is an LLM screenshot comparison, not a human
+      sign-off.
+
+      2026-08-09 correction: Rufus reported the theme-applied demo (not the
+      landing repro, which was already byte-verified against source) looked
+      off vs. his landing page — font sizes wrong. Root cause:
+      `.page-header-title`/`.page-header-description` (the page-title
+      banner Flowershow renders above markdown content, separate from an
+      in-markdown h1) were never styled here, so every real page (kitchen
+      sink, blog index) fell back to the default theme's 48px heading —
+      completely breaking the tight monospace scale outside the raw-HTML
+      landing repro. material-draft already handled this class;
+      codestorage-draft didn't. Fixed and republished; verified live via
+      getComputedStyle (17px/600, matching the rest of the scale). This is
+      exactly the kind of gap the "LLM-judged" pass above missed — it
+      compared the landing page (correct) and didn't check every themed
+      page against the component list.
+
+      Also found and fixed same day: `.rendered-mdx` set font-size on the
+      container but not on p/li/blockquote/table/pre individually, so
+      @tailwindcss/typography's own explicit per-element font-size (18px on
+      p) won regardless — fixed with :where(...) grouping + !important,
+      same underlying cascade-layer-tie issue as the backtick gotcha.
+
+      2026-08-09 architecture change: the landing page moved from a
+      separate raw-HTML site (codestorage-landing-demo, deleted) to a
+      `layout: plain` markdown page (landing_page above) published at
+      /landing on the main demo site — one site, standard nav/footer kept,
+      Tailwind typography off so hand-authored HTML+CSS has a blank
+      canvas. Plain HTML (`class=`, not JSX `className=`) works fine here;
+      an early draft over-assumed JSX was required from one example file
+      that happened to use it. See docs/theme-authoring-tutorial.md.
     known_gaps:
       - "BerkeleyMono (reference site's actual font) is commercial; substituted IBM Plex Mono — see theme.css header comment"
       - "reference site's nav is literal bracketed page copy, not a navbar component; approximated with a bracket-styled navbar instead"
-      - "decorative circle/diagram illustrations on the homepage are bespoke page content, not cloned"
+      - "decorative circle/diagram illustrations on the homepage (including a swarm-of-blobs distributed-storage diagram further down the page) are bespoke page content, not cloned; landing repro uses a gradient placeholder for the metallic blob hero, real one is a genuine 3D render"
     notes: >
       Font/color/spacing values read from the live site via computed-style
       inspection (closed source, no repo to read from).
@@ -74,15 +157,15 @@ themes:
 docs:
   - id: theme-authoring-tutorial
     kind: doc
-    passes: false
-    target: "content/flowershow-app or themes repo README — TBD, see CLAUDE.md open decision"
-    notes: "To be written from the experience of building material-draft and codestorage-draft, not written first."
+    passes: true
+    target: "docs/theme-authoring-tutorial.md — default landing spot, see CLAUDE.md open decision. Written here because it required no access outside this repo; moving it to flowershow/flowershow docs or flowershow/skills is still open for a human to decide."
+    notes: "Written 2026-08-09 from the experience of building material-draft and codestorage-draft — two-stage method, numeric comparison, caching gotchas, component gotchas, licensing, structural ceiling."
 
   - id: ai-theme-cloning-skill
     kind: skill
-    passes: false
-    target: "TBD — see CLAUDE.md open decision (skills repo vs this repo)"
-    notes: "AI-agent-facing instructions for 'clone the look of <url> into a Flowershow theme', derived from the same two builds."
+    passes: true
+    target: "docs/ai-theme-cloning-skill.md — default landing spot (same reasoning as theme-authoring-tutorial above). Written in flowershow/skills' SKILL.md frontmatter shape so it can be ported there directly if a human decides that's the right home."
+    notes: "AI-agent-facing instructions for 'clone the look of <url> into a Flowershow theme', derived from the same two builds. Same content as theme-authoring-tutorial.md in agent-instruction form, not duplicated reasoning."
 
 structural_findings:
   # L4 (component-tree / placement) gaps found while building the themes
@@ -118,3 +201,11 @@ structural_findings:
     summary: "Callouts are styled via [data-callout] / [data-callout-type] attributes, not class names; and bare attribute selectors tie the base rules at 0,1,0 so themes must scope to .rendered-mdx. Needs to be stated in the class reference."
     status: folded-into
     issue: flowershow/flowershow#1338
+  - id: subnav-breadcrumb-link-no-base-style
+    summary: "default-theme.css's .site-subnav-breadcrumb-link defines only a :hover block, no base color/text-decoration — renders as browser-default blue/underlined regardless of theme. Every sibling *-link class in the same file sets an explicit base color; this is the one outlier."
+    status: filed
+    issue: flowershow/flowershow#1348
+  - id: navbar-dropdown-trigger-color-not-themed
+    summary: ".site-navbar-dropdown-trigger (the \"More\" menu label + chevron) uses color:inherit and isn't grouped with .site-navbar-link, so it doesn't pick up a theme's navbar text color — verified white .site-navbar-link vs dark .site-navbar-dropdown-trigger side by side on material-draft's indigo navbar. None of the 6 themes in this repo (4 shipped + 2 draft) style it, so this isn't a per-theme gap."
+    status: filed
+    issue: flowershow/flowershow#1349

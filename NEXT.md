@@ -1,78 +1,62 @@
 # Next
 
 Working state for the theme-cloning work. **This file is the source of truth
-for what's next** — keep it current, and prefer editing it over leaving
-status in issue comments.
+for what's next** — keep it concise: current state and next actions, not a
+log of everything that's been done (see git history / `docs/features.yaml`
+`fidelity_notes` for that).
 
 Branch: `draft/new-themes`. Tracking issue:
 [flowershow/flowershow#1339](https://github.com/flowershow/flowershow/issues/1339).
 Full method, measurements and gotchas:
-[the plan doc](https://github.com/flowershow/flowershow/blob/main/docs/plans/2026-08-08-theme-cloning-fidelity-method.md).
+[the plan doc](https://github.com/flowershow/flowershow/blob/main/docs/plans/2026-08-08-theme-cloning-fidelity-method.md)
+and [docs/theme-authoring-tutorial.md](docs/theme-authoring-tutorial.md).
 
 ## Now
 
-1. **Human fidelity review of the Material theme.** `fidelity` is
-   `unreviewed` in `docs/features.yaml` and deliberately not self-graded.
-   Both surfaces match the reference numerically; whether they *read* as
-   Material is a human call.
-   - Landing: https://material-landing-v2-rufuspollock.flowershow.me
-   - Docs page: https://material-landing-demo-rufuspollock.flowershow.me/docs/kitchen-sink
-   - Reference: https://squidfunk.github.io/mkdocs-material/
+1. **Human fidelity review of both draft themes.** Both `fidelity:
+   unreviewed` in `docs/features.yaml` — deliberately not self-graded.
+   - Material: https://material-theme-demo-rufuspollock.flowershow.me
+     (`/landing` + `/docs/kitchen-sink`) vs. https://squidfunk.github.io/mkdocs-material/
+   - code.storage: https://codestorage-theme-demo-rufuspollock.flowershow.me
+     (`/landing` + `/docs/kitchen-sink`) vs. https://code.storage/
 
-2. **code.storage clone** — tracked in
-   [#1344](https://github.com/flowershow/flowershow/issues/1344). Rufus is
-   iterating separately and will bring files over. Drop them in
-   `codestorage-draft/` and `_repro/`, then:
-   ```sh
-   scripts/demo-site.sh codestorage-draft --landing _repro/<file>.html
-   ```
-   Simpler target than Material — near-monochrome, one font, no illustration
-   system.
+2. **Verify flowershow/flowershow#1349 fix once deployed.** Pushed straight
+   to `main` (c2ddbf23) — check the "More" navbar dropdown on
+   `material-theme-demo` renders white (matching other nav links) instead
+   of dark.
 
-## After that
-
-3. **Authoring tutorial + AI cloning skill**, written from what actually
-   broke. The gotchas list in the plan doc is the spine; "compare
-   numerically, not by eye" is the core method. Open: does this live here, in
-   the main docs, or in `flowershow/skills`?
-
-4. **Structural / L4 decision.** Confirmed unclonable without core changes:
-   content tabs (no component), prev/next page pagination, version selector.
-   Unresolved: accept the fixed skeleton and document it honestly, add
-   slot/block ordering, or go to full layout templating.
-
-5. **Preview images** for both themes — `verify.sh` warns; required before
-   promoting out of draft.
-
-6. **Fix or retire `material-landing-demo`.** Its `index.html` is stuck on an
-   old CDN copy. `fl` reports all files current and a freshly-named site
-   (`material-landing-v2`) picked up new markup immediately, so the upload is
-   fine — it's purely cache.
-
-## Not blockers (previously mis-called)
-
-- **Artwork.** mkdocs-material's parallax illustration is bespoke and can't
-  ship, so an original replacement is eventually needed — but it was *not*
-  what made the landing read as not-Material. Typographic precision was.
-  Don't treat it as gating.
+3. **#1348 still open** (`.site-subnav-breadcrumb-link` unstyled, browser
+   default blue/underline) — filed, not fixed. Same core-not-theme call as
+   #1349.
 
 ## Open questions for a human
 
-- Where do the tutorial and AI skill live? (see 3)
-- Which L4 direction? (see 4)
-- Should theme work be tracked in this repo's issues rather than
-  `flowershow/flowershow`? Everything is currently filed there (#1337, #1338,
-  #1339, #1340–#1344) because this repo doesn't use issues.
+- Where do the authoring tutorial and AI skill actually live long-term —
+  this repo's `docs/`, main `flowershow/flowershow` docs, or
+  `flowershow/skills`? Currently parked here (`docs/theme-authoring-tutorial.md`,
+  `docs/ai-theme-cloning-skill.md`) since writing them needed no access
+  outside this repo.
+- L4 (structural ceiling — content tabs, prev/next pagination, version
+  selector): default call was "accept it, document it" — see
+  [docs/l4-structural-decision.md](docs/l4-structural-decision.md). Slot
+  ordering / full layout templating remain open if a human wants to
+  pursue either.
+- Should theme work move to this repo's own issues instead of
+  `flowershow/flowershow`'s? Everything is filed there today (see below)
+  because this repo doesn't use issues yet.
 
 ## Filed from this work
 
-| Issue | |
-| --- | --- |
-| [#1337](https://github.com/flowershow/flowershow/issues/1337) | themes gallery / feature page |
-| [#1338](https://github.com/flowershow/flowershow/issues/1338) | publish the semantic CSS class list |
-| [#1340](https://github.com/flowershow/flowershow/issues/1340) | leaf theme uses dashboard-only tokens |
-| [#1341](https://github.com/flowershow/flowershow/issues/1341) | `--navbar-height` never read |
-| [#1342](https://github.com/flowershow/flowershow/issues/1342) | forced inline-code backticks need `!important` |
-| [#1343](https://github.com/flowershow/flowershow/issues/1343) | `.is-linked` dot bug, Tailwind leak, unstyled classes |
-| [#1344](https://github.com/flowershow/flowershow/issues/1344) | code.storage theme |
-| [#1345](https://github.com/flowershow/flowershow/issues/1345) | raw `.html` pages 404 with any query string |
+| Issue | | Status |
+| --- | --- | --- |
+| [#1337](https://github.com/flowershow/flowershow/issues/1337) | themes gallery / feature page | open |
+| [#1338](https://github.com/flowershow/flowershow/issues/1338) | publish the semantic CSS class list | open |
+| [#1340](https://github.com/flowershow/flowershow/issues/1340) | leaf theme uses dashboard-only tokens | open |
+| [#1341](https://github.com/flowershow/flowershow/issues/1341) | `--navbar-height` never read | open |
+| [#1342](https://github.com/flowershow/flowershow/issues/1342) | forced inline-code backticks need `!important` | open |
+| [#1343](https://github.com/flowershow/flowershow/issues/1343) | `.is-linked` dot bug, Tailwind leak, unstyled classes | open |
+| [#1344](https://github.com/flowershow/flowershow/issues/1344) | code.storage theme | open |
+| [#1345](https://github.com/flowershow/flowershow/issues/1345) | raw `.html` pages 404 with any query string | open |
+| [#1347](https://github.com/flowershow/flowershow/issues/1347) | `fl`-published raw-HTML page can serve stale content | open |
+| [#1348](https://github.com/flowershow/flowershow/issues/1348) | `.site-subnav-breadcrumb-link` has no base style | open |
+| [#1349](https://github.com/flowershow/flowershow/issues/1349) | navbar dropdown trigger doesn't track link color | **fixed on main, pending deploy verification (see item 2 above)** |

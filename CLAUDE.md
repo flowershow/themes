@@ -59,14 +59,25 @@ are compared on identical content, not different content).
 Use the script — don't do it by hand:
 
 ```sh
-scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--name <site-name>]
+scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>]
 
 # theme applied to the shared demo content:
 scripts/demo-site.sh material-draft
 
-# same, but with a stage-1 raw-HTML landing page as index:
+# stage-1 raw-HTML landing repro, published as a SEPARATE site's index —
+# no theme, no nav/footer, for comparing structure/type/color against the
+# live target before anything is extracted into theme.css:
 scripts/demo-site.sh material-draft --landing _repro/material-landing.html \
   --name material-landing-demo
+
+# stage-2 shipped landing page, published at /landing on the theme's own
+# demo site (ONE site, not a separate one) — a `layout: plain` markdown
+# page, so it gets Flowershow's standard nav/footer with Tailwind
+# typography ("prose") turned off, leaving a blank canvas for hand-built
+# HTML+CSS. Prefer this over --landing once you're past stage 1 and the
+# target's chrome is close enough to Flowershow's own nav/footer to reuse
+# them — see docs/theme-authoring-tutorial.md.
+scripts/demo-site.sh codestorage-draft --landing-page codestorage-draft/demo-landing.md
 ```
 
 It assembles `_demo-content/` + a `config.json` pointing `theme` at a

@@ -94,13 +94,21 @@
       h4  16px   / 700 / m 16 0
 ========================== */
 
-.rendered-mdx {
+/* :not(.is-plain) throughout this block (added 2026-08-09, matching
+   Flowershow's own default-theme.css convention of scoping prose to
+   :not(.is-plain)): the landing page uses `layout: plain` with its own
+   hand-measured classes (.t-h1-hero etc) and needs a blank canvas — a
+   bare `.rendered-mdx h1` (class+tag, specificity 0,1,1) would otherwise
+   beat `.t-h1-hero` (single class, 0,1,0) and silently flatten the
+   hero-vs-section weight distinction that's the whole point of this
+   theme's fidelity fix (see the comment below). */
+.rendered-mdx:not(.is-plain) {
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.6;
 }
 
-.rendered-mdx p {
+.rendered-mdx:not(.is-plain) p {
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -108,7 +116,7 @@
 /* h1 on the reference is LIGHT WEIGHT and GREY, not bold and black.
    This is the single most recognisable thing about a Material docs page
    and the earlier draft got it wrong. */
-.rendered-mdx h1,
+.rendered-mdx:not(.is-plain) h1,
 .page-header-title {
   font-family: var(--font-heading);
   font-size: 2rem;
@@ -119,7 +127,7 @@
   margin: 0 0 2.5rem;
 }
 
-.rendered-mdx h2 {
+.rendered-mdx:not(.is-plain) h2 {
   font-size: 1.5625rem;
   font-weight: 300;
   line-height: 1.4;
@@ -127,7 +135,7 @@
   margin: 2.5rem 0 1rem;
 }
 
-.rendered-mdx h3 {
+.rendered-mdx:not(.is-plain) h3 {
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.5;
@@ -135,15 +143,15 @@
   margin: 1rem 0;
 }
 
-.rendered-mdx h4 {
+.rendered-mdx:not(.is-plain) h4 {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   margin: 1rem 0;
 }
 
-.rendered-mdx h5,
-.rendered-mdx h6 {
+.rendered-mdx:not(.is-plain) h5,
+.rendered-mdx:not(.is-plain) h6 {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -151,16 +159,16 @@
 }
 
 /* measured: links are primary indigo, no underline */
-.rendered-mdx a {
+.rendered-mdx:not(.is-plain) a {
   color: var(--md-primary);
   text-decoration: none;
 }
-.rendered-mdx a:hover {
+.rendered-mdx:not(.is-plain) a:hover {
   color: var(--md-accent);
   text-decoration: underline;
 }
 
-:root[data-theme="dark"] .rendered-mdx a {
+:root[data-theme="dark"] .rendered-mdx:not(.is-plain) a {
   color: var(--md-accent);
 }
 
@@ -176,7 +184,7 @@ kbd {
   font-family: var(--font-mono);
 }
 
-.rendered-mdx :not(pre) > code {
+.rendered-mdx:not(.is-plain) :not(pre) > code {
   background-color: var(--md-code-bg);
   color: var(--md-code-fg);
   font-size: 0.85em;
@@ -192,9 +200,12 @@ kbd {
    a plain `content: none` loses no matter how specific the selector is.
    Verified in the browser — this is the one place in this theme that needs
    it, and the theming docs say `overrides` layering should make !important
-   unnecessary. It doesn't here. */
-.rendered-mdx code::before,
-.rendered-mdx code::after {
+   unnecessary. It doesn't here. (:not(.is-plain) doesn't matter for this
+   one specifically since layout:plain pages aren't expected to use prose
+   inline code styling anyway, but kept consistent with the rest of the
+   block.) */
+.rendered-mdx:not(.is-plain) code::before,
+.rendered-mdx:not(.is-plain) code::after {
   content: none !important;
 }
 

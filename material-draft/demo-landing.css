@@ -1,0 +1,60 @@
+/*
+ * Page-specific layout for material-draft's landing page
+ * (material-draft/demo-landing.md, published at /landing via
+ * `layout: plain`). Published as this demo site's custom.css — see
+ * scripts/demo-site.sh's --landing-page convention.
+ *
+ * Scoped entirely under .mat-landing so it can't leak onto the
+ * kitchen-sink or blog pages of the same demo site. Values are the same
+ * ones measured in _repro/material-landing.html (see that file's own
+ * comments for the measurement notes) — this is that repro's <style>
+ * block, rescoped from a standalone page's globals into one wrapper
+ * class instead of copied loose.
+ */
+
+.mat-landing {
+  font-family: var(--font-body);
+}
+
+/* Type scale measured off the live landing page with getComputedStyle.
+   The non-obvious part is that the HERO h1 and the SECTION h1s differ:
+     hero h1     32px / 700 / white          (bold, full strength)
+     section h1  32px / 300 / 0.56 or 0.54   (light AND dimmed)
+   Getting that backwards — bold, full-opacity section headings — is what
+   made the earlier pass read as "not Material" even with the right font. */
+.mat-landing .t-h1-hero    { font-size: 32px; font-weight: 700; line-height: 41.6px; letter-spacing: -0.32px; margin: 0; }
+.mat-landing .t-h1-section { font-size: 32px; font-weight: 300; line-height: 41.6px; letter-spacing: -0.32px; margin: 0 0 40px; }
+.mat-landing .t-h2         { font-size: 25px; font-weight: 700; line-height: 35px;   letter-spacing: -0.25px; margin: 0 0 16px; }
+.mat-landing .t-body       { font-size: 16px; font-weight: 400; line-height: 25.6px; margin: 0; }
+.mat-landing .t-small      { font-size: 12.8px; line-height: 1.6; }
+
+/* measured opacities — headings sit at a LOWER opacity than body text */
+.mat-landing .dark-h1   { color: rgba(226,228,233,0.56); }
+.mat-landing .dark-h2   { color: rgba(226,228,233,0.82); }
+.mat-landing .dark-body { color: rgba(226,228,233,0.82); }
+.mat-landing .light-h1   { color: rgba(0,0,0,0.54); }
+.mat-landing .light-h2   { color: rgba(0,0,0,0.87); }
+.mat-landing .light-body { color: rgba(0,0,0,0.87); }
+
+/* measured: buttons are 700, not 500 */
+.mat-landing .t-btn { font-size: 16px; font-weight: 700; line-height: 25.6px; border-radius: 2px; padding: 10px 32px; }
+
+/* measured: .mdx-expect__list is flex-wrap, gap 32px, items flex:1 0 48%
+   => TWO columns, not three. Icons are 44px and inherit the text colour,
+   they are not accent-coloured. */
+.mat-landing .expect-list { display: flex; flex-wrap: wrap; gap: 32px; }
+.mat-landing .expect-item { display: flex; flex-direction: row; gap: 12px; flex: 1 0 48%; }
+.mat-landing .expect-icon { width: 44px; height: 44px; flex: none; }
+
+/* measured: .mdx-spotlight__feature is flex, gap 64px, margin-bottom 64px */
+.mat-landing .spotlight { display: flex; gap: 64px; margin-bottom: 64px; align-items: center; }
+
+/* Placeholder for mkdocs-material's bespoke parallax illustration, which is
+   not ours to ship (see _repro/README.md "Artwork licensing" and
+   NEXT.md "Not blockers"). The reusable part is the parallax TECHNIQUE
+   (perspective:50px container, per-layer translateZ+scale, square layer
+   images with object-position) documented in _repro/material-landing.html
+   — an original-art version would restore that structure here. */
+.mat-landing .hero-placeholder {
+  background: linear-gradient(180deg, #4d5eb8 0%, #8a9bd4 60%, #c9b6c4 85%, #1e2129 100%);
+}

@@ -61,3 +61,6 @@ The reusable part is the technique, not the art:
 | Repro | Fidelity |
 | --- | --- |
 | `material-landing.html` | hero composition close; structure/type/color measured from live site. Foreground plant layers frame smaller than reference, blend washes the sky more than it should. Sections below hero are structurally right, placeholder imagery. |
+| `codestorage-landing.html` | self-contained (theme.css inlined — raw `.html` publishing has no sibling assets, see `scripts/demo-site.sh`). Ported from a separate repro pass; colors/type extracted into `codestorage-draft/theme.css`. Blob hero is a gradient placeholder, not the real metallic render. Unreviewed by a human — see `docs/features.yaml` `fidelity`. |
+
+`codestorage-reference-tokens.css` + `codestorage-text-reference.html` are the second exemplar (an inner docs/text page, not a landing page) used to extract typographic values for `codestorage-draft/theme.css`'s `.rendered-mdx` rules — not published anywhere, reference only.

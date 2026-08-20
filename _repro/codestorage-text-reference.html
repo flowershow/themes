@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-od-id="page-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Documentation Page — Code Storage</title>
+  <meta name="description" content="Example documentation page using code.storage theme">
+  <link rel="stylesheet" href="codestorage-reference-tokens.css">
+  <style>
+    /* reuse header/footer styles from main page */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-lg);
+      border-bottom: var(--border-width) solid var(--border);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      text-align: right;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 0.6em;
+      height: 1em;
+      background: var(--fg);
+      vertical-align: -0.1em;
+    }
+
+    .footer {
+      margin-top: var(--space-3xl);
+      padding-top: var(--space-2xl);
+      border-top: var(--border-width) solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .footer-links a {
+      border: none;
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--fg);
+      border-bottom: 1px solid var(--fg);
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: var(--space-lg);
+    }
+
+    /* breadcrumb navigation */
+    .breadcrumb {
+      padding: var(--space-lg) 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .breadcrumb a {
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    /* article typography */
+    article h1 {
+      margin-top: 0;
+    }
+
+    article h3 {
+      font-size: 1.125rem;
+      line-height: 1.4;
+      font-weight: 600;
+      margin-top: var(--space-xl);
+      margin-bottom: var(--space-sm);
+    }
+
+    /* code inline styles */
+    .inline-code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 0.125rem 0.375rem;
+      border-radius: 2px;
+      font-size: 0.9em;
+      color: var(--fg);
+    }
+
+    /* note callout */
+    .note {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: var(--space-md);
+      margin: var(--space-lg) 0;
+      max-width: var(--max-width);
+    }
+
+    .note p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="header" data-od-id="header">
+    <div class="header-left">
+      <div>PIERRE COMPUTER COMPANY <span class="cursor"></span></div>
+      <div>CODE STORAGE</div>
+      <div>2026</div>
+    </div>
+    <nav class="header-right">
+      <div>[ <a href="/login">LOG IN</a> / <a href="/signup">SIGN UP</a> ]</div>
+      <div>[ <a href="/changelog" target="_blank">CHANGELOG</a> ]</div>
+      <div>[ <a href="/docs" target="_blank">DOCS</a> ]</div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <nav class="breadcrumb" data-od-id="breadcrumb">
+      <a href="/">Home</a> / <a href="/docs">Docs</a> / Getting Started
+    </nav>
+
+    <article data-od-id="article-content">
+      <h1>Getting Started with Code Storage</h1>
+
+      <p>
+        This guide walks you through setting up your first Code Storage instance,
+        creating repositories programmatically, and integrating with your application.
+      </p>
+
+      <h2>Installation</h2>
+
+      <p>Install the SDK for your preferred language:</p>
+
+      <pre><code># TypeScript / Node.js
+npm install @code-storage/sdk
+
+# Python
+pip install code-storage
+
+# Go
+go get github.com/code-storage/go-sdk</code></pre>
+
+      <h2>Authentication</h2>
+
+      <p>
+        Code Storage uses API keys for authentication. Generate your key from the
+        <a href="/dashboard">dashboard</a> and set it as an environment variable:
+      </p>
+
+      <pre><code>export CODE_STORAGE_KEY="cs_live_..."</code></pre>
+
+      <div class="note" data-od-id="security-note">
+        <p class="strong">Security Note</p>
+        <p>
+          Never commit API keys to version control. Use environment variables or a
+          secure secret management system in production.
+        </p>
+      </div>
+
+      <h2>Creating Your First Repository</h2>
+
+      <p>
+        Initialize a storage instance and create a repository with the following code:
+      </p>
+
+      <pre><code>const { GitStorage } = require('@code-storage/sdk');
+
+const store = new GitStorage({
+  name: 'my-app',
+  key: process.env.CODE_STORAGE_KEY
+});
+
+const repo = await store.createRepo({
+  id: 'user-123-workspace',
+  warmStorage: true
+});
+
+console.log('Repository URL:', repo.getRemoteURL());</code></pre>
+
+      <h3>Repository Configuration</h3>
+
+      <p>
+        When creating a repository, you can configure several options:
+      </p>
+
+      <ul>
+        <li><span class="inline-code">id</span> — Unique identifier for the repository</li>
+        <li><span class="inline-code">warmStorage</span> — Enable low-latency warm storage tier (default: true)</li>
+        <li><span class="inline-code">replicas</span> — Number of replicas (1-5, default: 3)</li>
+        <li><span class="inline-code">region</span> — Deployment region preference</li>
+      </ul>
+
+      <h2>Working with Files</h2>
+
+      <p>
+        Code Storage provides both Git-native operations and SDK convenience methods
+        for file manipulation:
+      </p>
+
+      <pre><code>// Write a file
+await repo.writeFile('README.md', '# My Project', {
+  branch: 'main',
+  message: 'Initial commit'
+});
+
+// Read a file
+const content = await repo.readFile('README.md');
+
+// List files
+const files = await repo.listFiles({ branch: 'main' });</code></pre>
+
+      <h2>Next Steps</h2>
+
+      <ul>
+        <li>Explore <a href="/docs/webhooks">webhooks</a> for build integration</li>
+        <li>Set up <a href="/docs/github-sync">GitHub sync</a> for existing projects</li>
+        <li>Learn about <a href="/docs/cold-storage">cold storage</a> optimization</li>
+        <li>Review <a href="/docs/api-reference">API reference</a> for advanced usage</li>
+      </ul>
+    </article>
+
+    <footer class="footer" data-od-id="footer">
+      <div class="footer-links">
+        <a href="/docs" target="_blank">Docs</a>
+        <span>|</span>
+        <a href="https://status.code.storage" target="_blank" rel="noopener">Status</a>
+        <span>|</span>
+        <a href="mailto:support@pierre.co">Support</a>
+        <span>|</span>
+        <a href="/pricing">Pricing</a>
+        <span>|</span>
+        <a href="/login">Log in</a>
+        <span>|</span>
+        <a href="/legal/terms">Terms</a>
+        <span>|</span>
+        <a href="/legal/privacy">Privacy</a>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://github.com/pierredotco" target="_blank" rel="noopener">GitHub</a>
+        <span>|</span>
+        <a href="http://x.com/pierrecomputer" target="_blank" rel="noopener">X</a>
+      </div>
+
+      <p class="copyright">~*~ © Code Storage by the Pierre Computer Company, Inc. ~*~</p>
+    </footer>
+  </main>
+</body>
+</html>
