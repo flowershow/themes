@@ -1,0 +1,96 @@
+---
+title: Choose a theme
+description: Compare official and preview Flowershow themes, open their demos, and copy their configuration.
+showToc: false
+---
+
+Four themes are released and available by name. Two more are being evaluated
+as previews. Preview status means “ready to try,” not “officially released.”
+
+<div className="not-prose mt-8 grid gap-8 md:grid-cols-2">
+  <section className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <img src="/assets/themes/letterpress.png" alt="Letterpress theme preview" className="aspect-[16/10] w-full border-b border-gray-100 object-cover object-top" />
+    <div className="p-6">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="m-0 text-2xl font-semibold text-gray-950">Letterpress</h2>
+        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">Official</span>
+      </div>
+      <p className="text-gray-600">A clean editorial theme with serif typography and generous whitespace—well suited to essays and blogs.</p>
+      <pre className="overflow-x-auto rounded-lg bg-gray-950 p-4 text-sm text-gray-100"><code>{`{ "theme": "letterpress" }`}</code></pre>
+      <a href="https://letterpress.flowershow.me/" className="font-semibold text-orange-600">Open live demo →</a>
+    </div>
+  </section>
+
+  <section className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <img src="/assets/themes/superstack.jpg" alt="Superstack theme preview" className="aspect-[16/10] w-full border-b border-gray-100 object-cover object-top" />
+    <div className="p-6">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="m-0 text-2xl font-semibold text-gray-950">Superstack</h2>
+        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">Official</span>
+      </div>
+      <p className="text-gray-600">A bold newsletter-style theme inspired by Substack, designed for publishing posts and updates.</p>
+      <pre className="overflow-x-auto rounded-lg bg-gray-950 p-4 text-sm text-gray-100"><code>{`{ "theme": "superstack" }`}</code></pre>
+      <a href="https://superstack.flowershow.me/" className="font-semibold text-orange-600">Open live demo →</a>
+    </div>
+  </section>
+
+  <section className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <img src="/assets/themes/lessflowery.jpg" alt="LessFlowery theme preview" className="aspect-[16/10] w-full border-b border-gray-100 object-cover object-top" />
+    <div className="p-6">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="m-0 text-2xl font-semibold text-gray-950">LessFlowery</h2>
+        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">Official</span>
+      </div>
+      <p className="text-gray-600">A restrained, text-first theme inspired by LessWrong—good for knowledge bases and long-form thinking.</p>
+      <pre className="overflow-x-auto rounded-lg bg-gray-950 p-4 text-sm text-gray-100"><code>{`{ "theme": "lessflowery" }`}</code></pre>
+      <a href="https://lessflowery.flowershow.me/" className="font-semibold text-orange-600">Open live demo →</a>
+    </div>
+  </section>
+
+  <section className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <img src="/assets/themes/leaf.png" alt="Leaf theme preview" className="aspect-[16/10] w-full border-b border-gray-100 object-cover object-top" />
+    <div className="p-6">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="m-0 text-2xl font-semibold text-gray-950">Leaf</h2>
+        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">Official</span>
+      </div>
+      <p className="text-gray-600">A warm, nature-inspired theme with earthy greens and botanical detail.</p>
+      <pre className="overflow-x-auto rounded-lg bg-gray-950 p-4 text-sm text-gray-100"><code>{`{ "theme": "leaf" }`}</code></pre>
+      <a href="https://leaf.flowershow.me/" className="font-semibold text-orange-600">Open live demo →</a>
+    </div>
+  </section>
+
+  <section className="overflow-hidden rounded-2xl border-2 border-dashed border-indigo-300 bg-indigo-50/40 shadow-sm">
+    <img src="/assets/themes/material-preview.png" alt="Material preview theme" className="aspect-[16/10] w-full border-b border-indigo-100 object-cover object-top" />
+    <div className="p-6">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="m-0 text-2xl font-semibold text-gray-950">Material</h2>
+        <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800">Preview</span>
+      </div>
+      <p className="text-gray-600">A documentation-focused preview inspired by Material for MkDocs, with precise typography and strong navigation treatment.</p>
+      <pre className="overflow-x-auto whitespace-pre-wrap rounded-lg bg-gray-950 p-4 text-xs text-gray-100"><code>{`{ "theme": "https://cdn.jsdelivr.net/gh/flowershow/themes@main/material-draft/theme.css" }`}</code></pre>
+      <a href="https://material-theme-demo-rufuspollock.flowershow.me" className="font-semibold text-indigo-700">Open preview demo →</a>
+      <p className="mt-3 text-xs text-gray-500">Inspired by Material for MkDocs. Preview art uses an original placeholder; upstream artwork is not redistributed.</p>
+    </div>
+  </section>
+
+  <section className="overflow-hidden rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/40 shadow-sm">
+    <img src="/assets/themes/codestorage-preview.png" alt="code.storage preview theme" className="aspect-[16/10] w-full border-b border-amber-100 object-cover object-top" />
+    <div className="p-6">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="m-0 text-2xl font-semibold text-gray-950">code.storage</h2>
+        <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-900">Preview</span>
+      </div>
+      <p className="text-gray-600">A compact, near-monochrome preview for technical sites, with a deliberately small monospace type scale.</p>
+      <pre className="overflow-x-auto whitespace-pre-wrap rounded-lg bg-gray-950 p-4 text-xs text-gray-100"><code>{`{ "theme": "https://cdn.jsdelivr.net/gh/flowershow/themes@main/codestorage-draft/theme.css" }`}</code></pre>
+      <a href="https://codestorage-theme-demo-rufuspollock.flowershow.me" className="font-semibold text-amber-800">Open preview demo →</a>
+      <p className="mt-3 text-xs text-gray-500">Inspired by code.storage. Uses IBM Plex Mono because the reference site's Berkeley Mono is commercially licensed.</p>
+    </div>
+  </section>
+</div>
+
+## Make another one
+
+None of these fit? [Build or contribute a theme](/contributing). The authoring
+workflow starts from a visual reference, tests against shared content, and
+keeps structural correctness separate from human fidelity review.

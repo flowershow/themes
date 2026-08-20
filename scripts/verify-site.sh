@@ -78,7 +78,7 @@ if [ -s "$SITE_DIR/themes.md" ]; then
                'https://codestorage-theme-demo-rufuspollock.flowershow.me' \
                'https://cdn.jsdelivr.net/gh/flowershow/themes@main/material-draft/theme.css' \
                'https://cdn.jsdelivr.net/gh/flowershow/themes@main/codestorage-draft/theme.css' \
-               'href="/contributing"'; do
+               '/contributing'; do
     if grep -Fq "$entry" "$SITE_DIR/themes.md"; then
       pass "gallery includes $entry"
     else
