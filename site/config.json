@@ -1,0 +1,30 @@
+{
+  "siteName": "Flowershow Themes Preview",
+  "nav": {
+    "title": "Flowershow Themes Preview",
+    "links": [
+      { "href": "/themes", "name": "Themes" },
+      { "href": "/authoring", "name": "Build a theme" },
+      { "href": "/ai-theme-cloning", "name": "AI workflow" },
+      { "href": "/contributing", "name": "Contributing" },
+      { "href": "/maintainers", "name": "Maintainers" }
+    ],
+    "cta": {
+      "href": "https://flowershow.app/docs/reference/themes",
+      "label": "Flowershow docs"
+    }
+  },
+  "social": [
+    {
+      "label": "github",
+      "href": "https://github.com/flowershow/themes",
+      "name": "GitHub"
+    }
+  ],
+  "showSidebar": false,
+  "enableSearch": true,
+  "theme": {
+    "showModeSwitch": true,
+    "defaultMode": "system"
+  }
+}
