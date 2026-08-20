@@ -2,6 +2,12 @@
 
 Official collection of themes for [Flowershow](https://flowershow.app) websites.
 
+Explore the parallel
+[Flowershow Themes Preview](https://flowershow-themes-preview-rufuspollock.flowershow.me)
+to compare official and preview themes or follow the complete authoring and
+contribution workflow. The main Flowershow themes reference remains canonical
+while this site is evaluated.
+
 ## Available Themes
 
 ### LessFlowery

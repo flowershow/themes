@@ -155,6 +155,16 @@ PYEOF
   echo ""
 done <<< "$theme_ids"
 
+if [ -d "$REPO_ROOT/site" ]; then
+  echo "-- themes preview site --"
+  if "$REPO_ROOT/scripts/verify-site.sh"; then
+    pass "themes preview site passes"
+  else
+    bad "themes preview site failed verification"
+  fi
+  echo ""
+fi
+
 echo "== summary =="
 if [ "$fail" -ne 0 ]; then
   echo "verify.sh: FAIL"

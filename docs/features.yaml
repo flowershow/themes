@@ -21,7 +21,7 @@ themes:
     inspiration: "https://squidfunk.github.io/mkdocs-material/"
     dir: material-draft
     passes: true             # structural only — see fidelity, which is separate
-    last_verified: 2026-08-09
+    last_verified: 2026-08-21
     checks:
       css_parses: true
       required_tokens_defined: true
@@ -37,8 +37,12 @@ themes:
         reason: "DELETED 2026-08-08 via `fl delete` — index.html stuck on an old CDN copy (Flowershow's own site-serving cache, not jsDelivr; `fl` confirmed uploaded files were current, so nothing in this repo could fix it). Filed as flowershow/flowershow#1347."
       - url: https://material-landing-v2-rufuspollock.flowershow.me
         reason: "DELETED 2026-08-09 — superseded by the /landing page on demo_url above (one site, not two)."
-    fidelity: unreviewed     # unreviewed | reviewed-close | reviewed-off — was reviewed-close (LLM-judged 2026-08-09) but that pass predates the landing-page rebuild (dropped hotlinked art for a placeholder, dropped the Tailwind CDN script, added :not(.is-plain) scoping, fixed a stale-nav-config publish bug) — needs a fresh pass
+    fidelity: reviewed-close # human-reviewed by Rufus 2026-08-21; preview/beta status remains until the release-readiness gate
     fidelity_notes: >
+      Human review 2026-08-21: Rufus reviewed the current live demo and
+      reported that it looked okay. This closes the fidelity-review task but
+      does not promote the theme beyond preview/beta status.
+
       Landing repro (stage-1, unpublished) matches the reference numerically
       on every element profiled (hero h1 700 vs section h1 300+dimmed, 2-col
       feature grid, 44px text-coloured icons, 700 buttons, spotlight gap/mb
@@ -86,7 +90,7 @@ themes:
     inspiration: "https://code.storage/"
     dir: codestorage-draft
     passes: true             # structural only — see fidelity, which is separate
-    last_verified: 2026-08-09
+    last_verified: 2026-08-21
     checks:
       css_parses: true
       required_tokens_defined: true
@@ -97,8 +101,12 @@ themes:
     landing_repro: _repro/codestorage-landing.html   # stage-1 static reference only (unpublished) — see landing_page for the shipped version
     landing_page: codestorage-draft/demo-landing.md  # stage-2: layout:plain markdown + codestorage-draft/demo-landing.css, published alongside the rest of the site
     landing_demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me/landing   # 2026-08-09: moved from a separate codestorage-landing-demo site (deleted) into a /landing page on the main demo site, per Rufus — one site, not two. Uses `layout: plain` (nav/footer kept, prose typography off), see docs/theme-authoring-tutorial.md
-    fidelity: unreviewed   # was reviewed-close (LLM-judged 2026-08-09) but that pass predates two real bugs Rufus then found (page-header + body font-size, see notes) and the landing-page architecture change — needs a fresh pass, not carried forward as still-valid
+    fidelity: reviewed-close # human-reviewed by Rufus 2026-08-21; preview/beta status remains until the release-readiness gate
     fidelity_notes: >
+      Human review 2026-08-21: Rufus reviewed the current live demo and
+      reported that it looked okay. This closes the fidelity-review task but
+      does not promote the theme beyond preview/beta status.
+
       theme.css re-measured 2026-08-09 against a second, independently-built
       static repro (Rufus's tmp/ HTML+Tailwind clone): paler background,
       lighter foreground, tighter line-height (1.6 not 2), semibold not bold
