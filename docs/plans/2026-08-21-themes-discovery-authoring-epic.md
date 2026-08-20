@@ -72,6 +72,8 @@ reference is published and protected against drift.
       maintaining divergent source copies.
 - [ ] Contributor instructions cover creation, verification, demo publishing,
       fidelity records, assets, and pull-request review.
+- [ ] Demo-site source/configuration and ownership are discoverable, resolving
+      the documentation gap tracked in #916.
 - [ ] Maintainer instructions cover preview, promotion, dashboard/gallery
       updates, release metadata, and the explicit tag/release gate.
 - [ ] Material and code.storage remain visibly marked preview/beta.
@@ -90,6 +92,9 @@ reference is published and protected against drift.
   class reference
 - [#854](https://github.com/flowershow/flowershow/issues/854) — broad historical
   themes/customization epic
+- [#916](https://github.com/flowershow/flowershow/issues/916) — where theme demo
+  sites and their configuration live; directly addressed by the site and
+  maintainer-guide workstream
 - [#1348](https://github.com/flowershow/flowershow/issues/1348) — separate
   breadcrumb-link core defect
 - [Approved design](https://github.com/flowershow/themes/blob/main/docs/plans/2026-08-21-themes-next-phase-design.md)
