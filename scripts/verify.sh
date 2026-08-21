@@ -53,9 +53,9 @@ with open(sys.argv[1]) as f:
 raise SystemExit(0 if config.get("enableSearch") is True else 1)
 PYEOF
 then
-  pass "shared demo enables the search review surface"
+  pass "shared demo requests the search review surface"
 else
-  bad "shared demo must enable search for visual review"
+  bad "shared demo must request search for visual review"
 fi
 
 if grep -Fq 'overflow-x: auto;' "$REPO_ROOT/codestorage-draft/demo-landing.css" && \

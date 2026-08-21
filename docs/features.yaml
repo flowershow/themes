@@ -40,6 +40,7 @@ themes:
     fidelity: reviewed-close # human-reviewed by Rufus 2026-08-21; preview/beta status remains until the release-readiness gate
     readiness: remain-preview
     readiness_record: docs/release-readiness.md#material
+    visual_review_record: docs/visual-review-matrix.md
     readiness_last_audited: 2026-08-21
     fidelity_notes: >
       Human review 2026-08-21: Rufus reviewed the current live demo and
@@ -107,6 +108,7 @@ themes:
     fidelity: reviewed-close # human-reviewed by Rufus 2026-08-21; preview/beta status remains until the release-readiness gate
     readiness: remain-preview
     readiness_record: docs/release-readiness.md#codestorage
+    visual_review_record: docs/visual-review-matrix.md
     readiness_last_audited: 2026-08-21
     fidelity_notes: >
       Human review 2026-08-21: Rufus reviewed the current live demo and

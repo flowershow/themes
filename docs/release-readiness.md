@@ -51,12 +51,18 @@ Status meanings:
 - **Known gaps:** tabbed content, previous/next pagination, and a version
   selector remain documented core/out-of-scope differences.
 
+### Completed review gates
+
+- [x] Desktop and mobile visual review is explicitly recorded.
+- [x] Light and dark visual review is explicitly recorded.
+- [x] Home, kitchen sink, blog listing/post, navbar, sidebar, and landing
+      surfaces are explicitly recorded as visually reviewed in the
+      [visual review matrix](visual-review-matrix.md).
+
 ### Pending gates
 
-- [ ] Desktop and mobile visual review is explicitly recorded.
-- [ ] Light and dark visual review is explicitly recorded.
-- [ ] Kitchen sink, blog listing/post, navbar, sidebar, search, and landing
-      surfaces are explicitly recorded as visually reviewed.
+- [ ] Search is explicitly visually reviewed once the preview site has the
+      Flowershow Search feature entitlement and renders the search control.
 - [ ] Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,
       and required attribution are reviewed; replace anything not cleared for
       an official release.
@@ -65,9 +71,9 @@ Status meanings:
 - [ ] Release metadata, purge coverage, version, and changelog are prepared.
 - [ ] A human explicitly authorizes promotion and the release tag.
 
-**Recommendation:** remain Preview. The next useful actions are the explicit
-visual review matrix and landing-fixture provenance review; release engineering
-should wait for their results.
+**Recommendation:** remain Preview. The responsive and mode matrix is complete;
+the next useful actions are search-surface enablement and the landing-fixture
+provenance review. Release engineering should wait for their results.
 
 ## code.storage
 
@@ -99,12 +105,18 @@ should wait for their results.
 - **Known gaps:** the reference's bracketed page-copy navigation and bespoke
   3D/diagram content remain explicitly outside the CSS theme.
 
+### Completed review gates
+
+- [x] Desktop and mobile visual review is explicitly recorded.
+- [x] Light and dark visual review is explicitly recorded.
+- [x] Home, kitchen sink, blog listing/post, navbar, sidebar, and landing
+      surfaces are explicitly recorded as visually reviewed in the
+      [visual review matrix](visual-review-matrix.md).
+
 ### Pending gates
 
-- [ ] Desktop and mobile visual review is explicitly recorded.
-- [ ] Light and dark visual review is explicitly recorded.
-- [ ] Kitchen sink, blog listing/post, navbar, sidebar, search, and landing
-      surfaces are explicitly recorded as visually reviewed.
+- [ ] Search is explicitly visually reviewed once the preview site has the
+      Flowershow Search feature entitlement and renders the search control.
 - [ ] Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,
       and required attribution are reviewed; replace anything not cleared for
       an official release.

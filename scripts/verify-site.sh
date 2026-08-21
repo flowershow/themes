@@ -176,10 +176,13 @@ if [ -s "$readiness_source" ]; then
     'material-draft|## Material|## code.storage'
     'codestorage-draft|## code.storage|## Promotion boundary'
   )
+  completed_gates=(
+    'Desktop and mobile visual review is explicitly recorded.'
+    'Light and dark visual review is explicitly recorded.'
+    'Home, kitchen sink, blog listing/post, navbar, sidebar, and landing'
+  )
   pending_gates=(
-    'Desktop and mobile visual review'
-    'Light and dark visual review'
-    'Kitchen sink, blog listing/post, navbar, sidebar, search, and landing'
+    'Search is explicitly visually reviewed once the preview site has the'
     'Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,'
     'Final public name and directory name are approved.'
     'Canonical Flowershow gallery and dashboard changes are prepared.'
@@ -196,6 +199,13 @@ if [ -s "$readiness_source" ]; then
     else
       bad "$theme_id section must record remain-preview on its theme marker"
     fi
+    for completed_gate in "${completed_gates[@]}"; do
+      if grep -Fq -- "- [x] $completed_gate" <<< "$section"; then
+        pass "$theme_id records completed: $completed_gate"
+      else
+        bad "$theme_id must record completed gate: $completed_gate"
+      fi
+    done
     for pending_gate in "${pending_gates[@]}"; do
       if grep -Fq -- "- [ ] $pending_gate" <<< "$section"; then
         pass "$theme_id keeps pending: $pending_gate"
@@ -218,7 +228,8 @@ for ledger_spec in "${ledger_specs[@]}"; do
     '$0 == "  - id: " id { found=1 } found && $0 ~ /^  - id: / && $0 != "  - id: " id { exit } found' \
     "$ROOT/docs/features.yaml")
   if grep -Fq '    readiness: remain-preview' <<< "$theme_block" && \
-     grep -Fq "    readiness_record: docs/release-readiness.md#$readiness_anchor" <<< "$theme_block"; then
+     grep -Fq "    readiness_record: docs/release-readiness.md#$readiness_anchor" <<< "$theme_block" && \
+     grep -Fq '    visual_review_record: docs/visual-review-matrix.md' <<< "$theme_block"; then
     pass "features ledger keeps $theme_id in Preview with its readiness record"
   else
     bad "features ledger must bind $theme_id remain-preview to #$readiness_anchor"
@@ -248,6 +259,7 @@ if [ -x "$ROOT/scripts/site.sh" ]; then
       "contributing.md"
       "maintainers.md"
       "readiness.md"
+      "visual-review-matrix.md"
       "status.md"
       "assets/themes/letterpress.png"
       "assets/themes/superstack.jpg"
@@ -280,6 +292,7 @@ if [ -n "$SITE_URL" ]; then
     "/contributing|Contribute a theme"
     "/maintainers|Maintain and release themes"
     "/readiness|Preview release readiness"
+    "/visual-review-matrix|Preview visual review matrix"
   )
   live_body=$(mktemp)
   for route_contract in "${live_routes[@]}"; do
