@@ -380,6 +380,16 @@
   line-height: 1.6;
 }
 
+/* Flowershow's syntax highlighter adds `.code-highlight` after Markdown is
+   rendered. Keep that generated wrapper inside this fixture's light code
+   surface instead of letting its default dark strip obscure the specimen. */
+.cs-landing .cs-code-demo pre code.code-highlight {
+  display: block;
+  padding: 0;
+  color: var(--cs-fg) !important;
+  background: transparent !important;
+}
+
 .cs-landing .cs-hljs-keyword {
   color: oklch(0.50 0.20 25);
   font-weight: 600;
