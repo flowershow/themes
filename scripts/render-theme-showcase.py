@@ -69,6 +69,7 @@ def validate_metadata(data: dict[str, object]) -> dict[str, str]:
     if (
         source.scheme != "https"
         or source.netloc != "github.com"
+        or "\\" in source.path
         or "%" in source.path
         or (
             decoded_path != "/flowershow/themes"

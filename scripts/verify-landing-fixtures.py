@@ -165,21 +165,115 @@ def contains_forbidden(folded_text: str, value: str) -> bool:
     return folded_value in folded_text
 
 
-def css_rule_selectors(css: str) -> list[str]:
-    """Return selectors from ordinary rule headers, including nested media rules."""
-    without_comments = re.sub(r"/\*.*?\*/", "", css, flags=re.DOTALL)
+def _next_css_delimiter(css: str, start: int) -> tuple[int, str]:
+    quote = ""
+    escaped = False
+    parentheses = 0
+    for index in range(start, len(css)):
+        character = css[index]
+        if escaped:
+            escaped = False
+        elif character == "\\":
+            escaped = True
+        elif quote:
+            if character == quote:
+                quote = ""
+        elif character in "\"'":
+            quote = character
+        elif character == "(":
+            parentheses += 1
+        elif character == ")" and parentheses:
+            parentheses -= 1
+        elif not parentheses and character in "{;":
+            return index, character
+    return len(css), ""
+
+
+def _matching_css_brace(css: str, opening: int) -> int:
+    depth = 1
+    quote = ""
+    escaped = False
+    for index in range(opening + 1, len(css)):
+        character = css[index]
+        if escaped:
+            escaped = False
+        elif character == "\\":
+            escaped = True
+        elif quote:
+            if character == quote:
+                quote = ""
+        elif character in "\"'":
+            quote = character
+        elif character == "{":
+            depth += 1
+        elif character == "}":
+            depth -= 1
+            if depth == 0:
+                return index
+    return len(css)
+
+
+def _split_css_selectors(header: str) -> list[str]:
     selectors = []
-    for match in re.finditer(r"(?:^|\})\s*([^{}]+?)\s*\{", without_comments):
-        header = match.group(1).strip()
-        if not header.startswith("@"):
-            selectors.extend(part.strip() for part in header.split(","))
-    # Rules directly inside @media start after its opening brace, not a `}`.
-    for block in re.finditer(r"@media[^{}]*\{(.*)\}\s*$", without_comments, re.DOTALL):
-        for match in re.finditer(r"(?:^|\})\s*([^{}]+?)\s*\{", block.group(1)):
-            header = match.group(1).strip()
-            if not header.startswith("@"):
-                selectors.extend(part.strip() for part in header.split(","))
+    start = 0
+    quote = ""
+    escaped = False
+    parentheses = 0
+    brackets = 0
+    for index, character in enumerate(header):
+        if escaped:
+            escaped = False
+        elif character == "\\":
+            escaped = True
+        elif quote:
+            if character == quote:
+                quote = ""
+        elif character in "\"'":
+            quote = character
+        elif character == "(":
+            parentheses += 1
+        elif character == ")" and parentheses:
+            parentheses -= 1
+        elif character == "[":
+            brackets += 1
+        elif character == "]" and brackets:
+            brackets -= 1
+        elif character == "," and not parentheses and not brackets:
+            selectors.append(header[start:index].strip())
+            start = index + 1
+    selectors.append(header[start:].strip())
     return selectors
+
+
+def _walk_css_rules(css: str) -> list[str]:
+    selectors = []
+    cursor = 0
+    while cursor < len(css):
+        delimiter, kind = _next_css_delimiter(css, cursor)
+        if not kind:
+            break
+        header = css[cursor:delimiter].strip()
+        if kind == ";":
+            cursor = delimiter + 1
+            continue
+        closing = _matching_css_brace(css, delimiter)
+        body = css[delimiter + 1 : closing]
+        if header.startswith("@"):
+            at_rule = header.split(None, 1)[0].casefold()
+            if at_rule not in {"@font-face", "@page", "@property"} and not (
+                at_rule.endswith("keyframes")
+            ):
+                selectors.extend(_walk_css_rules(body))
+        elif header:
+            selectors.extend(_split_css_selectors(header))
+        cursor = closing + 1
+    return selectors
+
+
+def css_rule_selectors(css: str) -> list[str]:
+    """Return ordinary selectors from a brace-aware recursive CSS walk."""
+    without_comments = re.sub(r"/\*.*?\*/", "", css, flags=re.DOTALL)
+    return _walk_css_rules(without_comments)
 
 
 def css_urls(css: str) -> list[str]:

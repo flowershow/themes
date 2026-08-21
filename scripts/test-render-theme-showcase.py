@@ -147,6 +147,9 @@ description: "{{yaml:description}}"
             "source-encoded-dot-segments": {
                 "sourceUrl": "https://github.com/flowershow/themes/%2e%2e/evil"
             },
+            "source-backslash-dot-segments": {
+                "sourceUrl": "https://github.com/flowershow/themes/foo\\..\\..\\evil"
+            },
         }
 
         for label, updates in mutations.items():
@@ -244,6 +247,50 @@ description: "{{yaml:description}}"
             self.assertEqual(result.returncode, 1)
             self.assertIn("Test Theme", result.stdout)
             self.assertIn("external CSS URL", result.stdout)
+
+            nested_cases = {
+                "multiple media blocks": """.test-landing { color: black; }
+@media (max-width: 900px) { .test-landing { color: gray; } }
+@media (max-width: 600px) { body { color: red; } }
+""",
+                "supports block": """.test-landing { color: black; }
+@supports (display: grid) { body { display: grid; } }
+""",
+            }
+            for label, css in nested_cases.items():
+                with self.subTest(label=label):
+                    (theme_dir / "demo-landing.css").write_text(css, encoding="utf-8")
+                    result = subprocess.run(
+                        ["python3", str(FIXTURE_VERIFIER)],
+                        cwd=ROOT,
+                        capture_output=True,
+                        text=True,
+                        check=False,
+                    )
+
+                    self.assertEqual(result.returncode, 1)
+                    self.assertIn(
+                        "showcase CSS selector is not scoped", result.stdout
+                    )
+                    self.assertIn("body", result.stdout)
+
+            (theme_dir / "demo-landing.css").write_text(
+                """.test-landing { color: black; }
+@supports (display: grid) {
+  .test-landing :is(.primary, .secondary) { display: grid; }
+}
+@-webkit-keyframes pulse { from { opacity: 0; } to { opacity: 1; } }
+""",
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                ["python3", str(FIXTURE_VERIFIER)],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_route_verifier_checks_every_standard_and_compatibility_route(self):
         responses = {
