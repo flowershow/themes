@@ -249,32 +249,64 @@ provenance_source="$ROOT/docs/landing-fixture-provenance.md"
 third_party_notices="$ROOT/THIRD_PARTY_NOTICES.md"
 if [ -s "$provenance_source" ] && [ -s "$third_party_notices" ]; then
   pass "landing-fixture provenance record and notices exist"
-  provenance_contracts=(
+  material_provenance=$(awk '
+    $0 == "## Material" { found=1 }
+    $0 == "## code.storage" { exit }
+    found
+  ' "$provenance_source")
+  codestorage_provenance=$(awk '
+    $0 == "## code.storage" { found=1 }
+    $0 == "## Boundary" { exit }
+    found
+  ' "$provenance_source")
+  material_provenance_contracts=(
     'data-provenance-theme="material-draft" data-disposition="attribution-and-trademark-review"'
-    'data-provenance-theme="codestorage-draft" data-disposition="replace-before-release"'
     'github.com/squidfunk/mkdocs-material/blob/master/README.md'
     'github.com/squidfunk/mkdocs-material/blob/master/LICENSE'
+    'obtain/record approval for the product-name and trademark presentation'
+    'independently document or replace every inline SVG'
+    'replace draft testimonials and third-party name tiles'
+    'replace the fixture with Flowershow-authored copy, identity, icons and claims'
+    'does not treat an open-source copyright license as a trademark or'
+  )
+  for provenance_contract in "${material_provenance_contracts[@]}"; do
+    if grep -Fq "$provenance_contract" <<< "$material_provenance"; then
+      pass "Material provenance section includes $provenance_contract"
+    else
+      bad "Material provenance section missing $provenance_contract"
+    fi
+  done
+  codestorage_provenance_contracts=(
+    'data-provenance-theme="codestorage-draft" data-disposition="replace-before-release"'
     'code.storage/legal/terms'
     'No public content-reuse license was found'
-    'not legal advice'
+    'Replace the company/product'
+    'marketing and product claims, pricing/SLA/security statements'
+    'contacts and upstream links with clearly Flowershow-authored demo material'
+    'Replace the inline SVG and branded pill wording with repository-owned assets'
+    'unless separate written'
   )
-  for provenance_contract in "${provenance_contracts[@]}"; do
-    if grep -Fq "$provenance_contract" "$provenance_source"; then
-      pass "provenance record includes $provenance_contract"
+  for provenance_contract in "${codestorage_provenance_contracts[@]}"; do
+    if grep -Fq "$provenance_contract" <<< "$codestorage_provenance"; then
+      pass "code.storage provenance section includes $provenance_contract"
     else
-      bad "provenance record missing $provenance_contract"
+      bad "code.storage provenance section missing $provenance_contract"
     fi
   done
-  for notice_contract in \
-    'Material for MkDocs' \
-    'Copyright (c) 2016-2025 Martin Donath' \
-    'Permission is hereby granted, free of charge'; do
-    if grep -Fq "$notice_contract" "$third_party_notices"; then
-      pass "third-party notices include $notice_contract"
-    else
-      bad "third-party notices missing $notice_contract"
-    fi
-  done
+
+  if grep -Fq 'not legal advice' "$provenance_source"; then
+    pass "provenance record states its practical, non-legal boundary"
+  else
+    bad "provenance record must state that it is not legal advice"
+  fi
+
+  material_license_hash=$(awk '/^MIT License$/ { found=1 } found' "$third_party_notices" | shasum -a 256 | awk '{ print $1 }')
+  expected_material_license_hash='1d18e1f58419fd7320b4367cbe744fa2ef8189a4627600c92ed81fbb633f3b53'
+  if [ "$material_license_hash" = "$expected_material_license_hash" ]; then
+    pass "third-party notices preserve the complete Material for MkDocs MIT notice"
+  else
+    bad "third-party notices must preserve the complete Material for MkDocs MIT notice"
+  fi
 else
   bad "landing-fixture provenance record or THIRD_PARTY_NOTICES.md missing"
 fi
