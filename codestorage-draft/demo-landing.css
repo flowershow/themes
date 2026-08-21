@@ -205,10 +205,57 @@
   margin-left: 0.25em;
 }
 
-.cs-landing .cs-logo-icon {
+.cs-landing .cs-node-mark {
+  position: relative;
   width: 48px;
   height: 48px;
   margin-bottom: var(--cs-space-xl);
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.cs-landing .cs-node-mark::before,
+.cs-landing .cs-node-mark::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 7px;
+  width: 30px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: center;
+  opacity: 0.65;
+}
+
+.cs-landing .cs-node-mark::before {
+  transform: rotate(45deg);
+}
+
+.cs-landing .cs-node-mark::after {
+  transform: rotate(-45deg);
+}
+
+.cs-landing .cs-node {
+  position: absolute;
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--cs-bg);
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cs-landing .cs-node-center {
+  top: 18px;
+  left: 18px;
+  width: 10px;
+  height: 10px;
+}
+
+.cs-landing .cs-node-nw { top: 7px; left: 7px; }
+.cs-landing .cs-node-ne { top: 7px; right: 7px; }
+.cs-landing .cs-node-sw { bottom: 7px; left: 7px; }
+.cs-landing .cs-node-se { right: 7px; bottom: 7px; }
 }
 
 .cs-landing .cs-hero {
