@@ -206,8 +206,8 @@ structural_findings:
     summary: "No prev/next page footer pagination in page.tsx; several reference sites use it."
     status: found-not-filed
   - id: callouts-use-data-attributes
-    summary: "Callouts are styled via [data-callout] / [data-callout-type] attributes, not class names; and bare attribute selectors tie the base rules at 0,1,0 so themes must scope to .rendered-mdx. Needs to be stated in the class reference."
-    status: folded-into
+    summary: "Callouts are styled via [data-callout] / [data-callout-type] attributes, not class names; and bare attribute selectors tie the base rules at 0,1,0 so themes must scope to .rendered-mdx. Documented in the semantic class reference by #1338."
+    status: completed
     issue: flowershow/flowershow#1338
   - id: subnav-breadcrumb-link-no-base-style
     summary: "default-theme.css's .site-subnav-breadcrumb-link defines only a :hover block, no base color/text-decoration — renders as browser-default blue/underlined regardless of theme. Every sibling *-link class in the same file sets an explicit base color; this is the one outlier."

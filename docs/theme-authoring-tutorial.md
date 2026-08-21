@@ -13,6 +13,13 @@ another repo unsupervised. See the companion
 [AI cloning skill](./ai-theme-cloning-skill.md) for the agent-facing
 version of the same method.
 
+Start broad visual changes with Flowershow's custom properties. When a theme
+needs component-specific selectors, use the published
+[semantic theme class reference](https://flowershow.app/docs/reference/theme-class-reference).
+It is the stable theme-author API for component hooks, states, variants, and
+their DOM ownership; do not infer that every class seen in component source is
+part of that contract.
+
 ## The method: two stages, never skip stage 1
 
 **Stage 1 — reproduce the target as standalone Tailwind/plain HTML+CSS,

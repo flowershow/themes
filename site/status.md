@@ -27,12 +27,16 @@ workflow, and documented the structural ceiling of CSS-only theming. See the
 completed [tracking issue](https://github.com/flowershow/flowershow/issues/1339)
 and [themes pull request](https://github.com/flowershow/themes/pull/8).
 
+The stable component, state, and variant hooks are now published in the
+[semantic theme class reference](https://flowershow.app/docs/reference/theme-class-reference),
+with automatic drift checking. That work closed
+[#1338](https://github.com/flowershow/flowershow/issues/1338) in
+[flowershow/flowershow#1366](https://github.com/flowershow/flowershow/pull/1366).
+
 ## Current work
 
 - evaluate this parallel discovery and authoring site;
 - make contribution and maintenance steps reproducible;
-- publish the semantic CSS-class API tracked in
-  [#1338](https://github.com/flowershow/flowershow/issues/1338); and
 - run the release-readiness checklist for Material and code.storage without
   assuming either should be promoted.
 

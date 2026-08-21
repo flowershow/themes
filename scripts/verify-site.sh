@@ -137,6 +137,19 @@ if [ -s "$SITE_DIR/contributing.md" ] && [ -s "$SITE_DIR/maintainers.md" ]; then
   done
 fi
 
+theme_class_reference="https://flowershow.app/docs/reference/theme-class-reference"
+for authoring_source in \
+  "$ROOT/docs/theme-authoring-tutorial.md" \
+  "$ROOT/docs/ai-theme-cloning-skill.md" \
+  "$SITE_DIR/contributing.md" \
+  "$SITE_DIR/status.md"; do
+  if grep -Fq "$theme_class_reference" "$authoring_source"; then
+    pass "$(basename "$authoring_source") links the semantic class reference"
+  else
+    bad "$(basename "$authoring_source") missing semantic class reference"
+  fi
+done
+
 if [ -s "$SITE_DIR/status.md" ]; then
   for entry in 'issues/1364' Material code.storage Preview; do
     if grep -Fq "$entry" "$SITE_DIR/status.md"; then
@@ -199,6 +212,15 @@ if [ -n "$SITE_URL" ]; then
       pass "live $route responds 200 with expected content"
     else
       bad "live $route failed content check (HTTP $status)"
+    fi
+  done
+
+  for authoring_route in /authoring /ai-theme-cloning /contributing /status; do
+    status=$(curl -sL -o "$live_body" -w '%{http_code}' --max-time 20 "$base_url$authoring_route?verify=$RANDOM" || echo 000)
+    if [ "$status" = "200" ] && grep -Fq "$theme_class_reference" "$live_body"; then
+      pass "live $authoring_route links the semantic class reference"
+    else
+      bad "live $authoring_route missing semantic class reference (HTTP $status)"
     fi
   done
 

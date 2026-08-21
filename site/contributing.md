@@ -10,6 +10,9 @@ representative content and records where visual fidelity deliberately stops.
 For the complete method, start with [Authoring a Flowershow theme](/authoring).
 If an AI agent is doing the visual translation, give it the
 [AI theme-cloning workflow](/ai-theme-cloning) as its operating instructions.
+For component-level CSS, use Flowershow's
+[semantic class reference](https://flowershow.app/docs/reference/theme-class-reference)
+instead of reverse-engineering selectors from an existing theme.
 
 ## Contribution path
 

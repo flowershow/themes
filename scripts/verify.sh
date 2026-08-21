@@ -21,10 +21,10 @@ REPO_ROOT="$(git -C "$(dirname "${BASH_SOURCE[0]}")" rev-parse --show-toplevel)"
 cd "$REPO_ROOT"
 
 # Required custom-property tokens every theme must define. Hand-maintained
-# copy of the ~10-token core API found in apps/flowershow/styles/
-# default-theme.css during the 2026-08-08 audit. THIS WILL DRIFT — refresh
-# it against flowershow/flowershow#1338 (publish the semantic class list)
-# once that ships. Until then this is the best available source of truth.
+# copy of the core token API documented at
+# https://flowershow.app/docs/reference/custom-styles. Component selectors are
+# documented separately at /docs/reference/theme-class-reference. Keep this
+# token gate aligned with custom-styles when the core API changes.
 REQUIRED_TOKENS=(
   "--font-heading"
   "--font-body"
