@@ -48,6 +48,12 @@ if [ -s "$SITE_DIR/config.json" ]; then
   else
     bad "site/config.json is not valid JSON"
   fi
+
+  if grep -Fq '"href": "/readiness"' "$SITE_DIR/config.json"; then
+    pass "site navigation links preview readiness"
+  else
+    bad "site navigation missing preview readiness"
+  fi
 fi
 
 if [ -s "$SITE_DIR/index.md" ]; then
@@ -150,6 +156,44 @@ for authoring_source in \
   fi
 done
 
+readiness_source="$ROOT/docs/release-readiness.md"
+if [ -s "$readiness_source" ]; then
+  pass "release-readiness record exists"
+  for readiness_contract in \
+    'data-readiness-theme="material-draft"' \
+    'data-readiness-theme="codestorage-draft"' \
+    'data-recommendation="remain-preview"' \
+    'flowershow/flowershow/issues/1367' \
+    'github.com/squidfunk/mkdocs-material/blob/master/LICENSE' \
+    'github.com/googlefonts/roboto-2/blob/main/LICENSE' \
+    'github.com/IBM/plex/blob/master/LICENSE.txt' \
+    'Desktop and mobile visual review' \
+    'Light and dark visual review' \
+    'human explicitly authorizes promotion'; do
+    if grep -Fq "$readiness_contract" "$readiness_source"; then
+      pass "readiness record includes $readiness_contract"
+    else
+      bad "readiness record missing $readiness_contract"
+    fi
+  done
+else
+  bad "docs/release-readiness.md missing or empty"
+fi
+
+for readiness_anchor in material codestorage; do
+  if grep -Fq "readiness_record: docs/release-readiness.md#$readiness_anchor" "$ROOT/docs/features.yaml"; then
+    pass "features ledger links $readiness_anchor readiness record"
+  else
+    bad "features ledger missing $readiness_anchor readiness record"
+  fi
+done
+readiness_status_count=$(grep -c 'readiness: remain-preview' "$ROOT/docs/features.yaml" || true)
+if [ "$readiness_status_count" -eq 2 ]; then
+  pass "features ledger keeps both candidates in Preview"
+else
+  bad "features ledger must record two remain-preview decisions"
+fi
+
 if [ -s "$SITE_DIR/status.md" ]; then
   for entry in 'issues/1364' Material code.storage Preview; do
     if grep -Fq "$entry" "$SITE_DIR/status.md"; then
@@ -172,6 +216,7 @@ if [ -x "$ROOT/scripts/site.sh" ]; then
       "ai-theme-cloning.md"
       "contributing.md"
       "maintainers.md"
+      "readiness.md"
       "status.md"
       "assets/themes/letterpress.png"
       "assets/themes/superstack.jpg"
@@ -203,6 +248,7 @@ if [ -n "$SITE_URL" ]; then
     "/ai-theme-cloning|Cloning a site"
     "/contributing|Contribute a theme"
     "/maintainers|Maintain and release themes"
+    "/readiness|Preview release readiness"
   )
   live_body=$(mktemp)
   for route_contract in "${live_routes[@]}"; do

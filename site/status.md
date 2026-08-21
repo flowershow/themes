@@ -37,8 +37,9 @@ with automatic drift checking. That work closed
 
 - evaluate this parallel discovery and authoring site;
 - make contribution and maintenance steps reproducible;
-- run the release-readiness checklist for Material and code.storage without
-  assuming either should be promoted.
+- complete the pending visual and product gates in the
+  [release-readiness record](/readiness) without assuming either Preview should
+  be promoted.
 
 ## Deferred decisions
 
