@@ -44,7 +44,20 @@
    they are not accent-coloured. */
 .mat-landing .expect-list { display: flex; flex-wrap: wrap; gap: 32px; }
 .mat-landing .expect-item { display: flex; flex-direction: row; gap: 12px; flex: 1 0 48%; }
-.mat-landing .expect-icon { width: 44px; height: 44px; flex: none; }
+.mat-landing .expect-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 1px solid rgba(226,228,233,0.3);
+  border-radius: 50%;
+  color: rgba(226,228,233,0.82);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
 
 /* measured: .mdx-spotlight__feature is flex, gap 64px, margin-bottom 64px */
 .mat-landing .spotlight { display: flex; gap: 64px; margin-bottom: 64px; align-items: center; }
@@ -57,4 +70,199 @@
    — an original-art version would restore that structure here. */
 .mat-landing .hero-placeholder {
   background: linear-gradient(180deg, #4d5eb8 0%, #8a9bd4 60%, #c9b6c4 85%, #1e2129 100%);
+}
+
+.mat-landing .mat-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(255,255,255,0.9);
+  border-radius: 8px 3px 8px 3px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mat-landing .mat-preview-label,
+.mat-landing .mat-eyebrow,
+.mat-landing .mat-kicker {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mat-landing .mat-preview-label {
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.86);
+}
+
+.mat-landing .mat-header-link,
+.mat-landing .mat-nav a {
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+}
+
+.mat-landing .mat-header-link:hover,
+.mat-landing .mat-nav a:hover {
+  color: #fff;
+}
+
+.mat-landing .mat-eyebrow {
+  margin: 0 0 12px;
+  color: rgba(255,255,255,0.72);
+}
+
+.mat-landing .mat-kicker {
+  margin: 0 0 10px;
+  color: #6b7280;
+}
+
+.mat-landing .mat-kicker-dark {
+  color: rgba(226,228,233,0.56);
+}
+
+.mat-landing .mat-scroll-cue {
+  position: absolute;
+  right: 0;
+  bottom: 26px;
+  left: 0;
+  z-index: 20;
+  color: rgba(255,255,255,0.82);
+  font-size: 26px;
+  text-align: center;
+}
+
+.mat-landing .specimen-panel {
+  display: flex;
+  flex: 1 1 0;
+  min-height: 230px;
+  padding: 32px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #f8fafc, #eef2ff);
+  color: #374151;
+  text-decoration: none;
+  box-shadow: 0 18px 45px rgba(30,33,41,0.08);
+}
+
+.mat-landing .specimen-panel span:first-child {
+  color: #dd2e57;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.mat-landing .specimen-panel-nav {
+  background: linear-gradient(145deg, #eef2ff, #fdf2f8);
+}
+
+.mat-landing .specimen-panel-code {
+  background: #1e2129;
+  color: rgba(226,228,233,0.82);
+  font-family: var(--font-mono, monospace);
+}
+
+.mat-landing .review-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.mat-landing .review-card {
+  display: flex;
+  min-height: 112px;
+  padding: 22px;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(226,228,233,0.18);
+  border-radius: 6px;
+  color: rgba(226,228,233,0.82);
+}
+
+.mat-landing .review-card span {
+  color: rgba(226,228,233,0.56);
+  font-size: 13px;
+}
+
+.mat-landing .open-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.mat-landing .open-card {
+  padding: 32px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.mat-landing .expect-marker-light {
+  margin-bottom: 24px;
+  border-color: #d1d5db;
+  color: #dd2e57;
+}
+
+.mat-landing .inspiration-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: 64px;
+}
+
+.mat-landing .dark-body a,
+.mat-landing .light-body a {
+  color: #dd2e57;
+}
+
+.mat-landing .mat-footer {
+  background: #1a1c23;
+  color: rgba(226,228,233,0.56);
+}
+
+.mat-landing .mat-footer a {
+  color: rgba(226,228,233,0.72);
+}
+
+@media (max-width: 760px) {
+  .mat-landing .mat-header-link,
+  .mat-landing .mat-preview-label {
+    display: none;
+  }
+
+  .mat-landing .mat-nav > div {
+    gap: 16px;
+    overflow-x: auto;
+  }
+
+  .mat-landing .mat-actions,
+  .mat-landing .mat-footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .mat-landing .expect-item {
+    flex-basis: 100%;
+  }
+
+  .mat-landing .spotlight {
+    gap: 28px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mat-landing .spotlight > * {
+    order: initial !important;
+  }
+
+  .mat-landing .review-grid,
+  .mat-landing .open-grid,
+  .mat-landing .inspiration-layout {
+    grid-template-columns: 1fr;
+  }
 }
