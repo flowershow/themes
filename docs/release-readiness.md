@@ -16,8 +16,8 @@ promotion and any release tag.
 technical and documentation foundation plus a responsive/light-dark review
 record for every currently rendered surface. Neither has a reviewed search
 surface, approved final identity, or prepared integration/release changes. The
-demo landing fixtures also need a copy/trademark/icon provenance decision before
-they can become official release artifacts.
+demo landing fixtures also need their recorded copy/trademark/icon provenance
+dispositions executed before they can become official release artifacts.
 
 Status meanings:
 
@@ -50,6 +50,11 @@ Status meanings:
   placeholder rather than redistributing the reference site's parallax art.
 - **Known gaps:** tabbed content, previous/next pagination, and a version
   selector remain documented core/out-of-scope differences.
+- **Fixture provenance audit:** upstream copyright reuse is traceable to MIT
+  sources and the required notice is preserved, but trademark presentation,
+  inline SVG provenance, testimonials, and third-party name tiles still need
+  the approval-or-replacement disposition in the
+  [landing-fixture provenance audit](landing-fixture-provenance.md) executed.
 
 ### Completed review gates
 
@@ -64,16 +69,17 @@ Status meanings:
 - [ ] Search is explicitly visually reviewed once the preview site has the
       Flowershow Search feature entitlement and renders the search control.
 - [ ] Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,
-      and required attribution are reviewed; replace anything not cleared for
-      an official release.
+      and representations follow the recorded attribution-or-replacement
+      disposition before an official release.
 - [ ] Final public name and directory name are approved.
 - [ ] Canonical Flowershow gallery and dashboard changes are prepared.
 - [ ] Release metadata, purge coverage, version, and changelog are prepared.
 - [ ] A human explicitly authorizes promotion and the release tag.
 
 **Recommendation:** remain Preview. The responsive and mode matrix is complete;
-the next useful actions are search-surface enablement and the landing-fixture
-provenance review. Release engineering should wait for their results.
+the next useful actions are search-surface enablement and execution of the
+landing-fixture provenance disposition. Release engineering should wait for
+their results.
 
 ## code.storage
 
@@ -104,6 +110,10 @@ provenance review. Release engineering should wait for their results.
   release and remain a gate below.
 - **Known gaps:** the reference's bracketed page-copy navigation and bespoke
   3D/diagram content remain explicitly outside the CSS theme.
+- **Fixture provenance audit:** no public content-reuse license was found for
+  the copied landing material, so the
+  [landing-fixture provenance audit](landing-fixture-provenance.md) requires
+  replacement rather than attribution before official release.
 
 ### Completed review gates
 
@@ -118,8 +128,8 @@ provenance review. Release engineering should wait for their results.
 - [ ] Search is explicitly visually reviewed once the preview site has the
       Flowershow Search feature entitlement and renders the search control.
 - [ ] Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,
-      and required attribution are reviewed; replace anything not cleared for
-      an official release.
+      product claims, contacts, and upstream links are replaced as required by
+      the recorded disposition before an official release.
 - [ ] Final public name and directory name are approved.
 - [ ] Canonical Flowershow gallery and dashboard changes are prepared.
 - [ ] Release metadata, purge coverage, version, and changelog are prepared.
@@ -127,7 +137,7 @@ provenance review. Release engineering should wait for their results.
 
 **Recommendation:** remain Preview. The font and hero-art substitutions support
 continued previewing; promotion still depends on search enablement, the
-provenance review, and an explicit product/release decision.
+recorded provenance replacements, and an explicit product/release decision.
 
 ## Promotion boundary
 

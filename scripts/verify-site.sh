@@ -245,6 +245,72 @@ else
   bad "docs/visual-review-matrix.md missing or empty"
 fi
 
+provenance_source="$ROOT/docs/landing-fixture-provenance.md"
+third_party_notices="$ROOT/THIRD_PARTY_NOTICES.md"
+if [ -s "$provenance_source" ] && [ -s "$third_party_notices" ]; then
+  pass "landing-fixture provenance record and notices exist"
+  material_provenance=$(awk '
+    $0 == "## Material" { found=1 }
+    $0 == "## code.storage" { exit }
+    found
+  ' "$provenance_source")
+  codestorage_provenance=$(awk '
+    $0 == "## code.storage" { found=1 }
+    $0 == "## Boundary" { exit }
+    found
+  ' "$provenance_source")
+  material_provenance_contracts=(
+    'data-provenance-theme="material-draft" data-disposition="attribution-and-trademark-review"'
+    'github.com/squidfunk/mkdocs-material/blob/master/README.md'
+    'github.com/squidfunk/mkdocs-material/blob/master/LICENSE'
+    'obtain/record approval for the product-name and trademark presentation'
+    'independently document or replace every inline SVG'
+    'replace draft testimonials and third-party name tiles'
+    'replace the fixture with Flowershow-authored copy, identity, icons and claims'
+    'does not treat an open-source copyright license as a trademark or'
+  )
+  for provenance_contract in "${material_provenance_contracts[@]}"; do
+    if grep -Fq "$provenance_contract" <<< "$material_provenance"; then
+      pass "Material provenance section includes $provenance_contract"
+    else
+      bad "Material provenance section missing $provenance_contract"
+    fi
+  done
+  codestorage_provenance_contracts=(
+    'data-provenance-theme="codestorage-draft" data-disposition="replace-before-release"'
+    'code.storage/legal/terms'
+    'No public content-reuse license was found'
+    'Replace the company/product'
+    'marketing and product claims, pricing/SLA/security statements'
+    'contacts and upstream links with clearly Flowershow-authored demo material'
+    'Replace the inline SVG and branded pill wording with repository-owned assets'
+    'unless separate written'
+  )
+  for provenance_contract in "${codestorage_provenance_contracts[@]}"; do
+    if grep -Fq "$provenance_contract" <<< "$codestorage_provenance"; then
+      pass "code.storage provenance section includes $provenance_contract"
+    else
+      bad "code.storage provenance section missing $provenance_contract"
+    fi
+  done
+
+  if grep -Fq 'not legal advice' "$provenance_source"; then
+    pass "provenance record states its practical, non-legal boundary"
+  else
+    bad "provenance record must state that it is not legal advice"
+  fi
+
+  material_license_hash=$(awk '/^MIT License$/ { found=1 } found' "$third_party_notices" | shasum -a 256 | awk '{ print $1 }')
+  expected_material_license_hash='1d18e1f58419fd7320b4367cbe744fa2ef8189a4627600c92ed81fbb633f3b53'
+  if [ "$material_license_hash" = "$expected_material_license_hash" ]; then
+    pass "third-party notices preserve the complete Material for MkDocs MIT notice"
+  else
+    bad "third-party notices must preserve the complete Material for MkDocs MIT notice"
+  fi
+else
+  bad "landing-fixture provenance record or THIRD_PARTY_NOTICES.md missing"
+fi
+
 ledger_specs=(
   'material-draft|material'
   'codestorage-draft|codestorage'
@@ -256,7 +322,8 @@ for ledger_spec in "${ledger_specs[@]}"; do
     "$ROOT/docs/features.yaml")
   if grep -Fq '    readiness: remain-preview' <<< "$theme_block" && \
      grep -Fq "    readiness_record: docs/release-readiness.md#$readiness_anchor" <<< "$theme_block" && \
-     grep -Fq '    visual_review_record: docs/visual-review-matrix.md' <<< "$theme_block"; then
+     grep -Fq '    visual_review_record: docs/visual-review-matrix.md' <<< "$theme_block" && \
+     grep -Fq "    provenance_record: docs/landing-fixture-provenance.md#$readiness_anchor" <<< "$theme_block"; then
     pass "features ledger keeps $theme_id in Preview with its readiness record"
   else
     bad "features ledger must bind $theme_id remain-preview to #$readiness_anchor"
@@ -287,6 +354,8 @@ if [ -x "$ROOT/scripts/site.sh" ]; then
       "maintainers.md"
       "readiness.md"
       "visual-review-matrix.md"
+      "landing-fixture-provenance.md"
+      "third-party-notices.md"
       "status.md"
       "assets/themes/letterpress.png"
       "assets/themes/superstack.jpg"
@@ -320,6 +389,8 @@ if [ -n "$SITE_URL" ]; then
     "/maintainers|Maintain and release themes"
     "/readiness|Preview release readiness"
     "/visual-review-matrix|Preview visual review matrix"
+    "/landing-fixture-provenance|Landing fixture provenance"
+    "/third-party-notices|Third-party notices"
   )
   live_body=$(mktemp)
   for route_contract in "${live_routes[@]}"; do
