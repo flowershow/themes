@@ -38,12 +38,12 @@ the other.
 
 ## Scope, as of 2026-08-08
 
-Focus is **new** themes (currently: `material-draft/`, `codestorage-draft/`
-— cloning mkdocs-material and code.storage), not the four existing shipped
-themes (`leaf/`, `letterpress/`, `lessflowery/`, `superstack/`). Those are
-explicitly out of scope for this round of work — do not edit them.
+Current candidates and recent additions are `material-draft/` and
+`monospace/`. Monospace is official; Material remains Preview. The older
+shipped themes (`leaf/`, `letterpress/`, `lessflowery/`, `superstack/`) remain
+out of scope unless a task explicitly names them.
 
-Draft themes live in `*-draft/` directories and are worked on a non-`main`
+Preview themes live in `*-draft/` directories and are worked on a non-`main`
 branch until explicitly promoted. `getThemeUrl()` in the main Flowershow
 app supports a full URL as the `theme` config value (not just
 `name@version`), so a draft can be demoed via a pinned jsDelivr URL
@@ -77,7 +77,7 @@ scripts/demo-site.sh material-draft --landing _repro/material-landing.html \
 # HTML+CSS. Prefer this over --landing once you're past stage 1 and the
 # target's chrome is close enough to Flowershow's own nav/footer to reuse
 # them — see docs/theme-authoring-tutorial.md.
-scripts/demo-site.sh codestorage-draft --landing-page codestorage-draft/demo-landing.md
+scripts/demo-site.sh monospace
 ```
 
 It assembles `_demo-content/` + a `config.json` pointing `theme` at a
@@ -102,8 +102,7 @@ live at `index.html` on the same site as the themed Markdown pages.
 
 ## Guard rails — never do these unattended
 
-- Never edit `leaf/`, `letterpress/`, `lessflowery/`, `superstack/`
-  (existing shipped themes) — out of scope this round, see above.
+- Never edit an existing shipped theme unless the task explicitly scopes it.
 - Never push to `main`, never create or push a `v*.*.*` git tag. Tagging
   is a real release (triggers `.github/workflows/release.yml`, which
   purges the public jsDelivr cache) — human-only action.
@@ -112,7 +111,7 @@ live at `index.html` on the same site as the themed Markdown pages.
 - Never remove or weaken a check in `scripts/verify.sh` to make a theme
   pass — if a check seems wrong, say so and stop, don't quietly delete it.
 - Never reference a commercial/non-redistributable font in a theme's
-  active `--font-*` stack (see `codestorage-draft/theme.css` header for
+  active `--font-*` stack (see `monospace/theme.css` header for
   why this came up — BerkeleyMono). Substitute an open font and say so in
   a comment; don't silently `@import` something unlicensed.
 - Never delete an `fl`-published demo site without recording the deletion
@@ -140,9 +139,8 @@ comparison), never inferred from the structural checks passing.
   `fs-<name>-<view>-<mode>.jpg` set both currently used across the
   existing four themes) — not resolved, only newly-required for themes
   promoted out of draft.
-- Per-theme versioning vs the current repo-global git tags — existing
-  themes are on repo-global tags; whether draft themes need their own
-  versioning scheme on promotion is unresolved.
+- Per-theme versioning vs the current repo-global git tags remains unresolved.
+  Promotion to a stable bare-name theme does not itself authorize a new tag.
 
 ## Related
 

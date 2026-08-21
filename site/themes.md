@@ -4,8 +4,8 @@ description: Compare official and preview Flowershow themes, open their demos, a
 showToc: false
 ---
 
-Four themes are released and available by name. Two more are being evaluated
-as previews. Preview status means “ready to try,” not “officially released.”
+Five themes are available by name. Material is still being evaluated as a
+preview. Preview status means “ready to try,” not “officially released.”
 
 <div className="not-prose mt-8 grid gap-8 md:grid-cols-2">
   <section data-theme-card="letterpress" data-theme-status="official" data-theme-config="letterpress" data-theme-demo="https://letterpress.flowershow.me/" data-theme-image="/assets/themes/letterpress.png" className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
@@ -78,17 +78,17 @@ as previews. Preview status means “ready to try,” not “officially released
     </div>
   </section>
 
-  <section data-theme-card="codestorage" data-theme-status="preview" data-theme-config="https://cdn.jsdelivr.net/gh/flowershow/themes@main/codestorage-draft/theme.css" data-theme-demo="https://codestorage-theme-demo-rufuspollock.flowershow.me" data-theme-image="/assets/themes/codestorage-preview.png" className="overflow-hidden rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/40 shadow-sm">
-    <img src="/assets/themes/codestorage-preview.png" alt="code.storage preview theme" className="aspect-[16/10] w-full border-b border-amber-100 object-cover object-top" />
+  <section data-theme-card="monospace" data-theme-status="official" data-theme-config="monospace" data-theme-demo="https://monospace-theme-demo-rufuspollock.flowershow.me" data-theme-image="/assets/themes/monospace.png" className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <img src="/assets/themes/monospace.png" alt="Monospace theme preview" className="aspect-[16/10] w-full border-b border-gray-100 object-cover object-top" />
     <div className="p-6">
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h2 className="m-0 text-2xl font-semibold text-gray-950">code.storage</h2>
-        <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-900">Preview</span>
+        <h2 className="m-0 text-2xl font-semibold text-gray-950">Monospace</h2>
+        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">Official</span>
       </div>
-      <p className="text-gray-600">A compact, near-monochrome preview for technical sites, with a deliberately small monospace type scale.</p>
-      <pre className="overflow-x-auto whitespace-pre-wrap rounded-lg bg-gray-950 p-4 text-xs text-gray-100"><code>&#123; &quot;theme&quot;: &quot;https://cdn.jsdelivr.net/gh/flowershow/themes@main/codestorage-draft/theme.css&quot; &#125;</code></pre>
-      <a href="https://codestorage-theme-demo-rufuspollock.flowershow.me" className="font-semibold text-amber-800">Open preview demo →</a>
-      <p className="mt-3 text-xs text-gray-500">Inspired by code.storage. Uses IBM Plex Mono because the reference site's Berkeley Mono is commercially licensed.</p>
+      <p className="text-gray-600">A compact, near-monochrome theme for technical sites, with a deliberately small monospace type scale.</p>
+      <pre className="overflow-x-auto rounded-lg bg-gray-950 p-4 text-sm text-gray-100"><code>&#123; &quot;theme&quot;: &quot;monospace&quot; &#125;</code></pre>
+      <a href="https://monospace-theme-demo-rufuspollock.flowershow.me" className="font-semibold text-orange-600">Open live demo →</a>
+      <p className="mt-3 text-xs text-gray-500">Inspired by code.storage. Uses open-source IBM Plex Mono in place of the commercially licensed reference font.</p>
     </div>
   </section>
 </div>

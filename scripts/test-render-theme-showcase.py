@@ -21,13 +21,13 @@ VALID_METADATA = {
     "schemaVersion": 1,
     "name": "Monospace",
     "slug": "monospace",
-    "status": "preview",
+    "status": "official",
     "headline": "A sharper home for your Markdown",
     "description": (
         "A compact monospace theme for docs, notes, blogs, and technical publishing."
     ),
     "wrapperClass": "cs-landing",
-    "sourceUrl": "https://github.com/flowershow/themes/tree/main/codestorage-draft",
+    "sourceUrl": "https://github.com/flowershow/themes/tree/main/monospace",
 }
 
 VALID_TEMPLATE = """---
@@ -68,7 +68,7 @@ def run_renderer(metadata, template=VALID_TEMPLATE):
 
 class RenderShowcaseTests(unittest.TestCase):
     def test_monospace_owns_its_showcase_template(self):
-        template_path = ROOT / "codestorage-draft/demo-showcase.template.md"
+        template_path = ROOT / "monospace/demo-showcase.template.md"
         self.assertTrue(template_path.is_file())
         template = template_path.read_text(encoding="utf-8")
 
@@ -77,7 +77,7 @@ class RenderShowcaseTests(unittest.TestCase):
         self.assertIn('aria-label="A small {{name}} theme specimen"', template)
 
     def test_monospace_template_keeps_nested_html_in_one_markdown_block(self):
-        template_path = ROOT / "codestorage-draft/demo-showcase.template.md"
+        template_path = ROOT / "monospace/demo-showcase.template.md"
         self.assertTrue(template_path.is_file())
         template = template_path.read_text(encoding="utf-8")
         html_block = template[template.index('<div class="{{wrapperClass}}') :]
@@ -92,7 +92,7 @@ class RenderShowcaseTests(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('data-theme-showcase="monospace"', page)
-        self.assertIn('data-theme-status="preview"', page)
+        self.assertIn('data-theme-status="official"', page)
         self.assertIn("<h1>Write &lt;share&gt; &amp; publish</h1>", page)
         self.assertEqual(page.lower().count("<h1"), 1)
         self.assertNotIn("{{", page)
@@ -179,7 +179,7 @@ description: "{{yaml:description}}"
                 [
                     "bash",
                     "scripts/demo-site.sh",
-                    "codestorage-draft",
+                    "monospace",
                     "--build-only",
                     str(output),
                 ],
@@ -401,7 +401,7 @@ title: "{{yaml:name}}"
         self.assertEqual(result.stdout, "")
 
     def test_monospace_style_gate_rejects_later_display_overrides(self):
-        css = (ROOT / "codestorage-draft/demo-landing.css").read_text(
+        css = (ROOT / "monospace/demo-landing.css").read_text(
             encoding="utf-8"
         )
         cases = {

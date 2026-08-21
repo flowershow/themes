@@ -4,8 +4,10 @@ description: What is official, what is experimental, and what comes next for Flo
 ---
 
 This site is an experiment in giving theme users and theme authors one coherent
-home. Work is tracked in
-[flowershow/flowershow#1364](https://github.com/flowershow/flowershow/issues/1364).
+home. Product evaluation is tracked in
+[flowershow/flowershow#1369](https://github.com/flowershow/flowershow/issues/1369),
+and Search review is tracked separately in
+[flowershow/flowershow#1370](https://github.com/flowershow/flowershow/issues/1370).
 
 Live preview: https://flowershow-themes-preview-rufuspollock.flowershow.me
 
@@ -13,9 +15,10 @@ Live preview: https://flowershow-themes-preview-rufuspollock.flowershow.me
 
 - The [Flowershow themes reference](https://flowershow.app/docs/reference/themes)
   remains canonical for now and is not being replaced in this phase.
-- Letterpress, Superstack, LessFlowery, and Leaf are official themes.
+- Letterpress, Superstack, LessFlowery, Leaf, and Monospace are **Official** themes.
 - Material is a **Preview** theme.
-- code.storage is a **Preview** theme.
+- Monospace was inspired by code.storage and uses the bare config value
+  `monospace`.
 - Preview themes can be tried with a full CSS URL but are not available in the
   dashboard theme picker and have not been included in a tagged release.
 
@@ -35,16 +38,18 @@ with automatic drift checking. That work closed
 
 ## Current work
 
-- evaluate this parallel discovery and authoring site;
+- answer the concrete review questions in
+  [#1369](https://github.com/flowershow/flowershow/issues/1369);
 - make contribution and maintenance steps reproducible;
 - complete the pending visual and product gates in the
-  [release-readiness record](/readiness) without assuming either Preview should
-  be promoted.
+  [release-readiness record](/readiness) for Material; and
+- enable and visually verify Search through
+  [#1370](https://github.com/flowershow/flowershow/issues/1370).
 
 ## Deferred decisions
 
 - whether this site or the existing reference gallery becomes canonical;
-- whether either Preview theme becomes official;
+- whether Material becomes official;
 - whether a shared catalog should eventually drive the site, dashboard, and
   documentation;
 - whether authoring guidance stays here or is generated elsewhere; and

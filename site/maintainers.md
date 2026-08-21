@@ -63,9 +63,9 @@ documents both CDN and Flowershow cache behavior.
 
 ## Preview-to-official readiness
 
-Run this checklist separately for each candidate. Material and code.storage
-remain **Preview** until every required item is reviewed and a human explicitly
-approves promotion.
+Run this checklist separately for each candidate. Monospace completed the
+promotion decision on 2026-08-21; Material remains **Preview** until its own
+required items are reviewed and a human explicitly approves promotion.
 
 Their evidence and open gates are maintained in the canonical
 [preview release-readiness record](/readiness), tracked by
@@ -91,8 +91,9 @@ review comment alone.
 - [ ] A version and changelog are agreed.
 - [ ] A human explicitly authorizes the release tag.
 
-Passing the list makes the theme eligible for promotion. It does not itself
-authorize a rename, dashboard listing, tag, release, or cache purge.
+Passing the list makes the theme eligible for promotion. An explicit human
+decision authorizes the name, stable directory and product listings; a version
+tag remains a separate release action and is never implied by promotion alone.
 
 ## Promote and release
 

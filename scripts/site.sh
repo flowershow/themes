@@ -33,7 +33,7 @@ build_site() {
   cp "$ROOT/lessflowery/fs-lessflowery-page-light.jpg" "$output_dir/assets/themes/lessflowery.jpg"
   cp "$ROOT/leaf/preview.png" "$output_dir/assets/themes/leaf.png"
   cp "$ROOT/material-draft/preview.png" "$output_dir/assets/themes/material-preview.png"
-  cp "$ROOT/codestorage-draft/preview.png" "$output_dir/assets/themes/codestorage-preview.png"
+  cp "$ROOT/monospace/preview.png" "$output_dir/assets/themes/monospace.png"
 }
 
 command_name="${1:-}"

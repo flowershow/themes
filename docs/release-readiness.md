@@ -1,9 +1,9 @@
 ---
-title: Preview release readiness
-description: Evidence and remaining gates for Material and code.storage.
+title: Theme release readiness
+description: Promotion evidence for Monospace and remaining gates for Material.
 ---
 
-This is the versioned readiness record for the two candidate themes tracked in
+This is the versioned readiness record for the themes tracked in
 [flowershow/flowershow#1367](https://github.com/flowershow/flowershow/issues/1367),
 a focused child of the [themes successor epic](https://github.com/flowershow/flowershow/issues/1364).
 Passing repository checks does not promote a theme. A maintainer must review
@@ -12,12 +12,13 @@ promotion and any release tag.
 
 ## Current result
 
-**Material: remain Preview. code.storage: remain Preview.** Both have a solid
-technical and documentation foundation plus a responsive/light-dark review
-record for every currently rendered surface. Neither has a reviewed search
-surface, approved final identity, or prepared integration/release changes. The
-demo landing fixtures now use Flowershow-owned specimen content and have closed
-their recorded copy/trademark/icon provenance actions.
+**Material: remain Preview. Monospace: Official.** Both have a solid technical
+and documentation foundation plus a responsive/light-dark review record for
+every currently rendered surface. Rufus approved the final Monospace name and
+promotion on 2026-08-21. Search is still unavailable on the demo sites and is
+tracked transparently in
+[flowershow/flowershow#1370](https://github.com/flowershow/flowershow/issues/1370)
+as a non-blocking visual-review follow-up.
 
 Status meanings:
 
@@ -79,19 +80,19 @@ Status meanings:
 responsive/mode matrix are complete. Search enablement, naming, integration,
 release preparation and explicit human authorization remain outstanding.
 
-## code.storage
+## Monospace
 
-<div data-readiness-theme="codestorage-draft" data-recommendation="remain-preview"></div>
+<div data-readiness-theme="monospace" data-recommendation="official"></div>
 
 ### Verified evidence
 
-- **Human fidelity:** Rufus reviewed the live preview on 2026-08-21 and said it
-  looked okay; the decision is recorded in `docs/features.yaml` as
-  `reviewed-close`.
-- **Repository contract:** `codestorage-draft/theme.css` and `preview.png`
+- **Human decision:** Rufus reviewed the finished Monospace homepage on
+  2026-08-21, said it was good to advance beyond Preview, and approved the
+  public name **Monospace** with the bare config value `monospace`.
+- **Repository contract:** `monospace/theme.css` and `preview.png`
   exist; required tokens, brace balance, dark-mode declarations, and the
   preview asset pass `scripts/verify.sh`.
-- **Live surfaces:** the [demo and canonical showcase](https://codestorage-theme-demo-rufuspollock.flowershow.me/),
+- **Live surfaces:** the [demo and canonical showcase](https://monospace-theme-demo-rufuspollock.flowershow.me/),
   kitchen sink, blog list, post, and `/landing` compatibility path pass
   HTTP/content smoke checks.
 - **Theme source method:** the reference is a proprietary service, so values
@@ -123,22 +124,24 @@ release preparation and explicit human authorization remain outstanding.
 - [x] Landing-fixture identity, copy, claims, contacts, upstream links, and
       unresolved SVG use the recorded Flowershow-owned specimen disposition.
 
-### Pending gates
+### Completed promotion gates
 
-- [ ] Search is explicitly visually reviewed once the preview site has the
-      Flowershow Search feature entitlement and renders the search control.
-- [ ] Final public name and directory name are approved.
-- [ ] Canonical Flowershow gallery and dashboard changes are prepared.
-- [ ] Release metadata, purge coverage, version, and changelog are prepared.
-- [ ] A human explicitly authorizes promotion and the release tag.
+- [x] Final public name and directory name are approved as Monospace / monospace.
+- [x] Themes gallery, canonical Flowershow gallery, and dashboard integration are prepared.
+- [x] Rufus explicitly authorized promotion on 2026-08-21.
 
-**Recommendation:** remain Preview. The font, hero-art and landing-content
-substitutions support continued previewing; promotion still depends on search
-enablement, naming, integration/release preparation and explicit authorization.
+### Non-blocking follow-ups
+
+- [ ] Search is visually reviewed after entitlement is enabled in flowershow/flowershow#1370.
+- [ ] A versioned release tag and changelog are separately approved.
+
+**Recommendation:** Official. The font, hero-art and landing-content
+substitutions are approved, the stable identity is Monospace, and the bare
+configuration value is `monospace`. This promotion does not create a version
+tag; Search review continues separately because entitlement is unavailable.
 
 ## Promotion boundary
 
-When a theme clears every pending gate, this record may recommend a **separate
-promotion proposal**. It must not trigger a rename, dashboard/gallery edit,
-release commit, or tag by itself. Follow the [maintainer checklist](/maintainers)
-and record the approving decision in #1367.
+Material still requires a separate promotion decision. Monospace was explicitly
+approved and promoted without creating a version tag. Future tags remain a
+separate release action under the [maintainer checklist](/maintainers).

@@ -1,7 +1,7 @@
 # Authoring a Flowershow theme
 
 Written from what actually broke building `material-draft/` and
-`codestorage-draft/` (2026-08-08/09) — not written first. If something here
+`monospace/` (2026-08-08/09) — not written first. If something here
 turns out wrong, trust a fresh render over this doc and fix the doc.
 
 **Placement note:** this lives in this repo's `docs/` for now. It was
@@ -178,7 +178,7 @@ All found by rendering, not by reading `docs/theming.md`:
 ## Licensing
 
 Never reference a commercial or non-redistributable font in a theme's
-active `--font-*` stack. `codestorage-draft/theme.css`'s header comment is
+active `--font-*` stack. `monospace/theme.css`'s header comment is
 the worked example: the reference site uses BerkeleyMono (commercial,
 berkeleygraphics.com), substituted with the open IBM Plex Mono, documented
 in a comment so a license holder knows they can override

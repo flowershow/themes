@@ -1,6 +1,6 @@
 ---
 title: Landing fixture provenance
-description: Source evidence and release disposition for the Material and code.storage preview landing pages.
+description: Source evidence and release disposition for the Material preview and Monospace landing pages.
 ---
 
 This audit separates the independently authored CSS themes from the marketing
@@ -50,11 +50,12 @@ reference to the upstream open-source project.
 
 ## code.storage
 
-<div data-provenance-theme="codestorage-draft" data-disposition="executed-owned-specimen"></div>
+<div data-provenance-theme="monospace" data-disposition="executed-owned-specimen"></div>
 
 ### Evidence
 
-- The original `codestorage-draft/demo-landing.md` reproduced the Code Storage
+- The original `codestorage-draft/demo-landing.md` (before promotion and rename)
+  reproduced the Code Storage
   and Pierre Computer Company names, marketing copy, product claims, pricing,
   SLA/security statements, API example identities, contact details and upstream
   navigation. Those elements are retained here only as historical audit facts.

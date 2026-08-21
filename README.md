@@ -44,6 +44,17 @@ A nature-inspired theme with subtle green colors.
 
 [👀 Demo](https://leaf.flowershow.app/)
 
+### Monospace
+
+A compact, near-monochrome theme for technical documentation, notes, and blogs.
+
+![Monospace Theme Preview](monospace/preview.png)
+
+[👀 Demo](https://monospace-theme-demo-rufuspollock.flowershow.me/)
+
+Inspired by code.storage, with open-source IBM Plex Mono replacing the
+reference site's commercially licensed font.
+
 
 ## Usage
 
