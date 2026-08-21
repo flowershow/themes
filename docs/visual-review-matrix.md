@@ -75,6 +75,15 @@ background that striped the configuration example. A landing-scoped override
 now keeps the generated code wrapper transparent and block-level. Configuration
 code stayed readable in the repeated desktop/mobile and light/dark runs.
 
+Independent review then caught three structural defects: the landing calls to
+action used a nonexistent `/kitchen-sink` route, the monospace landing CSS had
+one unmatched closing brace, and the Material-inspired page used section
+headings as additional `h1` elements. The links now use the live
+`/docs/kitchen-sink` route, the CSS is balanced, and each landing has one `h1`
+with nested section headings. A repeated eight-render audit confirmed the
+linked specimen responds HTTP 200 and the corrected pages retain their visual
+hierarchy in both modes and viewports.
+
 ## Still unavailable or pending
 
 - The shared demo requests search with `enableSearch: true`, but these preview
