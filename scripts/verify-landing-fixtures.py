@@ -3,6 +3,7 @@
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -86,9 +87,19 @@ def verify(contract: FixtureContract) -> list[str]:
     failures.extend(
         f'{contract.label}: forbidden content remains: {value}'
         for value in contract.forbidden
-        if value.casefold() in folded
+        if contains_forbidden(folded, value)
     )
     return failures
+
+
+def contains_forbidden(folded_text: str, value: str) -> bool:
+    """Match identifiers as terms while keeping markup/fragments literal."""
+    folded_value = value.casefold()
+    if folded_value[0].isalnum() and folded_value[-1].isalnum():
+        return re.search(
+            rf"(?<!\w){re.escape(folded_value)}(?!\w)", folded_text
+        ) is not None
+    return folded_value in folded_text
 
 
 def main() -> int:
