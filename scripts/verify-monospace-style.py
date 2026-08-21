@@ -188,16 +188,30 @@ def effective_property(rules: list[Rule], target: str, property_name: str) -> st
 def verify(css: str) -> list[str]:
     rules = parse_rules(css)
     contracts = (
-        ("h1", "font-size", "18px"),
-        ("h2", "font-size", "16px"),
+        ("h1", ".cs-landing h1", "font-size", "18px"),
+        ("h2", ".cs-landing h2", "font-size", "16px"),
         (
             "hero",
+            ".cs-landing .ts-hero-grid",
             "grid-template-columns",
             "minmax(0, 1fr) minmax(280px, 420px)",
         ),
     )
     failures = []
-    for target, property_name, expected in contracts:
+    for target, approved_selector, property_name, expected in contracts:
+        competing = [
+            rule.selector
+            for rule in rules
+            if matching_target(rule.selector, target)
+            and property_name in rule.declarations
+            and re.sub(r"\s+", " ", rule.selector.strip()) != approved_selector
+        ]
+        if competing:
+            failures.append(
+                f"{target} {property_name} has competing desktop selector(s): "
+                + ", ".join(competing)
+            )
+            continue
         actual = effective_property(rules, target, property_name)
         if re.sub(r"\s+", "", actual) != re.sub(r"\s+", "", expected):
             failures.append(

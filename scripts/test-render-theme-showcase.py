@@ -405,6 +405,10 @@ title: "{{yaml:name}}"
             encoding="utf-8"
         )
         cases = {
+            "earlier higher-specificity heading": (
+                "body .cs-landing h1 { font-size: 96px; }\n" + css,
+                "font-size",
+            ),
             "oversized heading": (
                 css + "\n.cs-landing h1 { font-size: 96px; }\n",
                 "font-size",
