@@ -10,6 +10,11 @@ import sys
 DESKTOP_WIDTH = 1280
 
 APPROVED_DESKTOP_SELECTORS = {
+    "all": set(),
+    "font": {
+        ".cs-landing pre code",
+        ".cs-landing pre code.code-highlight",
+    },
     "font-size": {
         ".cs-landing",
         ".cs-landing h1",
@@ -22,6 +27,8 @@ APPROVED_DESKTOP_SELECTORS = {
         ".cs-landing .ts-art-label",
         ".cs-landing .ts-status",
     },
+    "grid": set(),
+    "grid-template": set(),
     "grid-template-columns": {".cs-landing .ts-hero-grid"},
 }
 

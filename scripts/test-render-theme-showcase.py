@@ -419,6 +419,19 @@ title: "{{yaml:name}}"
                 + css,
                 "grid-template-columns",
             ),
+            "font shorthand heading": (
+                css + "\n.cs-landing h1 { font: 96px monospace; }\n",
+                "font",
+            ),
+            "grid-template shorthand hero": (
+                css
+                + "\n.cs-landing .ts-hero-grid { grid-template: none / 1fr; }\n",
+                "grid-template",
+            ),
+            "all shorthand heading": (
+                css + "\n.cs-landing h1 { all: revert; }\n",
+                "all",
+            ),
             "oversized heading": (
                 css + "\n.cs-landing h1 { font-size: 96px; }\n",
                 "font-size",
