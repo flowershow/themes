@@ -68,13 +68,13 @@ def declarations(selector):
     return re.sub(r"\s+", "", match.group(1)) if match else ""
 
 contracts = {
-    ".cs-landing .cs-container": ("min-width:0;",),
-    ".cs-landing .cs-section": ("min-width:0;",),
-    ".cs-landing .cs-hero": ("min-width:0;",),
-    ".cs-landing .cs-hero-text": ("min-width:0;",),
-    ".cs-landing .cs-pricing-grid": ("min-width:0;",),
-    ".cs-landing .cs-pricing-table-wrapper": ("min-width:0;",),
-    ".cs-landing .cs-ascii-table": ("max-width:100%;", "overflow-x:auto;"),
+    ".cs-landing": ("min-width:0;", "overflow:hidden;"),
+    ".cs-landing .ts-wrap": ("min-width:0;",),
+    ".cs-landing .ts-hero-copy": ("min-width:0;",),
+    ".cs-landing .ts-hero-art": ("min-width:0;",),
+    ".cs-landing .ts-card": ("min-width:0;",),
+    ".cs-landing .ts-theme-sample": ("min-width:0;",),
+    ".cs-landing .ts-theme-sample pre": ("max-width:100%;", "overflow-x:auto;"),
 }
 
 raise SystemExit(0 if all(
@@ -83,9 +83,9 @@ raise SystemExit(0 if all(
 ) else 1)
 PYEOF
 then
-  pass "code.storage landing constrains wide content on mobile"
+  pass "Monospace showcase constrains wide content on mobile"
 else
-  bad "code.storage landing needs overflow and intrinsic-width guards"
+  bad "Monospace showcase needs overflow and intrinsic-width guards"
 fi
 
 if python3 - "$REPO_ROOT/material-draft/theme.css" <<'PYEOF'
@@ -176,30 +176,26 @@ while IFS=$'\t' read -r id dir; do
     warning "no preview asset yet (not a hard gate pre-launch, but required before promoting out of draft)"
   fi
 
-  demo_url=$(python3 - "$REPO_ROOT/docs/features.yaml" "$id" <<'PYEOF'
-import re, sys
-text = open(sys.argv[1]).read()
-target = sys.argv[2]
-m = re.search(rf'- id: {re.escape(target)}\n(?:.*\n)*?\s+demo_url: (\S+)', text)
-url = m.group(1) if m else "null"
-print("" if url == "null" else url)
-PYEOF
-  )
+  demo_url=$(python3 "$REPO_ROOT/scripts/read-feature-field.py" \
+    "$REPO_ROOT/docs/features.yaml" "$id" demo_url)
 
   if [ -n "$demo_url" ]; then
-    code=$(curl -s -o /tmp/verify-demo-body.html -w "%{http_code}" --max-time 20 "$demo_url" || echo "000")
-    if [ "$code" = "200" ] && grep -q "Theme Demo Site" /tmp/verify-demo-body.html; then
-      pass "demo site responds 200 and renders expected content ($demo_url)"
-    else
-      bad "demo site smoke check failed (HTTP $code) ($demo_url)"
+    expected_demo_content="Theme Demo Site"
+    if [ -s "$REPO_ROOT/$dir/demo-showcase.json" ]; then
+      expected_demo_content=$(python3 - "$REPO_ROOT/$dir/demo-showcase.json" <<'PYEOF'
+import json, sys
+with open(sys.argv[1]) as source:
+    print(f'data-theme-showcase="{json.load(source)["slug"]}"')
+PYEOF
+      )
     fi
-
-    component_url="${demo_url%/}/docs/kitchen-sink"
-    component_code=$(curl -sL -o /tmp/verify-component-body.html -w "%{http_code}" --max-time 20 "$component_url" || echo "000")
-    if [ "$component_code" = "200" ] && grep -qi "Kitchen Sink" /tmp/verify-component-body.html; then
-      pass "linked kitchen-sink specimen responds 200 ($component_url)"
+    compatibility_url=$(python3 "$REPO_ROOT/scripts/read-feature-field.py" \
+      "$REPO_ROOT/docs/features.yaml" "$id" landing_compatibility_url)
+    if python3 "$REPO_ROOT/scripts/verify-demo-routes.py" \
+      "$demo_url" "$expected_demo_content" "$compatibility_url"; then
+      pass "all standard demo routes respond with expected content ($demo_url)"
     else
-      bad "linked kitchen-sink specimen failed (HTTP $component_code) ($component_url)"
+      bad "one or more standard demo routes failed ($demo_url)"
     fi
   else
     warning "no demo_url recorded yet — live smoke check skipped, not failed"
@@ -212,15 +208,8 @@ PYEOF
   # NOTE: hit the bare root, NOT /index.html. Raw .html paths 404 when given
   # any query string (flowershow/flowershow#1345), so the usual cache-busting
   # trick breaks them. The bare root serves the same file and tolerates ?cb=.
-  landing_url=$(python3 - "$REPO_ROOT/docs/features.yaml" "$id" <<'PYEOF'
-import re, sys
-text = open(sys.argv[1]).read()
-target = sys.argv[2]
-m = re.search(rf'- id: {re.escape(target)}\n(?:.*\n)*?\s+landing_demo_url: (\S+)', text)
-url = m.group(1) if m else "null"
-print("" if url == "null" else url)
-PYEOF
-  )
+  landing_url=$(python3 "$REPO_ROOT/scripts/read-feature-field.py" \
+    "$REPO_ROOT/docs/features.yaml" "$id" landing_demo_url)
 
   if [ -n "$landing_url" ]; then
     lcode=$(curl -sL -o /tmp/verify-landing-body.html -w "%{http_code}" --max-time 20 "${landing_url}/?cb=$RANDOM" || echo "000")

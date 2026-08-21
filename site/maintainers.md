@@ -6,14 +6,16 @@ description: Internal workflow for reviewing previews, updating galleries, and p
 This page is the operational path for Flowershow maintainers. It complements
 the public [contribution guide](/contributing) and the method in
 [Authoring a Flowershow theme](/authoring).
+The canonical [standard demo pages and content inventory](/demo-site-content)
+defines route ownership, metadata, migration, publishing, and verification.
 
 ## Where theme demos live
 
 Demo content is versioned here:
 
-- `_demo-content/` contains the shared kitchen sink and blog;
-- `THEME-DIR/demo-landing.md` and `demo-landing.css` contain an optional
-  theme-specific landing page;
+- `_demo-content/` contains the shared showcase template, kitchen sink, and blog;
+- `THEME-DIR/demo-showcase.json` contains the theme-specific homepage identity;
+- `THEME-DIR/demo-landing.css` styles the shared homepage under its wrapper;
 - `scripts/demo-site.sh` assembles and publishes the demo;
 - `docs/features.yaml` records the public URL and retired-site history.
 
@@ -42,11 +44,16 @@ Push the exact branch commit first, then run:
 scripts/demo-site.sh THEME-DIR
 ```
 
-For a shipped `layout: plain` landing page:
+To inspect assembly without publishing:
 
 ```bash
-scripts/demo-site.sh THEME-DIR --landing-page THEME-DIR/demo-landing.md
+output_dir=$(mktemp -d)
+scripts/demo-site.sh THEME-DIR --build-only "$output_dir"
 ```
+
+The standard homepage publishes at `/`; an identical `/landing` copy preserves
+links during migration. `--landing-page` is only for a documented exceptional
+fixture, not the normal theme-demo path.
 
 The script pins the theme to a commit SHA on jsDelivr. After publishing, update
 `docs/features.yaml` and rerun `scripts/verify.sh`. If a live page appears

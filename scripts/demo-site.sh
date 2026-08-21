@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
 # Build and publish a demo site for a theme.
 #
-#   scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>]
+#   scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>] [--build-only <output-dir>]
 #
-# Assembles a site from:
-#   - _demo-content/          the shared kitchen-sink + blog content, so every
-#                             theme is compared on IDENTICAL content
+# Assembles a site from (see docs/demo-site-content.md):
+#   - _demo-content/          the shared showcase template, kitchen sink, and
+#                             blog, so every theme uses identical content
 #   - <theme-dir>/theme.css   applied via a jsDelivr URL pinned to the current
 #                             git branch (no release/tag needed for drafts)
+#   - <theme-dir>/demo-showcase.json + demo-landing.css
+#                             the standard homepage's validated identity and
+#                             theme-scoped presentation. Rendered at / with an
+#                             identical /landing compatibility page.
 #   - --landing <file>        optional raw .html landing page, published as
 #                             index.html, REPLACING the site's home page. Used
 #                             for stage-1 Tailwind repros — plain HTML with no
 #                             theme, no nav/footer, compared like-for-like
 #                             against the target before anything is themed.
-#   - --landing-page <file>   optional `layout: plain` markdown landing page,
+#   - --landing-page <file>   exceptional `layout: plain` research page,
 #                             published at /landing ALONGSIDE the rest of the
 #                             site (kitchen sink, blog) rather than replacing
 #                             it — one demo site, not a separate one. Prefer
@@ -41,19 +45,21 @@ THEME_DIR=""
 LANDING=""
 LANDING_PAGE=""
 SITE_NAME=""
+BUILD_ONLY_DIR=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --landing)      LANDING="$2"; shift 2 ;;
     --landing-page) LANDING_PAGE="$2"; shift 2 ;;
     --name)         SITE_NAME="$2"; shift 2 ;;
+    --build-only)   BUILD_ONLY_DIR="$2"; shift 2 ;;
     -*) echo "unknown flag: $1" >&2; exit 2 ;;
     *) THEME_DIR="$1"; shift ;;
   esac
 done
 
 if [ -z "$THEME_DIR" ]; then
-  echo "usage: scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>]" >&2
+  echo "usage: scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>] [--build-only <output-dir>]" >&2
   exit 2
 fi
 
@@ -91,7 +97,7 @@ echo "   commit: ${SHA:0:8}"
 echo "   css:    $THEME_URL"
 
 # jsDelivr can only serve commits that are on GitHub.
-if ! git branch -r --contains "$SHA" 2>/dev/null | grep -q .; then
+if [ -z "$BUILD_ONLY_DIR" ] && ! git branch -r --contains "$SHA" 2>/dev/null | grep -q .; then
   echo ""
   echo "ERROR: commit ${SHA:0:8} is not on any remote branch. jsDelivr cannot"
   echo "serve it. Push first:  git push -u origin $BRANCH"
@@ -104,10 +110,32 @@ if [ -n "$(git status --porcelain -- "$THEME_DIR")" ]; then
   echo "from commit ${SHA:0:8}, NOT your working tree. Commit and push first."
 fi
 
-BUILD_DIR="$(mktemp -d)"
-trap 'rm -rf "$BUILD_DIR"' EXIT
+if [ -n "$BUILD_ONLY_DIR" ]; then
+  BUILD_DIR="$BUILD_ONLY_DIR"
+  if [ -d "$BUILD_DIR" ] && [ -n "$(find "$BUILD_DIR" -mindepth 1 -maxdepth 1 -print -quit)" ]; then
+    echo "build-only output directory must be empty: $BUILD_DIR" >&2
+    exit 2
+  fi
+  mkdir -p "$BUILD_DIR"
+else
+  BUILD_DIR="$(mktemp -d)"
+  trap 'rm -rf "$BUILD_DIR"' EXIT
+fi
 
 cp -R "$REPO_ROOT/_demo-content/." "$BUILD_DIR/"
+
+SHOWCASE_METADATA="$REPO_ROOT/$THEME_DIR/demo-showcase.json"
+if [ -f "$SHOWCASE_METADATA" ] && [ -z "$LANDING" ] && [ -z "$LANDING_PAGE" ]; then
+  python3 "$REPO_ROOT/scripts/render-theme-showcase.py" \
+    "$REPO_ROOT/_demo-content/theme-showcase.template.md" \
+    "$SHOWCASE_METADATA" \
+    "$BUILD_DIR/index.md"
+  cp "$BUILD_DIR/index.md" "$BUILD_DIR/landing.md"
+  if [ -f "$REPO_ROOT/$THEME_DIR/demo-landing.css" ]; then
+    cp "$REPO_ROOT/$THEME_DIR/demo-landing.css" "$BUILD_DIR/custom.css"
+  fi
+  echo "   showcase: $THEME_DIR/demo-showcase.json -> / and /landing"
+fi
 
 if [ -n "$LANDING" ]; then
   if [ ! -f "$REPO_ROOT/$LANDING" ]; then
@@ -148,10 +176,10 @@ fi
 # title, nav links, CTA, social links, or search is configured — so without it
 # there is no navbar on the demo at all, and a theme's navbar styling is
 # invisible. Same reason the sidebar and mode switch are enabled there.
-rm -f "$BUILD_DIR/config.base.json"
-python3 - "$REPO_ROOT/_demo-content/config.base.json" "$THEME_URL" "$BUILD_DIR/config.json" <<'PYEOF'
+rm -f "$BUILD_DIR/config.base.json" "$BUILD_DIR/theme-showcase.template.md"
+python3 - "$REPO_ROOT/_demo-content/config.base.json" "$THEME_URL" "$BUILD_DIR/config.json" "$SHOWCASE_METADATA" <<'PYEOF'
 import json, sys
-base_path, theme_url, out_path = sys.argv[1], sys.argv[2], sys.argv[3]
+base_path, theme_url, out_path, metadata_path = sys.argv[1:]
 with open(base_path) as f:
     cfg = json.load(f)
 theme = cfg.get("theme")
@@ -159,9 +187,32 @@ if isinstance(theme, dict):
     theme["theme"] = theme_url
 else:
     cfg["theme"] = theme_url
+if metadata_path and __import__("os").path.isfile(metadata_path):
+    with open(metadata_path) as f:
+        metadata = json.load(f)
+    cfg["title"] = f"Flowershow — {metadata['name']} theme"
+    cfg["nav"] = {
+        "title": "Flowershow",
+        "links": [
+            {"href": "/", "name": "Home"},
+            {"href": "/docs/kitchen-sink", "name": "Kitchen Sink"},
+            {"href": "/blog", "name": "Blog"},
+            {"href": metadata["sourceUrl"], "name": "Theme Source"},
+        ],
+        "cta": {
+            "href": "https://flowershow.app/publish",
+            "label": "Publish with Flowershow",
+        },
+    }
 with open(out_path, "w") as f:
     json.dump(cfg, f, indent=2)
 PYEOF
+
+if [ -n "$BUILD_ONLY_DIR" ]; then
+  echo ""
+  echo "Built demo site at $BUILD_DIR"
+  exit 0
+fi
 
 echo ""
 fl "$BUILD_DIR" --name "$SITE_NAME" --yes

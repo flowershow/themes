@@ -1,481 +1,624 @@
 /*
- * Page-specific layout for codestorage-draft's landing page
- * (codestorage-draft/demo-landing.md, published at /landing via
- * `layout: plain`). Published as this demo site's custom.css — see
- * scripts/demo-site.sh's --landing-page convention.
+ * Monospace theme-showcase presentation.
  *
- * Scoped entirely under .cs-landing so it can't leak onto the kitchen-sink
- * or blog pages of the same demo site. Values are the same ones ported
- * from tmp/theme.css + tmp/code-storage.html (2026-08-09), just rescoped
- * from a standalone page's globals into one wrapper class, and with
- * `--bg`/`--fg`/etc. renamed under a `--cs-` prefix so they can't collide
- * with the theme's own `--color-*` tokens.
+ * The page content comes from _demo-content/theme-showcase.template.md.
+ * Everything here is scoped under .cs-landing so the shared kitchen sink and
+ * blog continue to demonstrate theme.css rather than landing-page overrides.
  */
 
 .cs-landing {
-  --cs-bg: oklch(0.99 0 0);              /* ~#fcfcfc pale background */
-  --cs-surface: oklch(0.97 0 0);         /* ~#f7f7f7 subtle surface */
-  --cs-fg: oklch(0.15 0 0);              /* ~#262626 body text */
-  --cs-muted: oklch(0.45 0 0);           /* ~#737373 secondary text */
-  --cs-border: oklch(0.88 0 0);          /* ~#e0e0e0 light borders */
-  --cs-accent: oklch(0.15 0 0);          /* ~#262626 black for links */
-  --cs-code-bg: oklch(0.97 0 0);         /* light code block background */
-  --cs-highlight: oklch(0.90 0.25 100);  /* ~#ffff00 yellow selection */
+  --cs-bg: #fbfbfa;
+  --cs-surface: #f2f2f0;
+  --cs-surface-strong: #e8e9e6;
+  --cs-fg: #181918;
+  --cs-muted: #636762;
+  --cs-border: #d8dad5;
+  --cs-accent: #d8ff45;
+  --cs-accent-ink: #151713;
+  --cs-shadow: rgba(18, 22, 17, 0.12);
+  --cs-max: 1180px;
+  --cs-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --cs-section: clamp(5rem, 10vw, 9rem);
 
-  --cs-space-xs: 0.5rem;
-  --cs-space-sm: 0.75rem;
-  --cs-space-md: 1rem;
-  --cs-space-lg: 1.5rem;
-  --cs-space-xl: 2rem;
-  --cs-space-2xl: 3rem;
-  --cs-space-3xl: 4rem;
-
-  --cs-max-width: 70ch;
-
+  min-width: 0;
+  overflow: hidden;
   background: var(--cs-bg);
   color: var(--cs-fg);
   font-family: var(--font-body);
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 0.875rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
-.cs-landing * {
+:root[data-theme="dark"] .cs-landing {
+  --cs-bg: #0b0c0b;
+  --cs-surface: #141614;
+  --cs-surface-strong: #1d201c;
+  --cs-fg: #eceee8;
+  --cs-muted: #a2a79e;
+  --cs-border: #30342f;
+  --cs-accent: #d8ff45;
+  --cs-accent-ink: #151713;
+  --cs-shadow: rgba(0, 0, 0, 0.45);
+}
+
+.cs-landing *,
+.cs-landing *::before,
+.cs-landing *::after {
   box-sizing: border-box;
 }
 
 .cs-landing h1,
 .cs-landing h2,
+.cs-landing h3,
+.cs-landing p {
+  margin-top: 0;
+}
+
+.cs-landing h1,
+.cs-landing h2,
 .cs-landing h3 {
+  color: var(--cs-fg);
   font-family: var(--font-heading);
-  letter-spacing: 0;
+  font-weight: 600;
+  letter-spacing: -0.04em;
 }
 
 .cs-landing h1 {
-  font-size: 17px;
-  line-height: 1.3;
-  font-weight: 600;
-  margin: 0 0 var(--cs-space-lg);
+  max-width: 12ch;
+  margin-bottom: 1.75rem;
+  font-size: clamp(2.8rem, 7vw, 6.6rem);
+  line-height: 0.96;
 }
 
 .cs-landing h2 {
-  font-size: 16px;
-  line-height: 1.4;
-  font-weight: 600;
-  margin: var(--cs-space-2xl) 0 var(--cs-space-md);
+  max-width: 17ch;
+  margin-bottom: 1.4rem;
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  line-height: 1.02;
+}
+
+.cs-landing h3 {
+  margin-bottom: 0.65rem;
+  font-size: 1rem;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
 }
 
 .cs-landing p {
-  margin: 0 0 var(--cs-space-md);
   color: var(--cs-muted);
-  max-width: var(--cs-max-width);
 }
 
 .cs-landing a {
-  color: var(--cs-accent);
+  color: inherit;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.15s;
 }
 
-.cs-landing a:hover {
-  border-bottom-color: var(--cs-accent);
+.cs-landing .ts-wrap {
+  width: min(100%, var(--cs-max));
+  min-width: 0;
+  margin-inline: auto;
+  padding-inline: var(--cs-gutter);
 }
 
-.cs-landing pre {
-  background: var(--cs-code-bg);
-  border: 1px solid var(--cs-border);
-  padding: var(--cs-space-md);
-  overflow-x: auto;
-  margin: 0 0 var(--cs-space-lg);
-  font-family: var(--font-body);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.cs-landing code {
-  font-family: var(--font-body);
-  background: var(--cs-code-bg);
-  padding: 0.125rem 0.25rem;
-  border-radius: 2px;
-}
-
-.cs-landing pre code {
-  padding: 0;
-  background: transparent;
-}
-
-.cs-landing ul {
-  list-style: none;
-  margin: 0 0 var(--cs-space-lg);
-  padding: 0;
-}
-
-.cs-landing li {
-  position: relative;
-  padding-left: var(--cs-space-lg);
-  margin-bottom: var(--cs-space-sm);
+.cs-landing .ts-eyebrow {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  margin-bottom: 1.4rem;
   color: var(--cs-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.cs-landing li::before {
-  content: "\2014";
-  position: absolute;
-  left: 0;
+.cs-landing .ts-eyebrow span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  padding-inline: 0.65rem;
+  border: 1px solid var(--cs-border);
+  border-radius: 999px;
   color: var(--cs-fg);
 }
 
-.cs-landing table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-body);
-  font-size: 14px;
-  margin: 0 0 var(--cs-space-lg);
-  max-width: var(--cs-max-width);
-}
-
-.cs-landing th,
-.cs-landing td {
-  text-align: left;
-  padding: var(--cs-space-sm) var(--cs-space-md);
+.cs-landing .ts-hero {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: min(820px, calc(100vh - var(--navbar-height, 3.5rem)));
+  padding-block: clamp(5rem, 10vw, 8rem);
   border-bottom: 1px solid var(--cs-border);
 }
 
-.cs-landing th {
+.cs-landing .ts-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: center;
+}
+
+.cs-landing .ts-hero-copy {
+  min-width: 0;
+}
+
+.cs-landing .ts-lede {
+  max-width: 46ch;
+  margin-bottom: 1rem;
   color: var(--cs-fg);
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  line-height: 1.5;
+}
+
+.cs-landing .ts-intro,
+.cs-landing .ts-section-intro,
+.cs-landing .ts-theme-description {
+  max-width: 62ch;
+  font-size: 0.95rem;
+}
+
+.cs-landing .ts-intro {
+  margin-bottom: 2rem;
+}
+
+.cs-landing .ts-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.cs-landing .ts-button {
+  display: inline-flex;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--cs-fg);
+  font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: transform 150ms ease, background-color 150ms ease;
 }
 
-.cs-landing td {
-  color: var(--cs-muted);
+.cs-landing .ts-button:hover {
+  transform: translateY(-2px);
 }
 
-.cs-landing ::selection {
-  background: var(--cs-highlight);
+.cs-landing .ts-button-primary {
+  background: var(--cs-fg);
   color: var(--cs-bg);
 }
 
-.cs-landing .cs-container {
-  max-width: 1200px;
-  min-width: 0;
-  margin: 0 auto;
-  padding: var(--cs-space-2xl) var(--cs-space-lg);
+.cs-landing .ts-button-secondary {
+  background: transparent;
+  color: var(--cs-fg);
 }
 
-.cs-landing .cs-section {
-  padding: 0 var(--cs-space-xl);
-  margin-bottom: var(--cs-space-3xl);
-  max-width: 800px;
-  min-width: 0;
-}
-
-.cs-landing .cs-section h2 {
-  font-size: 16px;
-  margin-bottom: var(--cs-space-md);
-}
-
-.cs-landing .cs-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: var(--cs-space-lg) var(--cs-space-xl);
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  line-height: 1.4;
-}
-
-.cs-landing .cs-header-left {
-  display: flex;
-  flex-direction: column;
-}
-
-.cs-landing .cs-header-right {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  text-align: right;
-}
-
-.cs-landing .cs-cursor {
-  display: inline-block;
-  width: 0.7em;
-  height: 1em;
-  background: var(--cs-fg);
-  vertical-align: -0.1em;
-  margin-left: 0.25em;
-}
-
-.cs-landing .cs-node-mark {
+.cs-landing .ts-hero-art {
   position: relative;
-  width: 48px;
-  height: 48px;
-  margin-bottom: var(--cs-space-xl);
-  border: 2px solid currentColor;
+  display: grid;
+  min-width: 0;
+  place-items: center;
+  width: min(100%, 500px);
+  aspect-ratio: 1;
+  justify-self: end;
+  border: 1px solid var(--cs-border);
+  border-radius: 50%;
+  background:
+    linear-gradient(135deg, transparent 49.8%, var(--cs-border) 50%, transparent 50.2%),
+    linear-gradient(45deg, transparent 49.8%, var(--cs-border) 50%, transparent 50.2%),
+    radial-gradient(circle at 36% 30%, var(--cs-surface-strong), var(--cs-surface) 55%, var(--cs-bg) 72%);
+  box-shadow: 0 2rem 5rem var(--cs-shadow);
+}
+
+.cs-landing .ts-orbit {
+  position: absolute;
+  border: 1px solid var(--cs-border);
   border-radius: 50%;
 }
 
-.cs-landing .cs-node-mark::before,
-.cs-landing .cs-node-mark::after {
+.cs-landing .ts-orbit-wide {
+  inset: 11%;
+  transform: rotate(18deg) scaleY(0.48);
+}
+
+.cs-landing .ts-orbit-tight {
+  inset: 23%;
+  transform: rotate(-32deg) scaleX(0.5);
+}
+
+.cs-landing .ts-node-mark {
+  position: relative;
+  z-index: 2;
+  width: 84px;
+  height: 84px;
+  border: 2px solid var(--cs-fg);
+  border-radius: 50%;
+  background: var(--cs-bg);
+  box-shadow: 0 0 0 12px color-mix(in srgb, var(--cs-bg) 70%, transparent);
+}
+
+.cs-landing .ts-node-mark::before,
+.cs-landing .ts-node-mark::after {
   content: "";
   position: absolute;
   top: 50%;
-  left: 7px;
-  width: 30px;
+  left: 13px;
+  width: 56px;
   height: 1px;
-  background: currentColor;
-  transform-origin: center;
+  background: var(--cs-fg);
   opacity: 0.65;
+  transform-origin: center;
 }
 
-.cs-landing .cs-node-mark::before {
-  transform: rotate(45deg);
-}
+.cs-landing .ts-node-mark::before { transform: rotate(45deg); }
+.cs-landing .ts-node-mark::after { transform: rotate(-45deg); }
 
-.cs-landing .cs-node-mark::after {
-  transform: rotate(-45deg);
-}
-
-.cs-landing .cs-node {
+.cs-landing .ts-node {
   position: absolute;
   z-index: 1;
-  width: 7px;
-  height: 7px;
-  border: 1px solid var(--cs-bg);
-  border-radius: 50%;
-  background: currentColor;
-}
-
-.cs-landing .cs-node-center {
-  top: 18px;
-  left: 18px;
   width: 10px;
   height: 10px;
-}
-
-.cs-landing .cs-node-nw { top: 7px; left: 7px; }
-.cs-landing .cs-node-ne { top: 7px; right: 7px; }
-.cs-landing .cs-node-sw { bottom: 7px; left: 7px; }
-.cs-landing .cs-node-se { right: 7px; bottom: 7px; }
-
-.cs-landing .cs-hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-width: 0;
-  gap: var(--cs-space-3xl);
-  align-items: center;
-  padding: 0 var(--cs-space-xl);
-  margin-bottom: var(--cs-space-3xl);
-  min-height: 70vh;
-}
-
-.cs-landing .cs-hero-text {
-  max-width: 600px;
-  min-width: 0;
-}
-
-.cs-landing .cs-hero-visual {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cs-landing .cs-blob-container {
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  aspect-ratio: 1;
-}
-
-.cs-landing .cs-blob-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg,
-    oklch(0.85 0.02 220) 0%,
-    oklch(0.92 0.01 240) 50%,
-    oklch(0.88 0.015 200) 100%);
-  border-radius: 42% 58% 55% 45% / 48% 38% 62% 52%;
-  box-shadow:
-    inset -20px -20px 60px rgba(255,255,255,0.8),
-    inset 20px 20px 60px rgba(0,0,0,0.1),
-    0 20px 60px rgba(0,0,0,0.15);
-}
-
-.cs-landing .cs-pill-badge {
-  position: absolute;
-  background: var(--cs-fg);
-  color: var(--cs-bg);
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.cs-landing .cs-pill-badge-1 {
-  top: 10%;
-  right: -5%;
-}
-
-.cs-landing .cs-pill-badge-2 {
-  bottom: 25%;
-  left: -10%;
-}
-
-.cs-landing .cs-connection-line {
-  position: absolute;
-  top: 40%;
-  right: 15%;
-  width: 2px;
-  height: 120px;
-  background: var(--cs-fg);
-  opacity: 0.3;
-}
-
-.cs-landing .cs-connection-dot {
-  position: absolute;
-  width: 8px;
-  height: 8px;
+  border: 2px solid var(--cs-bg);
   border-radius: 50%;
   background: var(--cs-fg);
-  border: 2px solid var(--cs-bg);
 }
 
-.cs-landing .cs-dot-top {
-  top: -4px;
-  left: -3px;
-}
+.cs-landing .ts-node-center { top: 34px; left: 34px; width: 14px; height: 14px; }
+.cs-landing .ts-node-nw { top: 13px; left: 13px; }
+.cs-landing .ts-node-ne { top: 13px; right: 13px; }
+.cs-landing .ts-node-sw { bottom: 13px; left: 13px; }
+.cs-landing .ts-node-se { right: 13px; bottom: 13px; }
 
-.cs-landing .cs-dot-bottom {
-  bottom: -4px;
-  left: -3px;
-}
-
-.cs-landing .cs-hero h1 {
-  font-size: 17px;
-  margin-bottom: var(--cs-space-lg);
-  max-width: 38ch;
+.cs-landing .ts-art-label {
+  position: absolute;
+  z-index: 3;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--cs-fg);
+  background: var(--cs-bg);
+  color: var(--cs-fg);
+  font-size: 0.68rem;
   font-weight: 600;
+  letter-spacing: 0.08em;
 }
 
-.cs-landing .cs-hero h1::before {
-  content: "# ";
-  color: var(--cs-muted);
+.cs-landing .ts-art-label-top { top: 13%; right: -3%; }
+.cs-landing .ts-art-label-bottom { bottom: 16%; left: -5%; }
+
+.cs-landing .ts-section {
+  padding-block: var(--cs-section);
+  border-bottom: 1px solid var(--cs-border);
 }
 
-.cs-landing .cs-code-demo {
-  background: var(--cs-code-bg);
-  border: 1px solid var(--cs-border);
-  padding: var(--cs-space-lg);
-  margin: var(--cs-space-2xl) 0;
-  max-width: 500px;
-  font-size: 13px;
+.cs-landing .ts-section-intro {
+  margin-bottom: 3rem;
 }
 
-.cs-landing .cs-code-demo code {
-  font-size: 13px;
-  line-height: 1.6;
+.cs-landing .ts-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--cs-border);
+  border-left: 1px solid var(--cs-border);
 }
 
-/* Flowershow's syntax highlighter adds `.code-highlight` after Markdown is
-   rendered. Keep that generated wrapper inside this fixture's light code
-   surface instead of letting its default dark strip obscure the specimen. */
-.cs-landing .cs-code-demo pre code.code-highlight {
+.cs-landing .ts-card {
+  min-width: 0;
+  min-height: 240px;
+  padding: 1.5rem;
+  border-right: 1px solid var(--cs-border);
+  border-bottom: 1px solid var(--cs-border);
+  background: var(--cs-bg);
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.cs-landing .ts-card:hover {
+  position: relative;
+  z-index: 1;
+  transform: translateY(-5px);
+  background: var(--cs-surface);
+}
+
+.cs-landing .ts-card-index {
   display: block;
+  margin-bottom: 4rem;
+  color: var(--cs-muted);
+  font-size: 0.68rem;
+}
+
+.cs-landing .ts-card p {
+  margin-bottom: 0;
+  font-size: 0.8rem;
+}
+
+.cs-landing .ts-benefits {
+  background: var(--cs-fg);
+}
+
+.cs-landing .ts-benefits h2,
+.cs-landing .ts-benefits h3 {
+  color: var(--cs-bg);
+}
+
+.cs-landing .ts-benefits .ts-eyebrow,
+.cs-landing .ts-benefits p {
+  color: color-mix(in srgb, var(--cs-bg) 66%, transparent);
+}
+
+.cs-landing .ts-benefit-list {
+  margin-top: 3.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--cs-bg) 22%, transparent);
+}
+
+.cs-landing .ts-benefit-list article {
+  display: grid;
+  grid-template-columns: minmax(80px, 0.25fr) minmax(0, 1fr);
+  gap: 2rem;
+  padding-block: 1.65rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--cs-bg) 22%, transparent);
+}
+
+.cs-landing .ts-benefit-list article > span {
+  color: var(--cs-accent);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.cs-landing .ts-benefit-list article div {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.45fr) minmax(0, 1fr);
+  gap: 2rem;
+}
+
+.cs-landing .ts-benefit-list p {
+  max-width: 62ch;
+  margin-bottom: 0;
+}
+
+.cs-landing .ts-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 3.5rem 0 0;
   padding: 0;
-  color: var(--cs-fg) !important;
-  background: transparent !important;
+  list-style: none;
+  counter-reset: none;
 }
 
-.cs-landing .cs-hljs-keyword {
-  color: oklch(0.50 0.20 25);
+.cs-landing .ts-steps li {
+  min-width: 0;
+  padding: 1.6rem;
+  border: 1px solid var(--cs-border);
+  border-right: 0;
+}
+
+.cs-landing .ts-steps li:last-child {
+  border-right: 1px solid var(--cs-border);
+}
+
+.cs-landing .ts-steps li::before {
+  content: none;
+}
+
+.cs-landing .ts-steps li > span {
+  display: block;
+  margin-bottom: 5rem;
+  color: var(--cs-muted);
+  font-size: 0.7rem;
+}
+
+.cs-landing .ts-steps p {
+  margin-bottom: 0;
+}
+
+.cs-landing .ts-theme-detail {
+  background: var(--cs-surface);
+}
+
+.cs-landing .ts-theme-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.75fr);
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: center;
+}
+
+.cs-landing .ts-theme-description {
+  color: var(--cs-fg);
+  font-size: 1.05rem;
+}
+
+.cs-landing .ts-text-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.cs-landing .ts-text-links a {
+  border-bottom: 1px solid var(--cs-fg);
+  font-size: 0.75rem;
   font-weight: 600;
+  text-transform: uppercase;
 }
 
-.cs-landing .cs-hljs-string,
-.cs-landing .cs-hljs-title {
+.cs-landing .ts-theme-sample {
+  min-width: 0;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--cs-border);
+  background: var(--cs-bg);
+  box-shadow: 1.5rem 1.5rem 0 var(--cs-surface-strong);
+}
+
+.cs-landing .ts-theme-sample > p {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.72rem;
+}
+
+.cs-landing .ts-theme-sample > p span {
   color: var(--cs-fg);
 }
 
-.cs-landing .cs-hljs-comment {
-  color: var(--cs-muted);
-}
-
-.cs-landing .cs-pricing-grid {
-  display: grid;
-  min-width: 0;
-  gap: var(--cs-space-2xl);
-  margin-bottom: var(--cs-space-2xl);
-}
-
-.cs-landing .cs-pricing-table-wrapper {
-  min-width: 0;
-}
-
-.cs-landing .cs-pricing-table-wrapper h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: var(--cs-space-md);
-}
-
-.cs-landing .cs-ascii-table {
-  font-family: var(--font-body);
-  font-size: 13px;
-  white-space: pre;
+.cs-landing .ts-theme-sample pre {
   max-width: 100%;
+  margin: 2rem 0 0;
+  padding: 1.25rem;
   overflow-x: auto;
-  color: var(--cs-muted);
-  line-height: 1.4;
-  margin-bottom: var(--cs-space-lg);
+  border: 1px solid var(--cs-border);
+  background: var(--cs-surface);
+  color: var(--cs-fg);
+  font: inherit;
+  line-height: 1.65;
 }
 
-.cs-landing .cs-footer {
-  margin-top: var(--cs-space-3xl);
-  padding: var(--cs-space-2xl) var(--cs-space-xl);
+.cs-landing .ts-theme-sample code,
+.cs-landing .ts-theme-sample pre code.code-highlight {
+  display: block;
+  padding: 0;
+  background: transparent !important;
+  color: var(--cs-fg) !important;
+  font: inherit;
+}
+
+.cs-landing .ts-final-cta {
+  border-bottom: 0;
+}
+
+.cs-landing .ts-cta-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 3rem;
+  align-items: end;
+}
+
+.cs-landing .ts-cta-grid h2 {
+  margin-bottom: 0;
+}
+
+.cs-landing .ts-preview-note {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: var(--cs-section);
+  padding-top: 1.25rem;
   border-top: 1px solid var(--cs-border);
   color: var(--cs-muted);
-  font-size: 13px;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.cs-landing .cs-footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cs-space-sm);
-  margin-bottom: var(--cs-space-md);
-}
-
-.cs-landing .cs-footer-links a {
-  border: none;
-  color: var(--cs-muted);
-}
-
-.cs-landing .cs-footer-links a:hover {
+.cs-landing .ts-preview-note a {
   color: var(--cs-fg);
   border-bottom: 1px solid var(--cs-fg);
 }
 
-.cs-landing .cs-copyright {
-  text-align: center;
-  margin-top: var(--cs-space-lg);
+.cs-landing ::selection {
+  background: var(--cs-accent);
+  color: var(--cs-accent-ink);
+}
+
+/* Align the real Flowershow identity; the landing intentionally has no nav. */
+.site-navbar-site-name,
+.site-navbar-site-title {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
 }
 
 @media (max-width: 900px) {
-  .cs-landing .cs-hero {
+  .cs-landing .ts-hero-grid,
+  .cs-landing .ts-theme-grid,
+  .cs-landing .ts-cta-grid {
     grid-template-columns: 1fr;
-    gap: var(--cs-space-2xl);
   }
 
-  .cs-landing .cs-hero-visual {
+  .cs-landing .ts-hero-art {
+    width: min(82vw, 430px);
+    justify-self: center;
     order: -1;
   }
 
-  .cs-landing .cs-pill-badge-1 {
-    right: 5%;
+  .cs-landing .ts-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .cs-landing .cs-pill-badge-2 {
-    left: 5%;
+  .cs-landing .ts-benefit-list article div {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .cs-landing .ts-theme-sample {
+    box-shadow: 0.85rem 0.85rem 0 var(--cs-surface-strong);
+  }
+}
+
+@media (max-width: 620px) {
+  .cs-landing h1 {
+    font-size: clamp(2.6rem, 14vw, 4.2rem);
+  }
+
+  .cs-landing .ts-hero {
+    min-height: 0;
+    padding-top: 3.5rem;
+  }
+
+  .cs-landing .ts-hero-grid {
+    gap: 3rem;
+  }
+
+  .cs-landing .ts-hero-art {
+    width: min(88vw, 340px);
+  }
+
+  .cs-landing .ts-art-label-top { right: 0; }
+  .cs-landing .ts-art-label-bottom { left: 0; }
+
+  .cs-landing .ts-actions,
+  .cs-landing .ts-button {
+    width: 100%;
+  }
+
+  .cs-landing .ts-card-grid,
+  .cs-landing .ts-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-landing .ts-card {
+    min-height: 190px;
+  }
+
+  .cs-landing .ts-card-index,
+  .cs-landing .ts-steps li > span {
+    margin-bottom: 2.5rem;
+  }
+
+  .cs-landing .ts-steps li {
+    border-right: 1px solid var(--cs-border);
+    border-bottom: 0;
+  }
+
+  .cs-landing .ts-steps li:last-child {
+    border-bottom: 1px solid var(--cs-border);
+  }
+
+  .cs-landing .ts-benefit-list article {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .cs-landing .ts-preview-note {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-landing .ts-button,
+  .cs-landing .ts-card {
+    transition: none;
   }
 }
