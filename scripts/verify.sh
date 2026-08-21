@@ -46,6 +46,27 @@ warning() { echo "  WARN  $1"; warn=1; }
 echo "== flowershow/themes: verify =="
 echo ""
 
+if python3 - "$REPO_ROOT/_demo-content/config.base.json" <<'PYEOF'
+import json, sys
+with open(sys.argv[1]) as f:
+    config = json.load(f)
+raise SystemExit(0 if config.get("enableSearch") is True else 1)
+PYEOF
+then
+  pass "shared demo enables the search review surface"
+else
+  bad "shared demo must enable search for visual review"
+fi
+
+if grep -Fq 'overflow-x: auto;' "$REPO_ROOT/codestorage-draft/demo-landing.css" && \
+   grep -Fq 'min-width: 0;' "$REPO_ROOT/codestorage-draft/demo-landing.css"; then
+  pass "code.storage landing constrains wide content on mobile"
+else
+  bad "code.storage landing needs overflow and intrinsic-width guards"
+fi
+
+echo ""
+
 # --- discover theme dirs from the ledger -----------------------------------
 theme_ids=$(python3 - "$REPO_ROOT/docs/features.yaml" <<'PYEOF'
 import re, sys

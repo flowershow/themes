@@ -157,6 +157,7 @@
 
 .cs-landing .cs-container {
   max-width: 1200px;
+  min-width: 0;
   margin: 0 auto;
   padding: var(--cs-space-2xl) var(--cs-space-lg);
 }
@@ -165,6 +166,7 @@
   padding: 0 var(--cs-space-xl);
   margin-bottom: var(--cs-space-3xl);
   max-width: 800px;
+  min-width: 0;
 }
 
 .cs-landing .cs-section h2 {
@@ -212,6 +214,7 @@
 .cs-landing .cs-hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  min-width: 0;
   gap: var(--cs-space-3xl);
   align-items: center;
   padding: 0 var(--cs-space-xl);
@@ -221,6 +224,7 @@
 
 .cs-landing .cs-hero-text {
   max-width: 600px;
+  min-width: 0;
 }
 
 .cs-landing .cs-hero-visual {
@@ -345,8 +349,13 @@
 
 .cs-landing .cs-pricing-grid {
   display: grid;
+  min-width: 0;
   gap: var(--cs-space-2xl);
   margin-bottom: var(--cs-space-2xl);
+}
+
+.cs-landing .cs-pricing-table-wrapper {
+  min-width: 0;
 }
 
 .cs-landing .cs-pricing-table-wrapper h3 {
@@ -359,6 +368,8 @@
   font-family: var(--font-body);
   font-size: 13px;
   white-space: pre;
+  max-width: 100%;
+  overflow-x: auto;
   color: var(--cs-muted);
   line-height: 1.4;
   margin-bottom: var(--cs-space-lg);
