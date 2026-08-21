@@ -65,6 +65,12 @@ else
   bad "code.storage landing needs overflow and intrinsic-width guards"
 fi
 
+if grep -Fq 'background-color: hsl(225, 15%, 18%);' "$REPO_ROOT/material-draft/theme.css"; then
+  pass "Material footer stays dark in both color modes"
+else
+  bad "Material footer must not use a mode-reversing foreground shade"
+fi
+
 echo ""
 
 # --- discover theme dirs from the ledger -----------------------------------
