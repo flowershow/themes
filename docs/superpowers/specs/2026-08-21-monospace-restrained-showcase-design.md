@@ -4,8 +4,9 @@
 
 Correct the Monospace demo homepage so it feels like the Monospace theme and
 the earlier code.storage-inspired specimen rather than a generic marketing
-template. Keep the reusable Flowershow-owned content system, the real
-Flowershow navbar, the two-column opening, and the standard demo routes.
+template. Keep Flowershow-owned content, the real Flowershow navbar, the
+two-column opening, and the standard demo routes. Change only Monospace in
+this phase; do not impose its homepage structure on other themes.
 
 ## Root cause
 
@@ -22,8 +23,8 @@ must not be copied.
 
 ## Page structure
 
-The shared showcase remains one generated semantic HTML document, but its
-structure becomes deliberately plain.
+The Monospace showcase remains one generated semantic HTML document, but its
+structure becomes deliberately plain and lives with the Monospace theme.
 
 1. The real Flowershow navbar remains the only navbar.
 2. The opening remains a two-column composition on desktop:
@@ -42,9 +43,9 @@ structure becomes deliberately plain.
    are removed.
 6. `/landing` remains an identical compatibility rendering of `/`.
 
-The template continues to use stable `ts-*` semantic classes, but it should
-not encode a card-based design. Future themes may arrange or decorate the
-plain sections differently through their own scoped landing CSS.
+The Monospace template uses stable `ts-*` semantic classes without encoding a
+card-based design. It is a successful theme-specific example, not the default
+HTML contract for every future theme.
 
 ## Monospace visual language
 
@@ -63,12 +64,25 @@ plain sections differently through their own scoped landing CSS.
   artwork.
 - Light and dark modes retain sufficient contrast and the same hierarchy.
 
-## Shared-template boundary
+## Scope and reuse boundary
 
-The shared template owns Flowershow product copy, links, semantic ordering,
-and accessibility. A theme owns only its metadata and scoped presentation.
-This correction must not introduce Monospace-specific font names or claims
-into the shared template.
+This phase changes only `codestorage-draft`. Material, official theme demos,
+and their landing pages remain untouched. The current shared template is not
+silently rewritten for all themes. Monospace receives a local showcase
+template alongside its metadata and scoped presentation CSS.
+
+What is common today is the demo contract, not homepage layout:
+
+- every theme has real, useful content rather than a decorative shell;
+- the real Flowershow navbar and standard kitchen-sink/blog routes remain;
+- sources, Preview status, responsive modes, and provenance are verifiable;
+- no fictional claims or copied reference identity/assets are allowed.
+
+Homepage structure stays theme-specific. A blogging-oriented theme may use a
+blog-like homepage; a documentation theme may lead with documentation; this
+technical theme uses a compact text document with a supporting visual. After
+several homepages work well, a later design can extract only proven common
+content or structure.
 
 The landing remains a real Flowershow page rather than a Tailwind-style bundle
 of bespoke utility markup. Raw HTML is limited to the structural wrapper and
@@ -79,6 +93,8 @@ semantic elements needed for the two-column opening and scoped styling.
 - Do not reproduce code.storage branding, copy, claims, logos, customer names,
   artwork, pricing, or service identity.
 - Do not alter the Material-inspired landing page.
+- Do not redesign or migrate any official theme homepage.
+- Do not define a universal landing-page layout in this phase.
 - Do not change the canonical Flowershow gallery or
   `/docs/reference/themes`.
 - Do not promote Monospace beyond Preview.
@@ -109,6 +125,6 @@ standard kitchen sink and blog routes smoke-checked for leakage.
   markers.
 - Content after the opening is predominantly linear text, lists, and links.
 - No four-across card layout or equivalent boxed marketing pattern remains.
-- The real Flowershow navbar, reusable content model, Preview status, and all
-  standard routes remain intact.
+- The real Flowershow navbar, validated metadata/rendering path, Preview
+  status, and all standard routes remain intact.
 - Both supported color modes and desktop/mobile layouts are visually sound.
