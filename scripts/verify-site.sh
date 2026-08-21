@@ -48,6 +48,12 @@ if [ -s "$SITE_DIR/config.json" ]; then
   else
     bad "site/config.json is not valid JSON"
   fi
+
+  if grep -Fq '"href": "/readiness"' "$SITE_DIR/config.json"; then
+    pass "site navigation links preview readiness"
+  else
+    bad "site navigation missing preview readiness"
+  fi
 fi
 
 if [ -s "$SITE_DIR/index.md" ]; then
@@ -150,6 +156,75 @@ for authoring_source in \
   fi
 done
 
+readiness_source="$ROOT/docs/release-readiness.md"
+if [ -s "$readiness_source" ]; then
+  pass "release-readiness record exists"
+  for readiness_contract in \
+    'flowershow/flowershow/issues/1367' \
+    'github.com/squidfunk/mkdocs-material/blob/master/LICENSE' \
+    'github.com/googlefonts/roboto-2/blob/main/LICENSE' \
+    'github.com/IBM/plex/blob/master/LICENSE.txt' \
+    'human explicitly authorizes promotion'; do
+    if grep -Fq "$readiness_contract" "$readiness_source"; then
+      pass "readiness record includes $readiness_contract"
+    else
+      bad "readiness record missing $readiness_contract"
+    fi
+  done
+
+  readiness_sections=(
+    'material-draft|## Material|## code.storage'
+    'codestorage-draft|## code.storage|## Promotion boundary'
+  )
+  pending_gates=(
+    'Desktop and mobile visual review'
+    'Light and dark visual review'
+    'Kitchen sink, blog listing/post, navbar, sidebar, search, and landing'
+    'Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,'
+    'Final public name and directory name are approved.'
+    'Canonical Flowershow gallery and dashboard changes are prepared.'
+    'Release metadata, purge coverage, version, and changelog are prepared.'
+    'A human explicitly authorizes promotion and the release tag.'
+  )
+  for readiness_spec in "${readiness_sections[@]}"; do
+    IFS='|' read -r theme_id start_heading end_heading <<< "$readiness_spec"
+    section=$(awk -v start="$start_heading" -v end="$end_heading" \
+      '$0 == start { found=1; next } $0 == end { exit } found' "$readiness_source")
+    marker="<div data-readiness-theme=\"$theme_id\" data-recommendation=\"remain-preview\"></div>"
+    if grep -Fxq "$marker" <<< "$section"; then
+      pass "$theme_id section records remain-preview"
+    else
+      bad "$theme_id section must record remain-preview on its theme marker"
+    fi
+    for pending_gate in "${pending_gates[@]}"; do
+      if grep -Fq -- "- [ ] $pending_gate" <<< "$section"; then
+        pass "$theme_id keeps pending: $pending_gate"
+      else
+        bad "$theme_id must keep unchecked pending gate: $pending_gate"
+      fi
+    done
+  done
+else
+  bad "docs/release-readiness.md missing or empty"
+fi
+
+ledger_specs=(
+  'material-draft|material'
+  'codestorage-draft|codestorage'
+)
+for ledger_spec in "${ledger_specs[@]}"; do
+  IFS='|' read -r theme_id readiness_anchor <<< "$ledger_spec"
+  theme_block=$(awk -v id="$theme_id" \
+    '$0 == "  - id: " id { found=1 } found && $0 ~ /^  - id: / && $0 != "  - id: " id { exit } found' \
+    "$ROOT/docs/features.yaml")
+  if grep -Fq '    readiness: remain-preview' <<< "$theme_block" && \
+     grep -Fq "    readiness_record: docs/release-readiness.md#$readiness_anchor" <<< "$theme_block"; then
+    pass "features ledger keeps $theme_id in Preview with its readiness record"
+  else
+    bad "features ledger must bind $theme_id remain-preview to #$readiness_anchor"
+  fi
+done
+
 if [ -s "$SITE_DIR/status.md" ]; then
   for entry in 'issues/1364' Material code.storage Preview; do
     if grep -Fq "$entry" "$SITE_DIR/status.md"; then
@@ -172,6 +247,7 @@ if [ -x "$ROOT/scripts/site.sh" ]; then
       "ai-theme-cloning.md"
       "contributing.md"
       "maintainers.md"
+      "readiness.md"
       "status.md"
       "assets/themes/letterpress.png"
       "assets/themes/superstack.jpg"
@@ -203,6 +279,7 @@ if [ -n "$SITE_URL" ]; then
     "/ai-theme-cloning|Cloning a site"
     "/contributing|Contribute a theme"
     "/maintainers|Maintain and release themes"
+    "/readiness|Preview release readiness"
   )
   live_body=$(mktemp)
   for route_contract in "${live_routes[@]}"; do

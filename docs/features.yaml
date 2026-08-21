@@ -38,6 +38,9 @@ themes:
       - url: https://material-landing-v2-rufuspollock.flowershow.me
         reason: "DELETED 2026-08-09 — superseded by the /landing page on demo_url above (one site, not two)."
     fidelity: reviewed-close # human-reviewed by Rufus 2026-08-21; preview/beta status remains until the release-readiness gate
+    readiness: remain-preview
+    readiness_record: docs/release-readiness.md#material
+    readiness_last_audited: 2026-08-21
     fidelity_notes: >
       Human review 2026-08-21: Rufus reviewed the current live demo and
       reported that it looked okay. This closes the fidelity-review task but
@@ -102,6 +105,9 @@ themes:
     landing_page: codestorage-draft/demo-landing.md  # stage-2: layout:plain markdown + codestorage-draft/demo-landing.css, published alongside the rest of the site
     landing_demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me/landing   # 2026-08-09: moved from a separate codestorage-landing-demo site (deleted) into a /landing page on the main demo site, per Rufus — one site, not two. Uses `layout: plain` (nav/footer kept, prose typography off), see docs/theme-authoring-tutorial.md
     fidelity: reviewed-close # human-reviewed by Rufus 2026-08-21; preview/beta status remains until the release-readiness gate
+    readiness: remain-preview
+    readiness_record: docs/release-readiness.md#codestorage
+    readiness_last_audited: 2026-08-21
     fidelity_notes: >
       Human review 2026-08-21: Rufus reviewed the current live demo and
       reported that it looked okay. This closes the fidelity-review task but

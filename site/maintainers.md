@@ -59,6 +59,12 @@ Run this checklist separately for each candidate. Material and code.storage
 remain **Preview** until every required item is reviewed and a human explicitly
 approves promotion.
 
+Their evidence and open gates are maintained in the canonical
+[preview release-readiness record](/readiness), tracked by
+[flowershow/flowershow#1367](https://github.com/flowershow/flowershow/issues/1367).
+Update that record when completing the checklist; do not rely on an ephemeral
+review comment alone.
+
 - [ ] Human fidelity decision is current in `docs/features.yaml`.
 - [ ] Desktop and mobile layouts have been reviewed.
 - [ ] Light and dark behavior has been reviewed.

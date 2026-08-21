@@ -6,10 +6,10 @@
  *
  * code.storage's real look uses BerkeleyMono, a commercial font
  * (berkeleygraphics.com) that cannot be redistributed via @import in an
- * open theme repo. This theme substitutes an open, similarly-proportioned
- * terminal monospace (Departure Mono, falling back to IBM Plex Mono /
- * JetBrains Mono / system monospace). Anyone with a BerkeleyMono license
- * can override --font-body / --font-heading locally to get the exact match.
+ * open theme repo. This theme substitutes the open, similarly-proportioned
+ * IBM Plex Mono (SIL Open Font License 1.1), with system monospace fallbacks.
+ * Anyone with a BerkeleyMono license can override --font-body / --font-heading
+ * locally to get the exact match.
  *
  * NOT YET CLONABLE: the site's nav is literal bracketed text
  * ("[ LOG IN / SIGN UP ]") rendered as page content, not a navbar

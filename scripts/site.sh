@@ -22,6 +22,7 @@ build_site() {
   cp -R "$ROOT/site/." "$output_dir/"
   cp "$ROOT/docs/theme-authoring-tutorial.md" "$output_dir/authoring.md"
   cp "$ROOT/docs/ai-theme-cloning-skill.md" "$output_dir/ai-theme-cloning.md"
+  cp "$ROOT/docs/release-readiness.md" "$output_dir/readiness.md"
 
   cp "$ROOT/letterpress/preview.png" "$output_dir/assets/themes/letterpress.png"
   cp "$ROOT/superstack/fs-superstack-page-light.jpg" "$output_dir/assets/themes/superstack.jpg"
