@@ -39,14 +39,48 @@ Live artifacts:
    rendered as a blank review surface. It now uses the repository-owned
    `_demo-content/assets/demo-image.svg` fixture.
 
+## Owned landing fixture review
+
+After the published landing fixtures were rewritten with Flowershow-owned copy
+and visuals, a focused addendum rendered both changed pages at desktop and
+mobile sizes in light and dark modes: eight renders total.
+
+| Theme specimen | Viewport | Mode | Result |
+| --- | --- | --- | --- |
+| Material-inspired | 1280 × 900 | light | pass |
+| Material-inspired | 1280 × 900 | dark | pass |
+| Material-inspired | 390 × 844 | light | pass |
+| Material-inspired | 390 × 844 | dark | pass |
+| Monospace | 1280 × 900 | light | pass |
+| Monospace | 1280 × 900 | dark | pass |
+| Monospace | 390 × 844 | light | pass |
+| Monospace | 390 × 844 | dark | pass |
+
+For every render, headless Chrome confirmed HTTP 200, the requested active
+`data-theme`, a visible `data-owned-fixture` marker with Preview status, visible
+fixture links to home, kitchen sink, and blog, and document width exactly equal
+to viewport width. It also confirmed the removed upstream identities and
+headlines were absent.
+
+Full-page captures were manually inspected. The Material-inspired page retains
+its gradient hero, strong hierarchy, alternating dark/light sections, feature
+grid, spotlights, and calls to action while reading clearly as Flowershow. The
+monospace page retains its bracketed navigation, compact type, code, CSS-only
+blob/node composition, long-form sections, and ASCII matrix while reading as a
+theme lab rather than a service offer. Neither page could be mistaken for its
+upstream visual reference.
+
+The first monospace dark-mode capture exposed a generated syntax-highlighting
+background that striped the configuration example. A landing-scoped override
+now keeps the generated code wrapper transparent and block-level. Configuration
+code stayed readable in the repeated desktop/mobile and light/dark runs.
+
 ## Still unavailable or pending
 
 - The shared demo requests search with `enableSearch: true`, but these preview
   sites do not have the Flowershow Search feature entitlement and render no
   `.search-button`. Search therefore remains explicitly unreviewed rather
   than being counted as a visual pass.
-- Landing-fixture copy, trademark use, icon/SVG provenance, and attribution
-  remain a separate official-release gate.
 - This matrix does not approve final names, canonical gallery/dashboard
   integration, release metadata, or a release tag.
 
@@ -54,5 +88,6 @@ Live artifacts:
 
 Desktop/mobile and light/dark review is recorded for every currently rendered
 surface. Material and code.storage still remain **Preview** because search is
-not reviewable in these demos and the provenance, naming, integration, release,
-and explicit human-promotion gates remain open.
+not reviewable in these demos and the naming, integration, release, and explicit
+human-promotion gates remain open. The landing-fixture provenance actions are
+complete and recorded separately.

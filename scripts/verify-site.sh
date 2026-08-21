@@ -236,6 +236,11 @@ if [ -s "$visual_review_source" ]; then
     'Search feature entitlement'
     '.search-button'
     'Search therefore remains explicitly unreviewed'
+    'Owned landing fixture review'
+    'eight renders'
+    'data-owned-fixture'
+    'code stayed readable'
+    'could be mistaken for its'
     'Material and code.storage still remain **Preview**'
   )
   for visual_contract in "${visual_review_contracts[@]}"; do
