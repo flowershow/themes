@@ -39,8 +39,11 @@ Each theme owns:
 
 Landing CSS is loaded site-wide as `custom.css`, so every rule must be scoped
 beneath the metadata's `wrapperClass`. It must not restyle the kitchen sink or
-blog accidentally. Styling the real semantic navbar classes is allowed; adding
-a second `<header>` or `<nav>` to the landing is not.
+blog accidentally. The verifier permits only the documented
+`.site-navbar-site-name` and `.site-navbar-site-title` selectors outside that
+wrapper for aligning the real navbar identity. Adding a second `<header>` or
+`<nav>` to the landing is not allowed. CSS images must be repository-owned,
+local paths; remote and data URLs are rejected.
 
 ## Showcase metadata
 
@@ -61,8 +64,11 @@ Create `THEME-DIR/demo-showcase.json` with exactly these fields:
 
 `status` is `preview` or `official`. `slug` and `wrapperClass` are lowercase
 ASCII identifiers. `sourceUrl` is an HTTPS path within
-`github.com/flowershow/themes`. The renderer rejects missing or extra fields,
-unsafe identifiers, unsupported states, and unresolved template placeholders.
+`github.com/flowershow/themes` (not a similarly prefixed repository or a path
+containing dot segments). The renderer rejects missing or extra fields, unsafe
+identifiers, unsupported states, and unresolved template placeholders. It
+escapes frontmatter and HTML independently, so metadata remains valid in both
+contexts.
 
 ## Add a new theme
 
@@ -132,4 +138,8 @@ scripts/verify.sh
 ```
 
 For live verification, set `SITE_URL` to the themes preview site. A green
-structural or live check is evidence, not release authorization.
+structural or live check is evidence, not release authorization. The verifier
+automatically discovers every `*/demo-showcase.json`, validates its rendered
+structure and scoped CSS, then checks `/`, `/docs/kitchen-sink`, `/blog`,
+`/blog/first-post`, and any recorded `/landing` compatibility URL on each
+published demo.

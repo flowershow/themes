@@ -176,15 +176,8 @@ while IFS=$'\t' read -r id dir; do
     warning "no preview asset yet (not a hard gate pre-launch, but required before promoting out of draft)"
   fi
 
-  demo_url=$(python3 - "$REPO_ROOT/docs/features.yaml" "$id" <<'PYEOF'
-import re, sys
-text = open(sys.argv[1]).read()
-target = sys.argv[2]
-m = re.search(rf'- id: {re.escape(target)}\n(?:.*\n)*?\s+demo_url: (\S+)', text)
-url = m.group(1) if m else "null"
-print("" if url == "null" else url)
-PYEOF
-  )
+  demo_url=$(python3 "$REPO_ROOT/scripts/read-feature-field.py" \
+    "$REPO_ROOT/docs/features.yaml" "$id" demo_url)
 
   if [ -n "$demo_url" ]; then
     expected_demo_content="Theme Demo Site"
@@ -196,19 +189,13 @@ with open(sys.argv[1]) as source:
 PYEOF
       )
     fi
-    code=$(curl -sL -o /tmp/verify-demo-body.html -w "%{http_code}" --max-time 20 "${demo_url%/}/?verify=$RANDOM" || echo "000")
-    if [ "$code" = "200" ] && grep -Fq "$expected_demo_content" /tmp/verify-demo-body.html; then
-      pass "demo site responds 200 and renders expected content ($demo_url)"
+    compatibility_url=$(python3 "$REPO_ROOT/scripts/read-feature-field.py" \
+      "$REPO_ROOT/docs/features.yaml" "$id" landing_compatibility_url)
+    if python3 "$REPO_ROOT/scripts/verify-demo-routes.py" \
+      "$demo_url" "$expected_demo_content" "$compatibility_url"; then
+      pass "all standard demo routes respond with expected content ($demo_url)"
     else
-      bad "demo site smoke check failed (HTTP $code) ($demo_url)"
-    fi
-
-    component_url="${demo_url%/}/docs/kitchen-sink"
-    component_code=$(curl -sL -o /tmp/verify-component-body.html -w "%{http_code}" --max-time 20 "$component_url" || echo "000")
-    if [ "$component_code" = "200" ] && grep -qi "Kitchen Sink" /tmp/verify-component-body.html; then
-      pass "linked kitchen-sink specimen responds 200 ($component_url)"
-    else
-      bad "linked kitchen-sink specimen failed (HTTP $component_code) ($component_url)"
+      bad "one or more standard demo routes failed ($demo_url)"
     fi
   else
     warning "no demo_url recorded yet — live smoke check skipped, not failed"
@@ -221,15 +208,8 @@ PYEOF
   # NOTE: hit the bare root, NOT /index.html. Raw .html paths 404 when given
   # any query string (flowershow/flowershow#1345), so the usual cache-busting
   # trick breaks them. The bare root serves the same file and tolerates ?cb=.
-  landing_url=$(python3 - "$REPO_ROOT/docs/features.yaml" "$id" <<'PYEOF'
-import re, sys
-text = open(sys.argv[1]).read()
-target = sys.argv[2]
-m = re.search(rf'- id: {re.escape(target)}\n(?:.*\n)*?\s+landing_demo_url: (\S+)', text)
-url = m.group(1) if m else "null"
-print("" if url == "null" else url)
-PYEOF
-  )
+  landing_url=$(python3 "$REPO_ROOT/scripts/read-feature-field.py" \
+    "$REPO_ROOT/docs/features.yaml" "$id" landing_demo_url)
 
   if [ -n "$landing_url" ]; then
     lcode=$(curl -sL -o /tmp/verify-landing-body.html -w "%{http_code}" --max-time 20 "${landing_url}/?cb=$RANDOM" || echo "000")

@@ -1,6 +1,6 @@
 ---
-title: "Flowershow — {{name}} theme"
-description: "{{description}}"
+title: "Flowershow — {{yaml:name}} theme"
+description: "{{yaml:description}}"
 layout: plain
 showToc: false
 showEditLink: false
@@ -78,10 +78,10 @@ showComments: false
           <p class="ts-eyebrow">About this theme</p>
           <h2>{{name}}</h2>
           <p class="ts-theme-description">{{description}}</p>
-          <p>This preview uses IBM Plex Mono, disciplined spacing, crisp rules, and first-class light and dark modes. It is designed to keep technical material dense without making it difficult to scan.</p>
+          <p>This showcase applies the theme across a real Flowershow homepage, while the linked kitchen sink and blog reveal how the same visual system handles everyday publishing.</p>
           <div class="ts-text-links"><a href="/blog">Read the demo blog →</a><a href="/docs/kitchen-sink">Inspect every component →</a></div>
         </div>
-        <div class="ts-theme-sample" aria-label="A small Monospace theme specimen">
+        <div class="ts-theme-sample" aria-label="A small {{name}} theme specimen">
           <p><span>THEME</span> {{name}}</p>
           <p><span>STATUS</span> {{status}}</p>
           <p><span>MODES</span> LIGHT / DARK</p>

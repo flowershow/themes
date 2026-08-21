@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import re
 import sys
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 
 REQUIRED_FIELDS = {
@@ -64,25 +64,38 @@ def validate_metadata(data: dict[str, object]) -> dict[str, str]:
             )
 
     source = urlparse(data["sourceUrl"])
+    decoded_path = unquote(source.path)
+    path_segments = decoded_path.split("/")
     if (
         source.scheme != "https"
         or source.netloc != "github.com"
-        or not source.path.startswith("/flowershow/themes")
+        or "%" in source.path
+        or (
+            decoded_path != "/flowershow/themes"
+            and not decoded_path.startswith("/flowershow/themes/")
+        )
+        or any(segment in {".", ".."} for segment in path_segments)
     ):
         raise ShowcaseMetadataError(
             "sourceUrl must be an HTTPS URL under github.com/flowershow/themes"
         )
 
-    return {
-        field: escape(data[field], quote=True)
-        for field in string_fields
-    }
+    return {field: data[field] for field in string_fields}
 
 
 def render(template: str, metadata: dict[str, str]) -> str:
-    rendered = template
-    for field, value in metadata.items():
-        rendered = rendered.replace("{{" + field + "}}", value)
+    def replacement(match: re.Match[str]) -> str:
+        token = match.group(1)
+        if token.startswith("yaml:"):
+            field = token.removeprefix("yaml:")
+            if field not in metadata:
+                return match.group(0)
+            return json.dumps(metadata[field], ensure_ascii=False)[1:-1]
+        if token not in metadata:
+            return match.group(0)
+        return escape(metadata[token], quote=True)
+
+    rendered = PLACEHOLDER.sub(replacement, template)
     unresolved = PLACEHOLDER.search(rendered)
     if unresolved:
         raise ShowcaseMetadataError(

@@ -2,14 +2,19 @@
 """Behavior tests for the theme showcase renderer."""
 
 import json
+import http.server
 from pathlib import Path
 import subprocess
 import tempfile
+import threading
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "scripts/render-theme-showcase.py"
+FIXTURE_VERIFIER = ROOT / "scripts/verify-landing-fixtures.py"
+ROUTE_VERIFIER = ROOT / "scripts/verify-demo-routes.py"
+FEATURE_FIELD_READER = ROOT / "scripts/read-feature-field.py"
 
 VALID_METADATA = {
     "schemaVersion": 1,
@@ -61,6 +66,15 @@ def run_renderer(metadata, template=VALID_TEMPLATE):
 
 
 class RenderShowcaseTests(unittest.TestCase):
+    def test_repository_template_is_theme_neutral(self):
+        template = (
+            ROOT / "_demo-content/theme-showcase.template.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertNotIn("IBM Plex Mono", template)
+        self.assertNotIn("Monospace theme specimen", template)
+        self.assertIn('aria-label="A small {{name}} theme specimen"', template)
+
     def test_repository_template_keeps_nested_html_in_one_markdown_block(self):
         template = (
             ROOT / "_demo-content/theme-showcase.template.md"
@@ -81,6 +95,26 @@ class RenderShowcaseTests(unittest.TestCase):
         self.assertIn("<h1>Write &lt;share&gt; &amp; publish</h1>", page)
         self.assertEqual(page.lower().count("<h1"), 1)
         self.assertNotIn("{{", page)
+
+    def test_uses_context_specific_yaml_and_html_escaping(self):
+        metadata = dict(VALID_METADATA)
+        metadata["name"] = 'A & B \\ "quoted" {theme}'
+        metadata["description"] = 'Plain & portable \\ "copy" {today}'
+        template = """---
+title: "Flowershow — {{yaml:name}} theme"
+description: "{{yaml:description}}"
+---
+<h1>{{name}}</h1>
+<p>{{description}}</p>
+"""
+
+        result, page = run_renderer(metadata, template=template)
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('title: "Flowershow — A & B \\\\ \\"quoted\\" {theme} theme"', page)
+        self.assertIn('description: "Plain & portable \\\\ \\"copy\\" {today}"', page)
+        self.assertIn("<h1>A &amp; B \\ &quot;quoted&quot; {theme}</h1>", page)
+        self.assertIn("<p>Plain &amp; portable \\ &quot;copy&quot; {today}</p>", page)
 
     def test_rejects_missing_and_unknown_fields(self):
         missing = dict(VALID_METADATA)
@@ -103,6 +137,15 @@ class RenderShowcaseTests(unittest.TestCase):
             "source-host": {"sourceUrl": "https://example.com/theme"},
             "source-scheme": {
                 "sourceUrl": "http://github.com/flowershow/themes/tree/main/theme"
+            },
+            "source-prefix-confusion": {
+                "sourceUrl": "https://github.com/flowershow/themes-malicious"
+            },
+            "source-dot-segments": {
+                "sourceUrl": "https://github.com/flowershow/themes/../../evil"
+            },
+            "source-encoded-dot-segments": {
+                "sourceUrl": "https://github.com/flowershow/themes/%2e%2e/evil"
             },
         }
 
@@ -172,6 +215,123 @@ class RenderShowcaseTests(unittest.TestCase):
                     },
                 ],
             )
+
+    def test_fixture_verifier_discovers_new_showcases_and_rejects_remote_css_urls(self):
+        with tempfile.TemporaryDirectory(prefix="showcase-test-", dir=ROOT) as temporary:
+            theme_dir = Path(temporary)
+            metadata = dict(
+                VALID_METADATA,
+                name="Test Theme",
+                slug="test-theme",
+                wrapperClass="test-landing",
+            )
+            (theme_dir / "demo-showcase.json").write_text(
+                json.dumps(metadata), encoding="utf-8"
+            )
+            (theme_dir / "demo-landing.css").write_text(
+                '.test-landing { background-image: url("https://example.com/art.png"); }\n',
+                encoding="utf-8",
+            )
+
+            result = subprocess.run(
+                ["python3", str(FIXTURE_VERIFIER)],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("Test Theme", result.stdout)
+            self.assertIn("external CSS URL", result.stdout)
+
+    def test_route_verifier_checks_every_standard_and_compatibility_route(self):
+        responses = {
+            "/": 'data-theme-showcase="monospace"',
+            "/docs/kitchen-sink": "Kitchen Sink",
+            "/blog": "Blog",
+            "/blog/first-post": "The First Post",
+            "/landing": 'data-theme-showcase="monospace"',
+        }
+
+        class Handler(http.server.BaseHTTPRequestHandler):
+            def do_GET(self):
+                body = responses.get(self.path.split("?", 1)[0])
+                self.send_response(200 if body is not None else 404)
+                self.end_headers()
+                self.wfile.write((body or "missing").encode())
+
+            def log_message(self, *_args):
+                pass
+
+        server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        base_url = f"http://127.0.0.1:{server.server_port}"
+        try:
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(ROUTE_VERIFIER),
+                    base_url,
+                    'data-theme-showcase="monospace"',
+                    f"{base_url}/landing",
+                ],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+            del responses["/blog/first-post"]
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(ROUTE_VERIFIER),
+                    base_url,
+                    'data-theme-showcase="monospace"',
+                    f"{base_url}/landing",
+                ],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("/blog/first-post", result.stdout)
+        finally:
+            server.shutdown()
+            server.server_close()
+
+    def test_feature_field_reader_does_not_bleed_into_the_next_theme(self):
+        ledger = """themes:
+  - id: first
+    kind: theme
+    demo_url: https://first.example
+  - id: second
+    kind: theme
+    landing_compatibility_url: https://second.example/landing
+"""
+        with tempfile.TemporaryDirectory() as temporary:
+            ledger_path = Path(temporary) / "features.yaml"
+            ledger_path.write_text(ledger, encoding="utf-8")
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(FEATURE_FIELD_READER),
+                    str(ledger_path),
+                    "first",
+                    "landing_compatibility_url",
+                ],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, "")
 
 
 if __name__ == "__main__":
