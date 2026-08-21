@@ -6,7 +6,7 @@ fidelity review; it is not approval to promote or release either theme.
 
 ## Matrix
 
-Both themes were rendered across all 20 combinations below:
+Each theme was rendered across all 20 combinations below (40 renders total):
 
 | Dimension | Values |
 | --- | --- |

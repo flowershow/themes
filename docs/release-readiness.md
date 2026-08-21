@@ -13,11 +13,11 @@ promotion and any release tag.
 ## Current result
 
 **Material: remain Preview. code.storage: remain Preview.** Both have a solid
-technical and documentation foundation, but neither has the explicit
-responsive/theme-mode/surface review record, approved final identity, or
-prepared integration/release changes required for a promotion proposal. The
-demo landing fixtures also need a copy/trademark/icon provenance decision
-before they can become official release artifacts.
+technical and documentation foundation plus a responsive/light-dark review
+record for every currently rendered surface. Neither has a reviewed search
+surface, approved final identity, or prepared integration/release changes. The
+demo landing fixtures also need a copy/trademark/icon provenance decision before
+they can become official release artifacts.
 
 Status meanings:
 
@@ -126,8 +126,8 @@ provenance review. Release engineering should wait for their results.
 - [ ] A human explicitly authorizes promotion and the release tag.
 
 **Recommendation:** remain Preview. The font and hero-art substitutions support
-continued previewing; promotion still depends on the visual/provenance reviews
-and an explicit product/release decision.
+continued previewing; promotion still depends on search enablement, the
+provenance review, and an explicit product/release decision.
 
 ## Promotion boundary
 
