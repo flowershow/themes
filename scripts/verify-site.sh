@@ -169,6 +169,7 @@ if [ -s "$readiness_source" ]; then
     'github.com/IBM/plex/blob/master/LICENSE.txt' \
     'Desktop and mobile visual review' \
     'Light and dark visual review' \
+    'Landing-fixture marketing copy' \
     'human explicitly authorizes promotion'; do
     if grep -Fq "$readiness_contract" "$readiness_source"; then
       pass "readiness record includes $readiness_contract"
