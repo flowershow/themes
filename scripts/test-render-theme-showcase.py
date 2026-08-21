@@ -115,6 +115,56 @@ class RenderShowcaseTests(unittest.TestCase):
         self.assertIn("unresolved template field", result.stderr)
         self.assertEqual(page, "")
 
+    def test_build_only_assembles_standard_showcase_and_real_nav(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "site"
+            output.mkdir()
+
+            result = subprocess.run(
+                [
+                    "bash",
+                    "scripts/demo-site.sh",
+                    "codestorage-draft",
+                    "--build-only",
+                    str(output),
+                ],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            home = (output / "index.md").read_text(encoding="utf-8")
+            compatibility = (output / "landing.md").read_text(encoding="utf-8")
+            self.assertEqual(home, compatibility)
+            self.assertIn('data-theme-showcase="monospace"', home)
+            self.assertTrue((output / "custom.css").is_file())
+            self.assertTrue((output / "docs/kitchen-sink.md").is_file())
+            self.assertTrue((output / "blog/first-post.md").is_file())
+
+            config = json.loads((output / "config.json").read_text(encoding="utf-8"))
+            self.assertEqual(config["nav"]["title"], "Flowershow")
+            self.assertEqual(
+                config["nav"]["cta"],
+                {
+                    "href": "https://flowershow.app/publish",
+                    "label": "Publish with Flowershow",
+                },
+            )
+            self.assertEqual(
+                config["nav"]["links"],
+                [
+                    {"href": "/", "name": "Home"},
+                    {"href": "/docs/kitchen-sink", "name": "Kitchen Sink"},
+                    {"href": "/blog", "name": "Blog"},
+                    {
+                        "href": VALID_METADATA["sourceUrl"],
+                        "name": "Theme Source",
+                    },
+                ],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
