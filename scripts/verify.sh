@@ -46,6 +46,71 @@ warning() { echo "  WARN  $1"; warn=1; }
 echo "== flowershow/themes: verify =="
 echo ""
 
+if python3 - "$REPO_ROOT/_demo-content/config.base.json" <<'PYEOF'
+import json, sys
+with open(sys.argv[1]) as f:
+    config = json.load(f)
+raise SystemExit(0 if config.get("enableSearch") is True else 1)
+PYEOF
+then
+  pass "shared demo requests the search review surface"
+else
+  bad "shared demo must request search for visual review"
+fi
+
+if python3 - "$REPO_ROOT/codestorage-draft/demo-landing.css" <<'PYEOF'
+import re, sys
+
+css = open(sys.argv[1]).read()
+
+def declarations(selector):
+    match = re.search(re.escape(selector) + r"\s*\{([^}]*)\}", css)
+    return re.sub(r"\s+", "", match.group(1)) if match else ""
+
+contracts = {
+    ".cs-landing .cs-container": ("min-width:0;",),
+    ".cs-landing .cs-section": ("min-width:0;",),
+    ".cs-landing .cs-hero": ("min-width:0;",),
+    ".cs-landing .cs-hero-text": ("min-width:0;",),
+    ".cs-landing .cs-pricing-grid": ("min-width:0;",),
+    ".cs-landing .cs-pricing-table-wrapper": ("min-width:0;",),
+    ".cs-landing .cs-ascii-table": ("max-width:100%;", "overflow-x:auto;"),
+}
+
+raise SystemExit(0 if all(
+    all(required in declarations(selector) for required in requirements)
+    for selector, requirements in contracts.items()
+) else 1)
+PYEOF
+then
+  pass "code.storage landing constrains wide content on mobile"
+else
+  bad "code.storage landing needs overflow and intrinsic-width guards"
+fi
+
+if python3 - "$REPO_ROOT/material-draft/theme.css" <<'PYEOF'
+import re, sys
+css = open(sys.argv[1]).read()
+match = re.search(r"\.site-footer\s*\{([^}]*)\}", css)
+declarations = re.sub(r"\s+", "", match.group(1)) if match else ""
+raise SystemExit(0 if "background-color:hsl(225,15%,18%);" in declarations else 1)
+PYEOF
+then
+  pass "Material footer stays dark in both color modes"
+else
+  bad "Material footer must not use a mode-reversing foreground shade"
+fi
+
+if [ -s "$REPO_ROOT/_demo-content/assets/demo-image.svg" ] && \
+   grep -Fq '](/assets/demo-image.svg)' "$REPO_ROOT/_demo-content/docs/kitchen-sink.md" && \
+   ! grep -Fq 'picsum.photos' "$REPO_ROOT/_demo-content/docs/kitchen-sink.md"; then
+  pass "kitchen-sink image review uses a repository-owned fixture"
+else
+  bad "kitchen-sink image surface must use the local deterministic fixture"
+fi
+
+echo ""
+
 # --- discover theme dirs from the ledger -----------------------------------
 theme_ids=$(python3 - "$REPO_ROOT/docs/features.yaml" <<'PYEOF'
 import re, sys

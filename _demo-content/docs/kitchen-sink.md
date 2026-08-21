@@ -92,7 +92,7 @@ def greet(name: str) -> str:
 
 ## Image
 
-![A placeholder image](https://picsum.photos/1200/630)
+![An abstract test card for the theme image surface](/assets/demo-image.svg)
 
 ## Horizontal rule
 

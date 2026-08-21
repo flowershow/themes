@@ -463,7 +463,10 @@ kbd {
 ========================== */
 
 .site-footer {
-  background-color: var(--color-foreground-800);
+  /* The foreground scale reverses in dark mode, so a foreground token makes
+     this footer pale precisely when the page is dark. Material's footer is a
+     stable dark surface in both modes. */
+  background-color: hsl(225, 15%, 18%);
   color: rgba(255, 255, 255, 0.7);
 }
 
