@@ -24,6 +24,8 @@ build_site() {
   cp "$ROOT/docs/ai-theme-cloning-skill.md" "$output_dir/ai-theme-cloning.md"
   cp "$ROOT/docs/release-readiness.md" "$output_dir/readiness.md"
   cp "$ROOT/docs/visual-review-matrix.md" "$output_dir/visual-review-matrix.md"
+  cp "$ROOT/docs/landing-fixture-provenance.md" "$output_dir/landing-fixture-provenance.md"
+  cp "$ROOT/THIRD_PARTY_NOTICES.md" "$output_dir/third-party-notices.md"
 
   cp "$ROOT/letterpress/preview.png" "$output_dir/assets/themes/letterpress.png"
   cp "$ROOT/superstack/fs-superstack-page-light.jpg" "$output_dir/assets/themes/superstack.jpg"

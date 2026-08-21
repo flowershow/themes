@@ -245,6 +245,40 @@ else
   bad "docs/visual-review-matrix.md missing or empty"
 fi
 
+provenance_source="$ROOT/docs/landing-fixture-provenance.md"
+third_party_notices="$ROOT/THIRD_PARTY_NOTICES.md"
+if [ -s "$provenance_source" ] && [ -s "$third_party_notices" ]; then
+  pass "landing-fixture provenance record and notices exist"
+  provenance_contracts=(
+    'data-provenance-theme="material-draft" data-disposition="attribution-and-trademark-review"'
+    'data-provenance-theme="codestorage-draft" data-disposition="replace-before-release"'
+    'github.com/squidfunk/mkdocs-material/blob/master/README.md'
+    'github.com/squidfunk/mkdocs-material/blob/master/LICENSE'
+    'code.storage/legal/terms'
+    'No public content-reuse license was found'
+    'not legal advice'
+  )
+  for provenance_contract in "${provenance_contracts[@]}"; do
+    if grep -Fq "$provenance_contract" "$provenance_source"; then
+      pass "provenance record includes $provenance_contract"
+    else
+      bad "provenance record missing $provenance_contract"
+    fi
+  done
+  for notice_contract in \
+    'Material for MkDocs' \
+    'Copyright (c) 2016-2025 Martin Donath' \
+    'Permission is hereby granted, free of charge'; do
+    if grep -Fq "$notice_contract" "$third_party_notices"; then
+      pass "third-party notices include $notice_contract"
+    else
+      bad "third-party notices missing $notice_contract"
+    fi
+  done
+else
+  bad "landing-fixture provenance record or THIRD_PARTY_NOTICES.md missing"
+fi
+
 ledger_specs=(
   'material-draft|material'
   'codestorage-draft|codestorage'
@@ -256,7 +290,8 @@ for ledger_spec in "${ledger_specs[@]}"; do
     "$ROOT/docs/features.yaml")
   if grep -Fq '    readiness: remain-preview' <<< "$theme_block" && \
      grep -Fq "    readiness_record: docs/release-readiness.md#$readiness_anchor" <<< "$theme_block" && \
-     grep -Fq '    visual_review_record: docs/visual-review-matrix.md' <<< "$theme_block"; then
+     grep -Fq '    visual_review_record: docs/visual-review-matrix.md' <<< "$theme_block" && \
+     grep -Fq "    provenance_record: docs/landing-fixture-provenance.md#$readiness_anchor" <<< "$theme_block"; then
     pass "features ledger keeps $theme_id in Preview with its readiness record"
   else
     bad "features ledger must bind $theme_id remain-preview to #$readiness_anchor"
@@ -287,6 +322,8 @@ if [ -x "$ROOT/scripts/site.sh" ]; then
       "maintainers.md"
       "readiness.md"
       "visual-review-matrix.md"
+      "landing-fixture-provenance.md"
+      "third-party-notices.md"
       "status.md"
       "assets/themes/letterpress.png"
       "assets/themes/superstack.jpg"
@@ -320,6 +357,8 @@ if [ -n "$SITE_URL" ]; then
     "/maintainers|Maintain and release themes"
     "/readiness|Preview release readiness"
     "/visual-review-matrix|Preview visual review matrix"
+    "/landing-fixture-provenance|Landing fixture provenance"
+    "/third-party-notices|Third-party notices"
   )
   live_body=$(mktemp)
   for route_contract in "${live_routes[@]}"; do

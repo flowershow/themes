@@ -50,6 +50,11 @@ Status meanings:
   placeholder rather than redistributing the reference site's parallax art.
 - **Known gaps:** tabbed content, previous/next pagination, and a version
   selector remain documented core/out-of-scope differences.
+- **Fixture provenance audit:** upstream copyright reuse is traceable to MIT
+  sources and the required notice is preserved, but trademark presentation,
+  inline SVG provenance, testimonials, and third-party name tiles still need
+  the disposition recorded in the
+  [landing-fixture provenance audit](landing-fixture-provenance.md).
 
 ### Completed review gates
 
@@ -64,8 +69,8 @@ Status meanings:
 - [ ] Search is explicitly visually reviewed once the preview site has the
       Flowershow Search feature entitlement and renders the search control.
 - [ ] Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,
-      and required attribution are reviewed; replace anything not cleared for
-      an official release.
+      and representations follow the recorded attribution-or-replacement
+      disposition before an official release.
 - [ ] Final public name and directory name are approved.
 - [ ] Canonical Flowershow gallery and dashboard changes are prepared.
 - [ ] Release metadata, purge coverage, version, and changelog are prepared.
@@ -104,6 +109,10 @@ provenance review. Release engineering should wait for their results.
   release and remain a gate below.
 - **Known gaps:** the reference's bracketed page-copy navigation and bespoke
   3D/diagram content remain explicitly outside the CSS theme.
+- **Fixture provenance audit:** no public content-reuse license was found for
+  the copied landing material, so the
+  [landing-fixture provenance audit](landing-fixture-provenance.md) requires
+  replacement rather than attribution before official release.
 
 ### Completed review gates
 
@@ -118,8 +127,8 @@ provenance review. Release engineering should wait for their results.
 - [ ] Search is explicitly visually reviewed once the preview site has the
       Flowershow Search feature entitlement and renders the search control.
 - [ ] Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,
-      and required attribution are reviewed; replace anything not cleared for
-      an official release.
+      product claims, contacts, and upstream links are replaced as required by
+      the recorded disposition before an official release.
 - [ ] Final public name and directory name are approved.
 - [ ] Canonical Flowershow gallery and dashboard changes are prepared.
 - [ ] Release metadata, purge coverage, version, and changelog are prepared.
