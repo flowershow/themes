@@ -380,7 +380,7 @@ def main() -> int:
             for failure in failures:
                 print(f"  FAIL  {failure}")
         else:
-            print(f"  PASS  {label} showcase passes the reusable fixture contract")
+            print(f"  PASS  {label} showcase passes the theme-local fixture contract")
     return int(failed)
 
 

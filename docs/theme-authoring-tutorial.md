@@ -75,25 +75,27 @@ icons at 44px inheriting text colour rather than 28px accent, buttons at
 more than font choice.** Get the ratios right before touching anything
 else.
 
-## Publishing the standard theme-demo homepage
+## Publishing a theme-appropriate demo homepage
 
 Stage 1's standalone `.html` reproduction in `_repro/` remains throwaway. A
-shipped demo uses Flowershow's shared product homepage, not a copy of the
-reference site's landing page.
+shipped demo uses factual Flowershow content, not a copy of the reference
+site's landing page.
 
-Add `THEME-DIR/demo-showcase.json` for the theme's name, Preview status,
-headline, description, wrapper class, and repository URL. Style the shared
-semantic markup in `THEME-DIR/demo-landing.css`, with every landing-only rule
-scoped beneath the wrapper. `scripts/demo-site.sh THEME-DIR` renders the shared
-template to `/`, retains an identical `/landing` compatibility page, copies the
-CSS as `custom.css`, and supplies the real Flowershow navbar.
+Add a `THEME-DIR/demo-showcase.template.md` that demonstrates the theme's
+intended use, plus `demo-showcase.json` for its name, Preview status, headline,
+description, wrapper class, and repository URL. Keep the page relatively
+simple and content-led; do not force every theme into the same marketing
+layout. Style it in `THEME-DIR/demo-landing.css`, with every landing-only rule
+scoped beneath the wrapper. `scripts/demo-site.sh THEME-DIR` renders the local
+template to `/`, retains an identical `/landing` compatibility page, copies
+the CSS as `custom.css`, and supplies the real Flowershow navbar.
 
 The exact schema, standard routes, shared sources, migration path, and commands
 are in [Standard theme demo pages and content](./demo-site-content.md).
 
 Do not add a second `<header>` or `<nav>` to the homepage. Do not place review
 matrices or release gates in marketing copy. Use `--landing-page FILE.md` only
-for an exceptional research fixture that cannot use the shared template, and
+for an exceptional research fixture outside the normal validated homepage, and
 `--landing FILE.html` only for stage-one comparison outside normal Flowershow
 chrome.
 

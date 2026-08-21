@@ -164,7 +164,7 @@ if [ -s "$demo_content_source" ]; then
     '| `/docs/kitchen-sink` |' \
     '| `/blog` |' \
     '| `/blog/first-post` |' \
-    '_demo-content/theme-showcase.template.md' \
+    'THEME-DIR/demo-showcase.template.md' \
     '_demo-content/docs/kitchen-sink.md' \
     '_demo-content/blog/index.mdx' \
     '_demo-content/blog/first-post.md' \

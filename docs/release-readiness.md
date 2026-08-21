@@ -102,9 +102,9 @@ release preparation and explicit human authorization remain outstanding.
   [SIL Open Font License 1.1](https://github.com/IBM/plex/blob/master/LICENSE.txt).
 - **Hero illustration:** the 3D reference art is replaced by an original
   CSS-authored node/orbit composition and soft geometric field.
-- **Owned landing fixture:** the shared Flowershow showcase template plus
-  `demo-showcase.json` now supplies a real product homepage with theme-owned,
-  scoped presentation CSS. It contains no copied service identity, commercial
+- **Owned landing fixture:** the theme-local Flowershow showcase template plus
+  `demo-showcase.json` supplies a restrained, real-content homepage with
+  theme-owned, scoped presentation CSS. It contains no copied service identity, commercial
   claims, pricing, contacts, upstream navigation or unresolved SVG.
 - **Known gaps:** the reference's bracketed page-copy navigation and bespoke
   3D/diagram content remain explicitly outside the CSS theme.

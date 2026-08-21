@@ -17,11 +17,11 @@ Branch: `main` after integration. Current tracking home:
 - The deployed fix for flowershow/flowershow#1349 was checked and works.
 - The human authoring tutorial and AI theme-cloning workflow currently live in
   [`docs/`](docs/).
-- Theme demos now have a canonical standard-page inventory and reusable
-  Flowershow showcase source in
+- Theme demos now have a canonical standard-route and content-quality
+  inventory in
   [`docs/demo-site-content.md`](docs/demo-site-content.md). The Monospace
-  preview is the first migrated homepage; other themes remain opt-in until the
-  pattern is evaluated.
+  preview is the first theme-specific real-content homepage; other homepages
+  remain unchanged until several good examples reveal what is genuinely common.
 - The parallel themes discovery and authoring site is live at
   https://flowershow-themes-preview-rufuspollock.flowershow.me with all six
   themes, full authoring guides, and contributor/maintainer workflows.

@@ -74,21 +74,23 @@ relationship" reads as correct at a glance but isn't. Instead:
    from its actual source (SCSS variables, tokens file), not from memory
    of what that kind of site "usually" does.
 
-## Publish the shared Flowershow showcase, not the reference landing page
+## Publish a theme-appropriate Flowershow homepage, not the reference landing page
 
 The stage-one standalone HTML reproduction is throwaway. For the shipped demo:
 
 1. create the validated `THEME-DIR/demo-showcase.json` identity layer;
-2. style `_demo-content/theme-showcase.template.md` through scoped
+2. create a restrained `THEME-DIR/demo-showcase.template.md` suited to what
+   this theme should demonstrate and style it through scoped
    `THEME-DIR/demo-landing.css`;
 3. run `scripts/demo-site.sh THEME-DIR`; and
 4. verify `/`, `/docs/kitchen-sink`, `/blog`, and `/blog/first-post`.
 
 Never invent customer claims, copy the reference-site marketing identity, or
 import its images or logos into the demo homepage. Visual inspiration belongs
-in theme CSS; Flowershow product content comes from the shared template. Use
-the real Flowershow navbar and never add a second page-level `<header>` or
-`<nav>`.
+in theme CSS; homepage copy must remain factual and Flowershow-owned. Prefer
+ordinary text, lists, posts, and documentation surfaces over elaborate custom
+HTML. Use the real Flowershow navbar and never add a second page-level
+`<header>` or `<nav>`.
 
 The `--landing-page` and raw `--landing` options are exceptional research tools,
 not the normal shipped path. Their use does not replace any standard route.
