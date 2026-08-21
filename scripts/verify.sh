@@ -58,14 +58,44 @@ else
   bad "shared demo must request search for visual review"
 fi
 
-if grep -Fq 'overflow-x: auto;' "$REPO_ROOT/codestorage-draft/demo-landing.css" && \
-   grep -Fq 'min-width: 0;' "$REPO_ROOT/codestorage-draft/demo-landing.css"; then
+if python3 - "$REPO_ROOT/codestorage-draft/demo-landing.css" <<'PYEOF'
+import re, sys
+
+css = open(sys.argv[1]).read()
+
+def declarations(selector):
+    match = re.search(re.escape(selector) + r"\s*\{([^}]*)\}", css)
+    return re.sub(r"\s+", "", match.group(1)) if match else ""
+
+contracts = {
+    ".cs-landing .cs-container": ("min-width:0;",),
+    ".cs-landing .cs-section": ("min-width:0;",),
+    ".cs-landing .cs-hero": ("min-width:0;",),
+    ".cs-landing .cs-hero-text": ("min-width:0;",),
+    ".cs-landing .cs-pricing-grid": ("min-width:0;",),
+    ".cs-landing .cs-pricing-table-wrapper": ("min-width:0;",),
+    ".cs-landing .cs-ascii-table": ("max-width:100%;", "overflow-x:auto;"),
+}
+
+raise SystemExit(0 if all(
+    all(required in declarations(selector) for required in requirements)
+    for selector, requirements in contracts.items()
+) else 1)
+PYEOF
+then
   pass "code.storage landing constrains wide content on mobile"
 else
   bad "code.storage landing needs overflow and intrinsic-width guards"
 fi
 
-if grep -Fq 'background-color: hsl(225, 15%, 18%);' "$REPO_ROOT/material-draft/theme.css"; then
+if python3 - "$REPO_ROOT/material-draft/theme.css" <<'PYEOF'
+import re, sys
+css = open(sys.argv[1]).read()
+match = re.search(r"\.site-footer\s*\{([^}]*)\}", css)
+declarations = re.sub(r"\s+", "", match.group(1)) if match else ""
+raise SystemExit(0 if "background-color:hsl(225,15%,18%);" in declarations else 1)
+PYEOF
+then
   pass "Material footer stays dark in both color modes"
 else
   bad "Material footer must not use a mode-reversing foreground shade"

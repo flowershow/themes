@@ -14,8 +14,8 @@ Each theme was rendered across all 20 combinations below (40 renders total):
 | Mode | light, dark |
 | Surface | home/navbar/sidebar, kitchen sink, blog list, blog post, landing |
 
-For every combination, a headless Chrome audit confirmed that the requested
-mode was active and the document width equalled the viewport width. Full-page
+For every combination, a headless Chrome audit confirmed that the requested mode was active
+and the document width equalled the viewport width. Full-page
 captures were then inspected for layout, typography, contrast, component
 styling, wrapping, and responsive behavior. The local kitchen-sink image was
 scrolled into view and confirmed loaded in both themes.

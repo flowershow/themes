@@ -218,6 +218,33 @@ else
   bad "docs/release-readiness.md missing or empty"
 fi
 
+visual_review_source="$ROOT/docs/visual-review-matrix.md"
+if [ -s "$visual_review_source" ]; then
+  pass "visual-review matrix exists"
+  visual_review_contracts=(
+    'Each theme was rendered across all 20 combinations below (40 renders total)'
+    'desktop (1280 × 900), mobile (390 × 844)'
+    'light, dark'
+    'home/navbar/sidebar, kitchen sink, blog list, blog post, landing'
+    'requested mode was active'
+    'document width equalled the viewport width'
+    'local kitchen-sink image was'
+    'Search feature entitlement'
+    '.search-button'
+    'Search therefore remains explicitly unreviewed'
+    'Material and code.storage still remain **Preview**'
+  )
+  for visual_contract in "${visual_review_contracts[@]}"; do
+    if grep -Fq "$visual_contract" "$visual_review_source"; then
+      pass "visual-review matrix includes $visual_contract"
+    else
+      bad "visual-review matrix missing evidence: $visual_contract"
+    fi
+  done
+else
+  bad "docs/visual-review-matrix.md missing or empty"
+fi
+
 ledger_specs=(
   'material-draft|material'
   'codestorage-draft|codestorage'
