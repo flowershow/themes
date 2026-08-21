@@ -68,13 +68,13 @@ def declarations(selector):
     return re.sub(r"\s+", "", match.group(1)) if match else ""
 
 contracts = {
-    ".cs-landing .cs-container": ("min-width:0;",),
-    ".cs-landing .cs-section": ("min-width:0;",),
-    ".cs-landing .cs-hero": ("min-width:0;",),
-    ".cs-landing .cs-hero-text": ("min-width:0;",),
-    ".cs-landing .cs-pricing-grid": ("min-width:0;",),
-    ".cs-landing .cs-pricing-table-wrapper": ("min-width:0;",),
-    ".cs-landing .cs-ascii-table": ("max-width:100%;", "overflow-x:auto;"),
+    ".cs-landing": ("min-width:0;", "overflow:hidden;"),
+    ".cs-landing .ts-wrap": ("min-width:0;",),
+    ".cs-landing .ts-hero-copy": ("min-width:0;",),
+    ".cs-landing .ts-hero-art": ("min-width:0;",),
+    ".cs-landing .ts-card": ("min-width:0;",),
+    ".cs-landing .ts-theme-sample": ("min-width:0;",),
+    ".cs-landing .ts-theme-sample pre": ("max-width:100%;", "overflow-x:auto;"),
 }
 
 raise SystemExit(0 if all(
@@ -83,9 +83,9 @@ raise SystemExit(0 if all(
 ) else 1)
 PYEOF
 then
-  pass "code.storage landing constrains wide content on mobile"
+  pass "Monospace showcase constrains wide content on mobile"
 else
-  bad "code.storage landing needs overflow and intrinsic-width guards"
+  bad "Monospace showcase needs overflow and intrinsic-width guards"
 fi
 
 if python3 - "$REPO_ROOT/material-draft/theme.css" <<'PYEOF'
