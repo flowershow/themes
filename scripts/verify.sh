@@ -109,6 +109,12 @@ else
   bad "kitchen-sink image surface must use the local deterministic fixture"
 fi
 
+if python3 "$REPO_ROOT/scripts/verify-landing-fixtures.py"; then
+  pass "published landing fixtures are Flowershow-owned specimens"
+else
+  bad "published landing fixtures violate ownership/content contracts"
+fi
+
 echo ""
 
 # --- discover theme dirs from the ledger -----------------------------------
