@@ -215,6 +215,15 @@ if [ -n "$SITE_URL" ]; then
     fi
   done
 
+  for authoring_route in /authoring /ai-theme-cloning /contributing /status; do
+    status=$(curl -sL -o "$live_body" -w '%{http_code}' --max-time 20 "$base_url$authoring_route?verify=$RANDOM" || echo 000)
+    if [ "$status" = "200" ] && grep -Fq "$theme_class_reference" "$live_body"; then
+      pass "live $authoring_route links the semantic class reference"
+    else
+      bad "live $authoring_route missing semantic class reference (HTTP $status)"
+    fi
+  done
+
   status=$(curl -sL -o "$live_body" -w '%{http_code}' --max-time 20 "$base_url/themes?verify=$RANDOM" || echo 000)
   if [ "$status" = "200" ] && grep -Fq '{`{' "$live_body"; then
     bad "live gallery renders a literal MDX wrapper around JSON"
