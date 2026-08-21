@@ -13,6 +13,8 @@ If an AI agent is doing the visual translation, give it the
 For component-level CSS, use Flowershow's
 [semantic class reference](https://flowershow.app/docs/reference/theme-class-reference)
 instead of reverse-engineering selectors from an existing theme.
+The [standard demo pages and content inventory](/demo-site-content) lists every
+required route and the canonical source for its content.
 
 ## Contribution path
 
@@ -24,7 +26,9 @@ descriptive branch, and add a new directory using a lowercase, URL-safe name:
 ```text
 your-theme/
 ├── theme.css
-└── preview.png
+├── preview.png
+├── demo-showcase.json
+└── demo-landing.css
 ```
 
 Use a `-draft` suffix while the design is still being evaluated. Do not edit
@@ -44,6 +48,10 @@ CLI must be installed and authenticated; login is intentionally interactive.
 Use the shared kitchen-sink, blog, navbar, sidebar, and dark-mode content in
 `_demo-content/`. A landing page alone is not enough: it can hide component
 classes and typography rules that fail on normal Markdown pages.
+
+The homepage is rendered from the shared Flowershow showcase template plus the
+theme's validated metadata and scoped landing CSS. Do not copy another theme's
+homepage or a reference site's marketing content.
 
 If you are translating an existing visual language, reproduce and measure the
 target outside Flowershow first. The authoring guide explains why this
@@ -80,6 +88,13 @@ Use the repository script rather than assembling a demo by hand:
 
 ```bash
 scripts/demo-site.sh your-theme-draft
+```
+
+To inspect the exact assembled files before publishing:
+
+```bash
+output_dir=$(mktemp -d)
+scripts/demo-site.sh your-theme-draft --build-only "$output_dir"
 ```
 
 The command combines `_demo-content/` with a commit-pinned jsDelivr theme URL

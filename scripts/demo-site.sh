@@ -3,17 +3,21 @@
 #
 #   scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>] [--build-only <output-dir>]
 #
-# Assembles a site from:
-#   - _demo-content/          the shared kitchen-sink + blog content, so every
-#                             theme is compared on IDENTICAL content
+# Assembles a site from (see docs/demo-site-content.md):
+#   - _demo-content/          the shared showcase template, kitchen sink, and
+#                             blog, so every theme uses identical content
 #   - <theme-dir>/theme.css   applied via a jsDelivr URL pinned to the current
 #                             git branch (no release/tag needed for drafts)
+#   - <theme-dir>/demo-showcase.json + demo-landing.css
+#                             the standard homepage's validated identity and
+#                             theme-scoped presentation. Rendered at / with an
+#                             identical /landing compatibility page.
 #   - --landing <file>        optional raw .html landing page, published as
 #                             index.html, REPLACING the site's home page. Used
 #                             for stage-1 Tailwind repros — plain HTML with no
 #                             theme, no nav/footer, compared like-for-like
 #                             against the target before anything is themed.
-#   - --landing-page <file>   optional `layout: plain` markdown landing page,
+#   - --landing-page <file>   exceptional `layout: plain` research page,
 #                             published at /landing ALONGSIDE the rest of the
 #                             site (kitchen sink, blog) rather than replacing
 #                             it — one demo site, not a separate one. Prefer

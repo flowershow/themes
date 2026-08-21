@@ -156,6 +156,56 @@ for authoring_source in \
   fi
 done
 
+demo_content_source="$ROOT/docs/demo-site-content.md"
+if [ -s "$demo_content_source" ]; then
+  pass "canonical demo-site content inventory exists"
+  for inventory_contract in \
+    '| `/` |' \
+    '| `/docs/kitchen-sink` |' \
+    '| `/blog` |' \
+    '| `/blog/first-post` |' \
+    '_demo-content/theme-showcase.template.md' \
+    '_demo-content/docs/kitchen-sink.md' \
+    '_demo-content/blog/index.mdx' \
+    '_demo-content/blog/first-post.md' \
+    'THEME-DIR/demo-showcase.json' \
+    'THEME-DIR/demo-landing.css'; do
+    if grep -Fq "$inventory_contract" "$demo_content_source"; then
+      pass "demo-site inventory includes $inventory_contract"
+    else
+      bad "demo-site inventory missing $inventory_contract"
+    fi
+  done
+else
+  bad "docs/demo-site-content.md missing or empty"
+fi
+
+for guide_source in \
+  "$ROOT/docs/theme-authoring-tutorial.md" \
+  "$ROOT/docs/ai-theme-cloning-skill.md"; do
+  if grep -Fq 'demo-site-content.md' "$guide_source"; then
+    pass "$(basename "$guide_source") links canonical demo-site content"
+  else
+    bad "$(basename "$guide_source") missing canonical demo-site content link"
+  fi
+done
+
+for guide_source in "$SITE_DIR/contributing.md" "$SITE_DIR/maintainers.md"; do
+  if grep -Fq '/demo-site-content' "$guide_source"; then
+    pass "$(basename "$guide_source") links published demo-site content"
+  else
+    bad "$(basename "$guide_source") missing published demo-site content link"
+  fi
+done
+
+for ai_boundary in 'customer claims' 'reference-site marketing identity' 'images or logos'; do
+  if grep -Fqi "$ai_boundary" "$ROOT/docs/ai-theme-cloning-skill.md"; then
+    pass "AI guide prohibits $ai_boundary"
+  else
+    bad "AI guide must prohibit $ai_boundary in showcase content"
+  fi
+done
+
 readiness_source="$ROOT/docs/release-readiness.md"
 if [ -s "$readiness_source" ]; then
   pass "release-readiness record exists"
@@ -364,6 +414,7 @@ if [ -x "$ROOT/scripts/site.sh" ]; then
       "themes.md"
       "authoring.md"
       "ai-theme-cloning.md"
+      "demo-site-content.md"
       "contributing.md"
       "maintainers.md"
       "readiness.md"
@@ -399,6 +450,7 @@ if [ -n "$SITE_URL" ]; then
     "/themes|data-theme-card=\"letterpress\""
     "/authoring|Authoring a Flowershow theme"
     "/ai-theme-cloning|Cloning a site"
+    "/demo-site-content|Standard theme demo pages and content"
     "/contributing|Contribute a theme"
     "/maintainers|Maintain and release themes"
     "/readiness|Preview release readiness"

@@ -7,6 +7,7 @@
       { "href": "/authoring", "name": "Build a theme" },
       { "href": "/ai-theme-cloning", "name": "AI workflow" },
       { "href": "/contributing", "name": "Contributing" },
+      { "href": "/demo-site-content", "name": "Demo content" },
       { "href": "/readiness", "name": "Readiness" },
       { "href": "/maintainers", "name": "Maintainers" }
     ],
