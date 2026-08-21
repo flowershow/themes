@@ -71,6 +71,14 @@ else
   bad "Material footer must not use a mode-reversing foreground shade"
 fi
 
+if [ -s "$REPO_ROOT/_demo-content/assets/demo-image.svg" ] && \
+   grep -Fq '](/assets/demo-image.svg)' "$REPO_ROOT/_demo-content/docs/kitchen-sink.md" && \
+   ! grep -Fq 'picsum.photos' "$REPO_ROOT/_demo-content/docs/kitchen-sink.md"; then
+  pass "kitchen-sink image review uses a repository-owned fixture"
+else
+  bad "kitchen-sink image surface must use the local deterministic fixture"
+fi
+
 echo ""
 
 # --- discover theme dirs from the ledger -----------------------------------
