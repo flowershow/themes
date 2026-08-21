@@ -193,6 +193,14 @@ PYEOF
     else
       bad "demo site smoke check failed (HTTP $code) ($demo_url)"
     fi
+
+    component_url="${demo_url%/}/docs/kitchen-sink"
+    component_code=$(curl -sL -o /tmp/verify-component-body.html -w "%{http_code}" --max-time 20 "$component_url" || echo "000")
+    if [ "$component_code" = "200" ] && grep -qi "Kitchen Sink" /tmp/verify-component-body.html; then
+      pass "linked kitchen-sink specimen responds 200 ($component_url)"
+    else
+      bad "linked kitchen-sink specimen failed (HTTP $component_code) ($component_url)"
+    fi
   else
     warning "no demo_url recorded yet — live smoke check skipped, not failed"
   fi

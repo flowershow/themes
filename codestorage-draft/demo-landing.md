@@ -16,7 +16,7 @@ showComments: false
     </div>
     <nav class="cs-header-right" aria-label="Specimen navigation">
       <div>[ <a href="/">HOME</a> ]</div>
-      <div>[ <a href="/kitchen-sink">KITCHEN SINK</a> ]</div>
+      <div>[ <a href="/docs/kitchen-sink">KITCHEN SINK</a> ]</div>
       <div>[ <a href="/blog">BLOG</a> ]</div>
       <div>[ <a href="https://github.com/flowershow/themes">THEME REPO</a> ]</div>
     </nav>
@@ -76,7 +76,7 @@ showComments: false
       </p>
       <ul>
         <li><a href="/">Home</a> tests navigation, sidebar, hierarchy, and calls to action</li>
-        <li><a href="/kitchen-sink">Kitchen sink</a> tests Markdown, code, tables, media, and callouts</li>
+        <li><a href="/docs/kitchen-sink">Kitchen sink</a> tests Markdown, code, tables, media, and callouts</li>
         <li><a href="/blog">Blog list</a> tests repeated summaries, metadata, and scanning rhythm</li>
         <li><a href="/blog/first-post">Blog post</a> tests a focused long-form reading surface</li>
       </ul>
@@ -163,14 +163,14 @@ RELEASE TAG : NOT AUTHORIZED</div>
       <p>
         Explore the <a href="https://github.com/flowershow/themes">repository</a>,
         read the <a href="https://flowershow-themes-preview-rufuspollock.flowershow.me/contributing">contribution workflow</a>,
-        or return to the <a href="/kitchen-sink">component specimen</a>.
+        or return to the <a href="/docs/kitchen-sink">component specimen</a>.
       </p>
     </section>
     <footer class="cs-footer">
       <div class="cs-footer-links">
         <a href="/">Home</a>
         <span>|</span>
-        <a href="/kitchen-sink">Kitchen sink</a>
+        <a href="/docs/kitchen-sink">Kitchen sink</a>
         <span>|</span>
         <a href="/blog">Blog</a>
         <span>|</span>

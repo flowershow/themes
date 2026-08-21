@@ -22,7 +22,7 @@ showComments: false
       <nav class="mat-nav flex items-center" aria-label="Specimen navigation">
         <div class="mx-auto w-full max-w-[1220px] px-4 flex items-center gap-6" style="font-size:14px;">
           <a class="text-white font-medium" href="/">Home</a>
-          <a href="/kitchen-sink">Kitchen sink</a>
+          <a href="/docs/kitchen-sink">Kitchen sink</a>
           <a href="/blog">Blog</a>
           <a href="https://flowershow-themes-preview-rufuspollock.flowershow.me/authoring">Authoring</a>
         </div>
@@ -39,7 +39,7 @@ showComments: false
             and publishing surfaces.
           </p>
           <div class="flex items-center gap-2 mat-actions" style="margin-top:18px;">
-            <a href="/kitchen-sink" class="t-btn inline-flex items-center justify-center text-white" style="background:#dd2e57;">Explore the specimen</a>
+            <a href="/docs/kitchen-sink" class="t-btn inline-flex items-center justify-center text-white" style="background:#dd2e57;">Explore the specimen</a>
             <a href="/blog" class="t-btn inline-flex items-center justify-center text-white">Read the blog</a>
           </div>
         </div>
@@ -50,47 +50,47 @@ showComments: false
 
   <section style="background:#1e2129;" class="py-24">
     <div class="mx-auto w-full max-w-[1220px] px-4">
-      <h1 class="t-h1-section dark-h1">Designed for real Markdown</h1>
+      <h2 class="t-h1-section dark-h1">Designed for real Markdown</h2>
       <div class="expect-list">
         <div class="expect-item">
           <span class="expect-marker" aria-hidden="true">01</span>
           <div>
-            <h2 class="t-h2 dark-h2">Content first</h2>
+            <h3 class="t-h2 dark-h2">Content first</h3>
             <p class="t-body dark-body">Headings, paragraphs, lists, tables, code, images, and callouts share one deliberate reading rhythm.</p>
           </div>
         </div>
         <div class="expect-item">
           <span class="expect-marker" aria-hidden="true">02</span>
           <div>
-            <h2 class="t-h2 dark-h2">Built for every screen</h2>
+            <h3 class="t-h2 dark-h2">Built for every screen</h3>
             <p class="t-body dark-body">The same hierarchy adapts from a wide documentation workspace to a focused mobile column without horizontal overflow.</p>
           </div>
         </div>
         <div class="expect-item">
           <span class="expect-marker" aria-hidden="true">03</span>
           <div>
-            <h2 class="t-h2 dark-h2">Token driven</h2>
+            <h3 class="t-h2 dark-h2">Token driven</h3>
             <p class="t-body dark-body">Flowershow color and type tokens keep the palette understandable while semantic classes shape components.</p>
           </div>
         </div>
         <div class="expect-item">
           <span class="expect-marker" aria-hidden="true">04</span>
           <div>
-            <h2 class="t-h2 dark-h2">Clear wayfinding</h2>
+            <h3 class="t-h2 dark-h2">Clear wayfinding</h3>
             <p class="t-body dark-body">Navbar, sidebar, page title, current-page state, and article links remain distinct without competing with the content.</p>
           </div>
         </div>
         <div class="expect-item">
           <span class="expect-marker" aria-hidden="true">05</span>
           <div>
-            <h2 class="t-h2 dark-h2">Light and dark</h2>
+            <h3 class="t-h2 dark-h2">Light and dark</h3>
             <p class="t-body dark-body">Both modes are designed and reviewed as first-class reading environments rather than simple color inversions.</p>
           </div>
         </div>
         <div class="expect-item">
           <span class="expect-marker" aria-hidden="true">06</span>
           <div>
-            <h2 class="t-h2 dark-h2">Open authoring</h2>
+            <h3 class="t-h2 dark-h2">Open authoring</h3>
             <p class="t-body dark-body">The theme is ordinary CSS in a public repository, with a documented path from experiment to reviewed preview.</p>
           </div>
         </div>
@@ -100,20 +100,20 @@ showComments: false
 
   <section style="background:#ffffff;" class="py-24">
     <div class="mx-auto w-full max-w-[1220px] px-4">
-      <h1 class="t-h1-section light-h1">Explore the theme</h1>
+      <h2 class="t-h1-section light-h1">Explore the theme</h2>
       <div>
         <div class="spotlight">
           <div style="flex:1 1 0;">
             <p class="mat-kicker">START HERE</p>
-            <h2 class="t-h2 light-h2">A complete component specimen</h2>
-            <p class="t-body light-body">The <a href="/kitchen-sink">kitchen sink</a> puts Markdown structures side by side so typography, spacing, borders, and code treatment can be reviewed consistently.</p>
+            <h3 class="t-h2 light-h2">A complete component specimen</h3>
+            <p class="t-body light-body">The <a href="/docs/kitchen-sink">kitchen sink</a> puts Markdown structures side by side so typography, spacing, borders, and code treatment can be reviewed consistently.</p>
           </div>
-          <a class="specimen-panel" href="/kitchen-sink"><span>H1</span><span>Body text</span><span>`code`</span></a>
+          <a class="specimen-panel" href="/docs/kitchen-sink"><span>H1</span><span>Body text</span><span>`code`</span></a>
         </div>
         <div class="spotlight">
           <div style="flex:1 1 0; order:2;">
             <p class="mat-kicker">PUBLISHING</p>
-            <h2 class="t-h2 light-h2">Blog lists and long-form posts</h2>
+            <h3 class="t-h2 light-h2">Blog lists and long-form posts</h3>
             <p class="t-body light-body">Open the <a href="/blog">blog</a> to inspect metadata, summaries, repeated cards, and a quieter article reading surface.</p>
           </div>
           <a class="specimen-panel" style="order:1;" href="/blog"><span>2026-08-21</span><span>Theme review notes</span><span>Read →</span></a>
@@ -121,7 +121,7 @@ showComments: false
         <div class="spotlight">
           <div style="flex:1 1 0;">
             <p class="mat-kicker">NAVIGATION</p>
-            <h2 class="t-h2 light-h2">Context without clutter</h2>
+            <h3 class="t-h2 light-h2">Context without clutter</h3>
             <p class="t-body light-body">Return <a href="/">home</a> to review the page-title banner, sidebar hierarchy, active links, navbar, and mode switch together.</p>
           </div>
           <a class="specimen-panel specimen-panel-nav" href="/"><span>Home</span><span>Guide</span><span>Reference</span></a>
@@ -129,7 +129,7 @@ showComments: false
         <div class="spotlight">
           <div style="flex:1 1 0; order:2;">
             <p class="mat-kicker">BUILD</p>
-            <h2 class="t-h2 light-h2">A repeatable authoring path</h2>
+            <h3 class="t-h2 light-h2">A repeatable authoring path</h3>
             <p class="t-body light-body">The <a href="https://flowershow-themes-preview-rufuspollock.flowershow.me/authoring">authoring guide</a> explains tokens, semantic classes, demo publishing, visual review, and release boundaries.</p>
           </div>
           <a class="specimen-panel specimen-panel-code" style="order:1;" href="https://flowershow-themes-preview-rufuspollock.flowershow.me/authoring"><span>theme.css</span><span>verify.sh</span><span>preview</span></a>
@@ -140,7 +140,7 @@ showComments: false
 
   <section style="background:#1e2129;" class="py-24">
     <div class="mx-auto w-full max-w-[1220px] px-4">
-      <h1 class="t-h1-section dark-h1">Review coverage</h1>
+      <h2 class="t-h1-section dark-h1">Review coverage</h2>
       <p class="t-body dark-body" style="max-width:680px; margin-bottom:48px;">
         This preview is checked across the combinations that most often expose theme defects.
         Search remains a separate pending surface until the demo receives its feature entitlement.
@@ -156,16 +156,16 @@ showComments: false
 
   <section style="background:#ffffff;" class="py-24">
     <div class="mx-auto w-full max-w-[1220px] px-4">
-      <h1 class="t-h1-section light-h1">Built in the open</h1>
+      <h2 class="t-h1-section light-h1">Built in the open</h2>
       <div class="open-grid">
         <div class="open-card">
           <span class="expect-marker expect-marker-light" aria-hidden="true">CSS</span>
-          <h2 class="t-h2 light-h2">Inspect the source</h2>
+          <h3 class="t-h2 light-h2">Inspect the source</h3>
           <p class="t-body light-body">Read the independently authored stylesheet and landing fixture in the <a href="https://github.com/flowershow/themes">Flowershow themes repository</a>.</p>
         </div>
         <div class="open-card">
           <span class="expect-marker expect-marker-light" aria-hidden="true">PR</span>
-          <h2 class="t-h2 light-h2">Improve the preview</h2>
+          <h3 class="t-h2 light-h2">Improve the preview</h3>
           <p class="t-body light-body">Follow the <a href="https://flowershow-themes-preview-rufuspollock.flowershow.me/contributing">contribution workflow</a> to add evidence, propose changes, and keep release decisions explicit.</p>
         </div>
       </div>
@@ -176,7 +176,7 @@ showComments: false
     <div class="mx-auto w-full max-w-[1220px] px-4 inspiration-layout">
       <div>
         <p class="mat-kicker mat-kicker-dark">INSPIRATION</p>
-        <h1 class="t-h1-section dark-h1">Inspired, not identical</h1>
+        <h2 class="t-h1-section dark-h1">Inspired, not identical</h2>
       </div>
       <div>
         <p class="t-body dark-body">
@@ -197,12 +197,12 @@ showComments: false
   <section style="background:#ffffff;" class="py-24">
     <div class="mx-auto w-full max-w-[1220px] px-4">
       <p class="mat-kicker">PREVIEW / NOT RELEASED</p>
-      <h1 class="t-h1-section light-h1">Try the preview</h1>
+      <h2 class="t-h1-section light-h1">Try the preview</h2>
       <p class="t-body light-body" style="max-width:680px; margin-bottom:32px;">
         Explore the real Markdown surfaces, switch modes, and compare the hierarchy. This is an
         evaluation artifact—not a final name, canonical listing, or release authorization.
       </p>
-      <a href="/kitchen-sink" class="t-btn inline-flex items-center justify-center text-white" style="background:#dd2e57;">Open the kitchen sink</a>
+      <a href="/docs/kitchen-sink" class="t-btn inline-flex items-center justify-center text-white" style="background:#dd2e57;">Open the kitchen sink</a>
     </div>
   </section>
 
