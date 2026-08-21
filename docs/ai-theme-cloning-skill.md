@@ -118,6 +118,13 @@ Check these before concluding a change "didn't apply":
 
 ## Flowershow-specific rendering facts (check before assuming a selector works)
 
+Use the
+[semantic theme class reference](https://flowershow.app/docs/reference/theme-class-reference)
+as the authoritative selector inventory. It separates stable component/state
+hooks from non-contract compatibility utilities and records their owners. Do
+not guess selectors from names or treat arbitrary component-source classes as
+stable API.
+
 - Callouts are styled via **data attributes**, not classes:
   `[data-callout]`, `[data-callout-type="note"]`, `[data-callout-title]`,
   `[data-callout-body]`. A `.callout` selector matches nothing.

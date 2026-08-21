@@ -137,6 +137,19 @@ if [ -s "$SITE_DIR/contributing.md" ] && [ -s "$SITE_DIR/maintainers.md" ]; then
   done
 fi
 
+theme_class_reference="https://flowershow.app/docs/reference/theme-class-reference"
+for authoring_source in \
+  "$ROOT/docs/theme-authoring-tutorial.md" \
+  "$ROOT/docs/ai-theme-cloning-skill.md" \
+  "$SITE_DIR/contributing.md" \
+  "$SITE_DIR/status.md"; do
+  if grep -Fq "$theme_class_reference" "$authoring_source"; then
+    pass "$(basename "$authoring_source") links the semantic class reference"
+  else
+    bad "$(basename "$authoring_source") missing semantic class reference"
+  fi
+done
+
 if [ -s "$SITE_DIR/status.md" ]; then
   for entry in 'issues/1364' Material code.storage Preview; do
     if grep -Fq "$entry" "$SITE_DIR/status.md"; then
