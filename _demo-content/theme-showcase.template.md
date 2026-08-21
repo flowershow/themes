@@ -36,7 +36,6 @@ showComments: false
         </div>
       </div>
     </section>
-
     <section class="ts-section ts-publish">
       <div class="ts-wrap">
         <p class="ts-eyebrow">One folder, many forms</p>
@@ -50,7 +49,6 @@ showComments: false
         </div>
       </div>
     </section>
-
     <section class="ts-section ts-benefits">
       <div class="ts-wrap">
         <p class="ts-eyebrow">The Flowershow way</p>
@@ -63,7 +61,6 @@ showComments: false
         </div>
       </div>
     </section>
-
     <section class="ts-section ts-process">
       <div class="ts-wrap">
         <p class="ts-eyebrow">A short path to published</p>
@@ -75,7 +72,6 @@ showComments: false
         </ol>
       </div>
     </section>
-
     <section class="ts-section ts-theme-detail">
       <div class="ts-wrap ts-theme-grid">
         <div>
@@ -90,13 +86,11 @@ showComments: false
           <p><span>STATUS</span> {{status}}</p>
           <p><span>MODES</span> LIGHT / DARK</p>
           <pre><code># Publish clearly
-
 Your words stay yours.
 Your website stays useful.</code></pre>
         </div>
       </div>
     </section>
-
     <section class="ts-section ts-final-cta">
       <div class="ts-wrap ts-cta-grid">
         <div><p class="ts-eyebrow">Content in. Website out.</p><h2>Give your Markdown a place to live.</h2></div>

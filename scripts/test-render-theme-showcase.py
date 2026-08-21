@@ -61,6 +61,14 @@ def run_renderer(metadata, template=VALID_TEMPLATE):
 
 
 class RenderShowcaseTests(unittest.TestCase):
+    def test_repository_template_keeps_nested_html_in_one_markdown_block(self):
+        template = (
+            ROOT / "_demo-content/theme-showcase.template.md"
+        ).read_text(encoding="utf-8")
+        html_block = template[template.index('<div class="{{wrapperClass}}') :]
+
+        self.assertNotIn("\n\n", html_block)
+
     def test_renders_valid_metadata_and_escapes_text(self):
         metadata = dict(VALID_METADATA)
         metadata["headline"] = "Write <share> & publish"
