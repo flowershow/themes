@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "name": "Monospace",
+  "slug": "monospace",
+  "status": "preview",
+  "headline": "A sharper home for your Markdown",
+  "description": "A compact monospace theme for docs, notes, blogs, and technical publishing.",
+  "wrapperClass": "cs-landing",
+  "sourceUrl": "https://github.com/flowershow/themes/tree/main/codestorage-draft"
+}
