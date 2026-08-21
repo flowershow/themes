@@ -36,6 +36,6 @@ This is an experimental home for theme discovery and authoring. The existing
 [Flowershow themes reference](https://flowershow.app/docs/reference/themes)
 remains the canonical user documentation while we evaluate this site.
 
-Material and code.storage are previews: you can try them with the provided
-full URLs, but they are not yet released or available in the dashboard theme
-picker. Follow [project status](/status) for the current boundary.
+Monospace is official and uses the bare config value `monospace`. Material
+remains a Preview that can be tried with its provided full CSS URL. Follow
+[project status](/status) for the current boundary.

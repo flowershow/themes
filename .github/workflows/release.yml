@@ -84,6 +84,7 @@ jobs:
             - LessFlowery: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.RELEASE_TAG }}/lessflowery/theme.css`
             - Letterpress: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.RELEASE_TAG }}/letterpress/theme.css`
             - Superstack: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.RELEASE_TAG }}/superstack/theme.css`
+            - Monospace: `https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.RELEASE_TAG }}/monospace/theme.css`
           draft: false
           prerelease: false
       

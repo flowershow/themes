@@ -4,16 +4,16 @@ Current state and next actions for Flowershow themes. Keep this concise; use
 git history and [`docs/features.yaml`](docs/features.yaml) for detailed work
 records.
 
-Branch: `main` after integration. Current tracking home:
-[flowershow/flowershow#1364](https://github.com/flowershow/flowershow/issues/1364).
+Branch: `main` after integration. Readiness history and Material tracking:
+[flowershow/flowershow#1367](https://github.com/flowershow/flowershow/issues/1367).
 
 ## Current state
 
 - The August theme-cloning phase is complete and merged in
   [flowershow/themes#8](https://github.com/flowershow/themes/pull/8).
-- Material and code.storage pass structural and live-demo verification. Rufus
-  completed the human fidelity review on 2026-08-21 and reported both looked
-  okay. They remain **preview/beta**, not released themes.
+- Material and Monospace pass structural and live-demo verification. Rufus
+  approved Monospace for promotion on 2026-08-21; it is now **Official** under
+  the bare config value `monospace`. Material remains **Preview**.
 - The deployed fix for flowershow/flowershow#1349 was checked and works.
 - The human authoring tutorial and AI theme-cloning workflow currently live in
   [`docs/`](docs/).
@@ -32,19 +32,24 @@ Branch: `main` after integration. Current tracking home:
 
 ## Now
 
-1. Evaluate and iterate on the parallel preview site without changing the
-   canonical Flowershow reference gallery yet.
-2. Enable and review the currently unavailable search surface when entitlement
-   is available. The Flowershow-owned landing-fixture dispositions are complete;
-   keep both candidates visibly marked preview/beta while final naming,
-   integration, and release decisions remain open.
-3. Use the checklist evidence to decide whether either preview is ready for a
-   separate promotion proposal; do not rename, list, or release either theme
-   without that explicit decision.
+1. Answer the concrete product-review questions in
+   [#1369](https://github.com/flowershow/flowershow/issues/1369) for the
+   [parallel themes site](https://flowershow-themes-preview-rufuspollock.flowershow.me):
+   status clarity, theme choice, link correctness, mobile usability, content
+   ownership, and its eventual relationship to the canonical Flowershow site.
+2. Complete [#1370](https://github.com/flowershow/flowershow/issues/1370): grant
+   Search entitlement to the Monospace and Material demos, then review the
+   control, modal, results, no-results, focus, desktop/mobile, and light/dark
+   surfaces. This is needed because Search is real themed UI but cannot render
+   on the demos' current Free plan; absence is not evidence that it looks good.
+3. Keep Material visibly **Preview** and use
+   [#1367](https://github.com/flowershow/flowershow/issues/1367) for any future
+   naming, integration, and explicit promotion decision.
 
 The existing
 [Flowershow themes reference](https://flowershow.app/docs/reference/themes)
-remains unchanged and canonical while the new site is evaluated.
+remains canonical and now includes official Monospace. The parallel site is
+still evaluated separately through #1369.
 
 ## Separate follow-ups
 
@@ -63,7 +68,7 @@ remains unchanged and canonical while the new site is evaluated.
 - Themes discovery and authoring site:
   https://flowershow-themes-preview-rufuspollock.flowershow.me
 - Material: https://material-theme-demo-rufuspollock.flowershow.me
-- code.storage: https://codestorage-theme-demo-rufuspollock.flowershow.me
+- Monospace: https://monospace-theme-demo-rufuspollock.flowershow.me
 
 The detailed next-phase design is
 [`docs/plans/2026-08-21-themes-next-phase-design.md`](docs/plans/2026-08-21-themes-next-phase-design.md).

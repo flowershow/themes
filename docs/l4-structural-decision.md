@@ -6,7 +6,7 @@ revisit it — it is not a substitute for that review.
 
 ## The problem
 
-Building `material-draft/` and `codestorage-draft/` confirmed three things
+Building `material-draft/` and `monospace/` confirmed three things
 that no theme can clone, because the underlying component doesn't exist in
 Flowershow core (checked against the actual component source, not assumed):
 

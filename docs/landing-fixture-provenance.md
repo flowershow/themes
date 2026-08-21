@@ -1,6 +1,6 @@
 ---
 title: Landing fixture provenance
-description: Source evidence and release disposition for the Material and code.storage preview landing pages.
+description: Source evidence and release disposition for the Material preview and Monospace landing pages.
 ---
 
 This audit separates the independently authored CSS themes from the marketing
@@ -50,11 +50,12 @@ reference to the upstream open-source project.
 
 ## code.storage
 
-<div data-provenance-theme="codestorage-draft" data-disposition="executed-owned-specimen"></div>
+<div data-provenance-theme="monospace" data-disposition="executed-owned-specimen"></div>
 
 ### Evidence
 
-- The original `codestorage-draft/demo-landing.md` reproduced the Code Storage
+- The original `codestorage-draft/demo-landing.md` (before promotion and rename)
+  reproduced the Code Storage
   and Pierre Computer Company names, marketing copy, product claims, pricing,
   SLA/security statements, API example identities, contact details and upstream
   navigation. Those elements are retained here only as historical audit facts.
@@ -80,8 +81,8 @@ contacts and upstream navigation.
 - The unresolved inline SVG was replaced with a repository-authored CSS node mark.
 - The original gradient, independently authored layout technique, open-font
   substitution and theme CSS remain.
-- The shared Flowershow showcase visibly identifies the theme as Monospace and
-  Preview, with the headline `A sharper home for your Markdown` and no copied
+- The theme-local Flowershow showcase visibly identifies the official theme as
+  Monospace, with the headline `A sharper home for your Markdown` and no copied
   service presentation.
 
 This disposition is executed for the published fixture. Attribution is not
@@ -91,7 +92,8 @@ field.
 
 ## Boundary
 
-These replacements close the content/provenance gate only. They do not approve
-a final theme name, canonical gallery/dashboard integration, release metadata,
-or a release tag. Both themes remain **Preview** until every readiness gate and
-the explicit human-promotion decision are complete.
+These replacements closed the content/provenance gate. Rufus subsequently
+approved the final Monospace name and promotion on 2026-08-21; its stable
+directory, gallery/dashboard integration, and release metadata are prepared.
+Material remains **Preview**. A versioned Monospace release tag is a separate
+future decision and is not created by the promotion.

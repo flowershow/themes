@@ -8,7 +8,7 @@ description: >-
 compatibility: Designed for Claude Code (or similar products)
 metadata:
   author: flowershow
-  status: draft — derived from building material-draft/ and codestorage-draft/
+  status: draft — derived from building material-draft/ and monospace/
     in flowershow/themes, not yet used cold by anyone else
 ---
 

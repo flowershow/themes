@@ -62,7 +62,7 @@ Create `THEME-DIR/demo-showcase.template.md` and a
   "headline": "A sharper home for your Markdown",
   "description": "A compact monospace theme for docs, notes, blogs, and technical publishing.",
   "wrapperClass": "cs-landing",
-  "sourceUrl": "https://github.com/flowershow/themes/tree/main/codestorage-draft"
+  "sourceUrl": "https://github.com/flowershow/themes/tree/main/monospace"
 }
 ```
 

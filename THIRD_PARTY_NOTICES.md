@@ -4,7 +4,7 @@
 
 The open-source
 [Material for MkDocs repository](https://github.com/squidfunk/mkdocs-material)
-inspired the preview theme. Its earlier landing fixture adapted upstream text;
+inspired the Material preview theme. Its earlier landing fixture adapted upstream text;
 the current fixture uses Flowershow-owned copy and visuals. The project is
 distributed under the MIT License below. This notice preserves the theme's
 source history; it does not assert permission to use any name, logo, or

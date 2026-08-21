@@ -67,7 +67,7 @@ if [ -s "$SITE_DIR/index.md" ]; then
 fi
 
 if [ -s "$SITE_DIR/themes.md" ]; then
-  for theme_name in Letterpress Superstack LessFlowery Leaf Material code.storage; do
+  for theme_name in Letterpress Superstack LessFlowery Leaf Material Monospace; do
     if grep -Fqi "$theme_name" "$SITE_DIR/themes.md"; then
       pass "gallery includes $theme_name"
     else
@@ -77,8 +77,8 @@ if [ -s "$SITE_DIR/themes.md" ]; then
 
   official_count=$(grep -o 'Official' "$SITE_DIR/themes.md" | wc -l | tr -d ' ')
   preview_count=$(grep -o 'Preview' "$SITE_DIR/themes.md" | wc -l | tr -d ' ')
-  [ "$official_count" -ge 4 ] && pass "gallery labels four official themes" || bad "gallery needs four Official labels"
-  [ "$preview_count" -ge 2 ] && pass "gallery labels two preview themes" || bad "gallery needs two Preview labels"
+  [ "$official_count" -ge 5 ] && pass "gallery labels five official themes" || bad "gallery needs five Official labels"
+  [ "$preview_count" -ge 1 ] && pass "gallery labels one preview theme" || bad "gallery needs one Preview label"
 
   card_contracts=(
     "letterpress|official|letterpress|https://letterpress.flowershow.me/|/assets/themes/letterpress.png"
@@ -86,7 +86,7 @@ if [ -s "$SITE_DIR/themes.md" ]; then
     "lessflowery|official|lessflowery|https://lessflowery.flowershow.me/|/assets/themes/lessflowery.jpg"
     "leaf|official|leaf|https://leaf.flowershow.me/|/assets/themes/leaf.png"
     "material|preview|https://cdn.jsdelivr.net/gh/flowershow/themes@main/material-draft/theme.css|https://material-theme-demo-rufuspollock.flowershow.me|/assets/themes/material-preview.png"
-    "codestorage|preview|https://cdn.jsdelivr.net/gh/flowershow/themes@main/codestorage-draft/theme.css|https://codestorage-theme-demo-rufuspollock.flowershow.me|/assets/themes/codestorage-preview.png"
+    "monospace|official|monospace|https://monospace-theme-demo-rufuspollock.flowershow.me|/assets/themes/monospace.png"
   )
   for contract in "${card_contracts[@]}"; do
     IFS='|' read -r card_id card_status card_config card_demo card_image <<< "$contract"
@@ -119,9 +119,9 @@ if [ -s "$SITE_DIR/themes.md" ]; then
                'https://lessflowery.flowershow.me/' \
                'https://leaf.flowershow.me/' \
                'https://material-theme-demo-rufuspollock.flowershow.me' \
-               'https://codestorage-theme-demo-rufuspollock.flowershow.me' \
+               'https://monospace-theme-demo-rufuspollock.flowershow.me' \
                'https://cdn.jsdelivr.net/gh/flowershow/themes@main/material-draft/theme.css' \
-               'https://cdn.jsdelivr.net/gh/flowershow/themes@main/codestorage-draft/theme.css' \
+               '"monospace"' \
                '/contributing'; do
     if grep -Fq "$entry" "$SITE_DIR/themes.md"; then
       pass "gallery includes $entry"
@@ -223,30 +223,23 @@ if [ -s "$readiness_source" ]; then
   done
 
   readiness_sections=(
-    'material-draft|## Material|## code.storage|Landing-fixture copy, trademark presentation, SVG/icon provenance, and'
-    'codestorage-draft|## code.storage|## Promotion boundary|Landing-fixture identity, copy, claims, contacts, upstream links, and'
+    'material-draft|## Material|## Monospace|Landing-fixture copy, trademark presentation, SVG/icon provenance, and|remain-preview'
+    'monospace|## Monospace|## Promotion boundary|Landing-fixture identity, copy, claims, contacts, upstream links, and|official'
   )
   completed_gates=(
     'Desktop and mobile visual review is explicitly recorded.'
     'Light and dark visual review is explicitly recorded.'
     'Home, kitchen sink, blog listing/post, navbar, sidebar, and landing'
   )
-  pending_gates=(
-    'Search is explicitly visually reviewed once the preview site has the'
-    'Final public name and directory name are approved.'
-    'Canonical Flowershow gallery and dashboard changes are prepared.'
-    'Release metadata, purge coverage, version, and changelog are prepared.'
-    'A human explicitly authorizes promotion and the release tag.'
-  )
   for readiness_spec in "${readiness_sections[@]}"; do
-    IFS='|' read -r theme_id start_heading end_heading fixture_gate <<< "$readiness_spec"
+    IFS='|' read -r theme_id start_heading end_heading fixture_gate recommendation <<< "$readiness_spec"
     section=$(awk -v start="$start_heading" -v end="$end_heading" \
       '$0 == start { found=1; next } $0 == end { exit } found' "$readiness_source")
-    marker="<div data-readiness-theme=\"$theme_id\" data-recommendation=\"remain-preview\"></div>"
+    marker="<div data-readiness-theme=\"$theme_id\" data-recommendation=\"$recommendation\"></div>"
     if grep -Fxq "$marker" <<< "$section"; then
-      pass "$theme_id section records remain-preview"
+      pass "$theme_id section records $recommendation"
     else
-      bad "$theme_id section must record remain-preview on its theme marker"
+      bad "$theme_id section must record $recommendation on its theme marker"
     fi
     for completed_gate in "${completed_gates[@]}"; do
       if grep -Fq -- "- [x] $completed_gate" <<< "$section"; then
@@ -260,13 +253,34 @@ if [ -s "$readiness_source" ]; then
     else
       bad "$theme_id must record completed fixture action: $fixture_gate"
     fi
-    for pending_gate in "${pending_gates[@]}"; do
-      if grep -Fq -- "- [ ] $pending_gate" <<< "$section"; then
-        pass "$theme_id keeps pending: $pending_gate"
-      else
-        bad "$theme_id must keep unchecked pending gate: $pending_gate"
-      fi
-    done
+    if [ "$theme_id" = "material-draft" ]; then
+      for pending_gate in \
+        'Search is explicitly visually reviewed once the preview site has the' \
+        'Final public name and directory name are approved.' \
+        'Canonical Flowershow gallery and dashboard changes are prepared.' \
+        'Release metadata, purge coverage, version, and changelog are prepared.' \
+        'A human explicitly authorizes promotion and the release tag.'; do
+        grep -Fq -- "- [ ] $pending_gate" <<< "$section" && \
+          pass "$theme_id keeps pending: $pending_gate" || \
+          bad "$theme_id must keep unchecked pending gate: $pending_gate"
+      done
+    else
+      for completed_gate in \
+        'Final public name and directory name are approved as Monospace / monospace.' \
+        'Themes gallery, canonical Flowershow gallery, and dashboard integration are prepared.' \
+        'Rufus explicitly authorized promotion on 2026-08-21.'; do
+        grep -Fq -- "- [x] $completed_gate" <<< "$section" && \
+          pass "$theme_id records completed promotion gate: $completed_gate" || \
+          bad "$theme_id must record completed promotion gate: $completed_gate"
+      done
+      for followup_gate in \
+        'Search is visually reviewed after entitlement is enabled in flowershow/flowershow#1370.' \
+        'A versioned release tag and changelog are separately approved.'; do
+        grep -Fq -- "- [ ] $followup_gate" <<< "$section" && \
+          pass "$theme_id records non-blocking follow-up: $followup_gate" || \
+          bad "$theme_id must record non-blocking follow-up: $followup_gate"
+      done
+    fi
   done
 else
   bad "docs/release-readiness.md missing or empty"
@@ -295,7 +309,7 @@ if [ -s "$visual_review_source" ]; then
     '20 renders'
     '18px computed H1'
     'one text-first'
-    'Material and code.storage still remain **Preview**'
+    'Material remains **Preview** and Monospace is **Official**'
   )
   for visual_contract in "${visual_review_contracts[@]}"; do
     if grep -Fq "$visual_contract" "$visual_review_source"; then
@@ -339,7 +353,7 @@ if [ -s "$provenance_source" ] && [ -s "$third_party_notices" ]; then
     fi
   done
   codestorage_provenance_contracts=(
-    'data-provenance-theme="codestorage-draft" data-disposition="executed-owned-specimen"'
+    'data-provenance-theme="monospace" data-disposition="executed-owned-specimen"'
     'code.storage/legal/terms'
     'No public content-reuse license was found'
     'published fixture now removes the Code Storage and Pierre'
@@ -369,7 +383,7 @@ if [ -s "$provenance_source" ] && [ -s "$third_party_notices" ]; then
   else
     bad "third-party notices must preserve the complete Material for MkDocs MIT notice"
   fi
-  if grep -Fq 'inspired the preview theme' "$third_party_notices"; then
+  if grep -Fq 'inspired the Material preview theme' "$third_party_notices"; then
     pass "third-party notices describe inspiration rather than copied fixture text"
   else
     bad "third-party notices must describe the current inspiration-only boundary"
@@ -379,27 +393,27 @@ else
 fi
 
 ledger_specs=(
-  'material-draft|material'
-  'codestorage-draft|codestorage'
+  'material-draft|material|material|remain-preview'
+  'monospace|monospace|codestorage|official'
 )
 for ledger_spec in "${ledger_specs[@]}"; do
-  IFS='|' read -r theme_id readiness_anchor <<< "$ledger_spec"
+  IFS='|' read -r theme_id readiness_anchor provenance_anchor expected_readiness <<< "$ledger_spec"
   theme_block=$(awk -v id="$theme_id" \
     '$0 == "  - id: " id { found=1 } found && $0 ~ /^  - id: / && $0 != "  - id: " id { exit } found' \
     "$ROOT/docs/features.yaml")
-  if grep -Fq '    readiness: remain-preview' <<< "$theme_block" && \
+  if grep -Fq "    readiness: $expected_readiness" <<< "$theme_block" && \
      grep -Fq "    readiness_record: docs/release-readiness.md#$readiness_anchor" <<< "$theme_block" && \
      grep -Fq '    visual_review_record: docs/visual-review-matrix.md' <<< "$theme_block" && \
-     grep -Fq "    provenance_record: docs/landing-fixture-provenance.md#$readiness_anchor" <<< "$theme_block" && \
+     grep -Fq "    provenance_record: docs/landing-fixture-provenance.md#$provenance_anchor" <<< "$theme_block" && \
      grep -Fq '    landing_fixture: owned-specimen' <<< "$theme_block"; then
-    pass "features ledger keeps $theme_id in Preview with its readiness record"
+    pass "features ledger records $theme_id as $expected_readiness with its readiness record"
   else
-    bad "features ledger must bind $theme_id remain-preview to #$readiness_anchor"
+    bad "features ledger must bind $theme_id $expected_readiness to #$readiness_anchor"
   fi
 done
 
 if [ -s "$SITE_DIR/status.md" ]; then
-  for entry in 'issues/1364' Material code.storage Preview; do
+  for entry in 'issues/1369' 'issues/1370' Material Monospace Official Preview; do
     if grep -Fq "$entry" "$SITE_DIR/status.md"; then
       pass "status includes $entry"
     else
@@ -431,7 +445,7 @@ if [ -x "$ROOT/scripts/site.sh" ]; then
       "assets/themes/lessflowery.jpg"
       "assets/themes/leaf.png"
       "assets/themes/material-preview.png"
-      "assets/themes/codestorage-preview.png"
+      "assets/themes/monospace.png"
     )
     for relative_path in "${required_output[@]}"; do
       if [ -s "$build_dir/$relative_path" ]; then
@@ -495,7 +509,7 @@ if [ -n "$SITE_URL" ]; then
     /assets/themes/lessflowery.jpg \
     /assets/themes/leaf.png \
     /assets/themes/material-preview.png \
-    /assets/themes/codestorage-preview.png; do
+    /assets/themes/monospace.png; do
     image_result=$(curl -sL -o /dev/null -w '%{http_code}|%{content_type}' --max-time 20 "$base_url$image_path" || echo '000|')
     IFS='|' read -r image_status image_type <<< "$image_result"
     if [ "$image_status" = "200" ] && [[ "$image_type" == image/* ]]; then

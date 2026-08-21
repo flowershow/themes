@@ -31,7 +31,7 @@ themes:
     demo_url: https://material-theme-demo-rufuspollock.flowershow.me
     landing_repro: _repro/material-landing.html   # stage-1 static reference only (unpublished, uses live-hotlinked mkdocs-material art as a comparison stand-in) — see landing_page for the shipped version
     landing_page: material-draft/demo-landing.md  # stage-2: layout:plain markdown + material-draft/demo-landing.css, published alongside the rest of the site
-    landing_demo_url: https://material-theme-demo-rufuspollock.flowershow.me/landing   # 2026-08-09: moved from a separate material-landing-v2 site (deleted) into a /landing page on the main demo site — one site, not two, same consolidation as codestorage-draft
+    landing_demo_url: https://material-theme-demo-rufuspollock.flowershow.me/landing   # 2026-08-09: moved from a separate material-landing-v2 site (deleted) into a /landing page on the main demo site — one site, not two, same consolidation as monospace
     landing_demo_urls_retired:
       - url: https://material-landing-demo-rufuspollock.flowershow.me
         reason: "DELETED 2026-08-08 via `fl delete` — index.html stuck on an old CDN copy (Flowershow's own site-serving cache, not jsDelivr; `fl` confirmed uploaded files were current, so nothing in this repo could fix it). Filed as flowershow/flowershow#1347."
@@ -64,7 +64,7 @@ themes:
       typography — see NEXT.md "not blockers"). This was an LLM screenshot
       comparison, not a human sign-off — still open per NEXT.md item 1.
 
-      2026-08-09 architecture change (same pass as codestorage-draft, per
+      2026-08-09 architecture change (same pass as monospace, per
       Rufus): landing page moved from the separate material-landing-v2 site
       to `layout: plain` markdown (landing_page above) published at
       /landing on the main demo site. The stage-1 repro's Tailwind CDN
@@ -91,10 +91,11 @@ themes:
       SCSS source, not guessed. Class selectors (.is-current, aria-current)
       checked against Flowershow component source, not assumed.
 
-  - id: codestorage-draft
+  - id: monospace
     kind: theme
     inspiration: "https://code.storage/"
-    dir: codestorage-draft
+    dir: monospace
+    config_name: monospace
     passes: true             # structural only — see fidelity, which is separate
     last_verified: 2026-08-21
     checks:
@@ -103,23 +104,25 @@ themes:
       dark_mode_defined: true
       preview_asset_present: true
       demo_site_responds: true
-    demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
+    demo_url: https://monospace-theme-demo-rufuspollock.flowershow.me
     landing_repro: _repro/codestorage-landing.html   # stage-1 static reference only (unpublished) — see landing_page for the shipped version
-    landing_page: codestorage-draft/demo-showcase.template.md  # theme-specific real-content homepage, rendered with validated metadata
-    landing_metadata: codestorage-draft/demo-showcase.json
-    landing_demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me/
-    landing_compatibility_url: https://codestorage-theme-demo-rufuspollock.flowershow.me/landing
-    fidelity: reviewed-close # human-reviewed by Rufus 2026-08-21; preview/beta status remains until the release-readiness gate
-    readiness: remain-preview
-    readiness_record: docs/release-readiness.md#codestorage
+    landing_page: monospace/demo-showcase.template.md  # theme-specific real-content homepage, rendered with validated metadata
+    landing_metadata: monospace/demo-showcase.json
+    landing_demo_url: https://monospace-theme-demo-rufuspollock.flowershow.me/
+    landing_compatibility_url: https://monospace-theme-demo-rufuspollock.flowershow.me/landing
+    historical_demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
+    fidelity: reviewed-close # human-reviewed by Rufus 2026-08-21 and promoted as Monospace
+    readiness: official
+    readiness_record: docs/release-readiness.md#monospace
     visual_review_record: docs/visual-review-matrix.md
     provenance_record: docs/landing-fixture-provenance.md#codestorage
     landing_fixture: owned-specimen
     readiness_last_audited: 2026-08-21
     fidelity_notes: >
-      Human review 2026-08-21: Rufus reviewed the current live demo and
-      reported that it looked okay. This closes the fidelity-review task but
-      does not promote the theme beyond preview/beta status.
+      Human review 2026-08-21: Rufus reviewed the finished Monospace homepage,
+      reported that it looked good, and explicitly approved advancing it beyond
+      Preview. The stable public name and configuration value are Monospace and
+      monospace. Search remains a separately tracked follow-up in #1370.
 
       theme.css re-measured 2026-08-09 against a second, independently-built
       static repro (Rufus's tmp/ HTML+Tailwind clone): paler background,
@@ -148,7 +151,7 @@ themes:
       sink, blog index) fell back to the default theme's 48px heading —
       completely breaking the tight monospace scale outside the raw-HTML
       landing repro. material-draft already handled this class;
-      codestorage-draft didn't. Fixed and republished; verified live via
+      monospace didn't. Fixed and republished; verified live via
       getComputedStyle (17px/600, matching the rest of the scale). This is
       exactly the kind of gap the "LLM-judged" pass above missed — it
       compared the landing page (correct) and didn't check every themed
@@ -181,7 +184,7 @@ docs:
     kind: doc
     passes: true
     target: "docs/theme-authoring-tutorial.md — default landing spot, see CLAUDE.md open decision. Written here because it required no access outside this repo; moving it to flowershow/flowershow docs or flowershow/skills is still open for a human to decide."
-    notes: "Written 2026-08-09 from the experience of building material-draft and codestorage-draft — two-stage method, numeric comparison, caching gotchas, component gotchas, licensing, structural ceiling."
+    notes: "Written 2026-08-09 from the experience of building material-draft and monospace — two-stage method, numeric comparison, caching gotchas, component gotchas, licensing, structural ceiling."
 
   - id: ai-theme-cloning-skill
     kind: skill

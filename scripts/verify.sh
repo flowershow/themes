@@ -58,7 +58,7 @@ else
   bad "shared demo must request search for visual review"
 fi
 
-if python3 - "$REPO_ROOT/codestorage-draft/demo-landing.css" <<'PYEOF'
+if python3 - "$REPO_ROOT/monospace/demo-landing.css" <<'PYEOF'
 import re, sys
 
 css = open(sys.argv[1]).read()
@@ -93,7 +93,7 @@ else
 fi
 
 if python3 "$REPO_ROOT/scripts/verify-monospace-style.py" \
-  "$REPO_ROOT/codestorage-draft/demo-landing.css"; then
+  "$REPO_ROOT/monospace/demo-landing.css"; then
   pass "Monospace showcase keeps effective restrained type and desktop columns"
 else
   bad "Monospace showcase lost effective restrained type or desktop columns"
