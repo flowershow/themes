@@ -173,8 +173,8 @@ if [ -s "$readiness_source" ]; then
   done
 
   readiness_sections=(
-    'material-draft|## Material|## code.storage'
-    'codestorage-draft|## code.storage|## Promotion boundary'
+    'material-draft|## Material|## code.storage|Landing-fixture copy, trademark presentation, SVG/icon provenance, and'
+    'codestorage-draft|## code.storage|## Promotion boundary|Landing-fixture identity, copy, claims, contacts, upstream links, and'
   )
   completed_gates=(
     'Desktop and mobile visual review is explicitly recorded.'
@@ -183,14 +183,13 @@ if [ -s "$readiness_source" ]; then
   )
   pending_gates=(
     'Search is explicitly visually reviewed once the preview site has the'
-    'Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,'
     'Final public name and directory name are approved.'
     'Canonical Flowershow gallery and dashboard changes are prepared.'
     'Release metadata, purge coverage, version, and changelog are prepared.'
     'A human explicitly authorizes promotion and the release tag.'
   )
   for readiness_spec in "${readiness_sections[@]}"; do
-    IFS='|' read -r theme_id start_heading end_heading <<< "$readiness_spec"
+    IFS='|' read -r theme_id start_heading end_heading fixture_gate <<< "$readiness_spec"
     section=$(awk -v start="$start_heading" -v end="$end_heading" \
       '$0 == start { found=1; next } $0 == end { exit } found' "$readiness_source")
     marker="<div data-readiness-theme=\"$theme_id\" data-recommendation=\"remain-preview\"></div>"
@@ -206,6 +205,11 @@ if [ -s "$readiness_source" ]; then
         bad "$theme_id must record completed gate: $completed_gate"
       fi
     done
+    if grep -Fq -- "- [x] $fixture_gate" <<< "$section"; then
+      pass "$theme_id records completed fixture action: $fixture_gate"
+    else
+      bad "$theme_id must record completed fixture action: $fixture_gate"
+    fi
     for pending_gate in "${pending_gates[@]}"; do
       if grep -Fq -- "- [ ] $pending_gate" <<< "$section"; then
         pass "$theme_id keeps pending: $pending_gate"
@@ -260,14 +264,13 @@ if [ -s "$provenance_source" ] && [ -s "$third_party_notices" ]; then
     found
   ' "$provenance_source")
   material_provenance_contracts=(
-    'data-provenance-theme="material-draft" data-disposition="attribution-and-trademark-review"'
+    'data-provenance-theme="material-draft" data-disposition="executed-owned-specimen"'
     'github.com/squidfunk/mkdocs-material/blob/master/README.md'
     'github.com/squidfunk/mkdocs-material/blob/master/LICENSE'
-    'obtain/record approval for the product-name and trademark presentation'
-    'independently document or replace every inline SVG'
-    'replace draft testimonials and third-party name tiles'
-    'replace the fixture with Flowershow-authored copy, identity, icons and claims'
-    'does not treat an open-source copyright license as a trademark or'
+    'published fixture now uses Flowershow-authored copy'
+    'No inline SVG, upstream logo, repository badge, customer-name tile,'
+    'The Material for MkDocs project remains named only as'
+    'This disposition is executed'
   )
   for provenance_contract in "${material_provenance_contracts[@]}"; do
     if grep -Fq "$provenance_contract" <<< "$material_provenance"; then
@@ -277,14 +280,14 @@ if [ -s "$provenance_source" ] && [ -s "$third_party_notices" ]; then
     fi
   done
   codestorage_provenance_contracts=(
-    'data-provenance-theme="codestorage-draft" data-disposition="replace-before-release"'
+    'data-provenance-theme="codestorage-draft" data-disposition="executed-owned-specimen"'
     'code.storage/legal/terms'
     'No public content-reuse license was found'
-    'Replace the company/product'
-    'marketing and product claims, pricing/SLA/security statements'
-    'contacts and upstream links with clearly Flowershow-authored demo material'
-    'Replace the inline SVG and branded pill wording with repository-owned assets'
-    'unless separate written'
+    'published fixture now removes the Code Storage and Pierre'
+    'commercial performance, pricing, uptime, security, or customer claims'
+    'All navigation and calls to action now point to real Flowershow'
+    'unresolved inline SVG was replaced with a repository-authored CSS node mark'
+    'This disposition is executed'
   )
   for provenance_contract in "${codestorage_provenance_contracts[@]}"; do
     if grep -Fq "$provenance_contract" <<< "$codestorage_provenance"; then
@@ -307,6 +310,11 @@ if [ -s "$provenance_source" ] && [ -s "$third_party_notices" ]; then
   else
     bad "third-party notices must preserve the complete Material for MkDocs MIT notice"
   fi
+  if grep -Fq 'inspired the preview theme' "$third_party_notices"; then
+    pass "third-party notices describe inspiration rather than copied fixture text"
+  else
+    bad "third-party notices must describe the current inspiration-only boundary"
+  fi
 else
   bad "landing-fixture provenance record or THIRD_PARTY_NOTICES.md missing"
 fi
@@ -323,7 +331,8 @@ for ledger_spec in "${ledger_specs[@]}"; do
   if grep -Fq '    readiness: remain-preview' <<< "$theme_block" && \
      grep -Fq "    readiness_record: docs/release-readiness.md#$readiness_anchor" <<< "$theme_block" && \
      grep -Fq '    visual_review_record: docs/visual-review-matrix.md' <<< "$theme_block" && \
-     grep -Fq "    provenance_record: docs/landing-fixture-provenance.md#$readiness_anchor" <<< "$theme_block"; then
+     grep -Fq "    provenance_record: docs/landing-fixture-provenance.md#$readiness_anchor" <<< "$theme_block" && \
+     grep -Fq '    landing_fixture: owned-specimen' <<< "$theme_block"; then
     pass "features ledger keeps $theme_id in Preview with its readiness record"
   else
     bad "features ledger must bind $theme_id remain-preview to #$readiness_anchor"

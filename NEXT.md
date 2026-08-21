@@ -29,10 +29,10 @@ Branch: `main` after integration. Current tracking home:
 
 1. Evaluate and iterate on the parallel preview site without changing the
    canonical Flowershow reference gallery yet.
-2. Enable and review the currently unavailable search surface, then execute
-   the attribution/replacement dispositions in the
-   [landing-fixture provenance audit](docs/landing-fixture-provenance.md) while
-   keeping Material and code.storage visibly marked preview/beta.
+2. Enable and review the currently unavailable search surface when entitlement
+   is available. The Flowershow-owned landing-fixture dispositions are complete;
+   keep both candidates visibly marked preview/beta while final naming,
+   integration, and release decisions remain open.
 3. Use the checklist evidence to decide whether either preview is ready for a
    separate promotion proposal; do not rename, list, or release either theme
    without that explicit decision.

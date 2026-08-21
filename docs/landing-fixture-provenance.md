@@ -11,48 +11,53 @@ landing page.
 
 ## Material
 
-<div data-provenance-theme="material-draft" data-disposition="attribution-and-trademark-review"></div>
+<div data-provenance-theme="material-draft" data-disposition="executed-owned-specimen"></div>
 
 ### Evidence
 
-- The product name, repository identity, headline, feature headings and much of
-  the feature copy in `material-draft/demo-landing.md` are adapted from the
+- The original draft's product name, repository identity, headline, feature
+  headings and much of its feature copy were adapted from the
   upstream [README](https://github.com/squidfunk/mkdocs-material/blob/master/README.md)
-  and documentation sources.
+  and documentation sources. That historical draft is no longer the published
+  fixture.
 - The upstream repository carries an
   [MIT License](https://github.com/squidfunk/mkdocs-material/blob/master/LICENSE).
   Its copyright notice and license text are now preserved in
   [Third-party notices](/third-party-notices).
 - The fixture does not redistribute the upstream parallax illustration. It uses
   an original gradient placeholder.
-- The inline SVG paths were created in this repository's earlier draft work,
-  but no independent creation record or upstream icon mapping was preserved.
-- The testimonial quotations are draft fixture text, not sourced testimonials.
-  The industry-name tiles reproduce third-party names from upstream marketing.
+- The earlier inline SVG paths had no preserved independent creation record or
+  upstream icon mapping. Its testimonial quotations were unsourced draft text,
+  and its industry tiles reproduced third-party names.
 
-### Disposition before an official release
+### Executed disposition
 
-Copyright attribution for the MIT-licensed source text is now present. Before
-promotion, a maintainer must still do one of the following:
+The published fixture now uses Flowershow-authored copy, identity, CSS geometry,
+specimen cards, calls to action and review evidence while retaining the
+Material-inspired color, hierarchy, spacing and alternating-section layout.
 
-1. obtain/record approval for the product-name and trademark presentation,
-   independently document or replace every inline SVG, and clearly label or
-   replace draft testimonials and third-party name tiles; or
-2. replace the fixture with Flowershow-authored copy, identity, icons and claims
-   while retaining the Material-inspired layout as the visual demonstration.
+- No inline SVG, upstream logo, repository badge, customer-name tile,
+  testimonial, sponsorship pitch or upstream marketing headline remains.
+- The Material for MkDocs project remains named only as open-source inspiration,
+  with a direct upstream link and the retained MIT notice.
+- The page visibly labels itself `Material-inspired preview` and `Preview theme
+  specimen`; it does not claim to be the upstream product.
 
-This audit does not treat an open-source copyright license as a trademark or
-endorsement grant.
+This disposition is executed for the published fixture. The historical audit
+does not treat an open-source copyright license as a trademark or endorsement
+grant, and the notice remains useful because the theme was developed with
+reference to the upstream open-source project.
 
 ## code.storage
 
-<div data-provenance-theme="codestorage-draft" data-disposition="replace-before-release"></div>
+<div data-provenance-theme="codestorage-draft" data-disposition="executed-owned-specimen"></div>
 
 ### Evidence
 
-- `codestorage-draft/demo-landing.md` reproduces the Code Storage and Pierre
-  Computer Company names, marketing copy, product claims, pricing, SLA/security
-  statements, API example identities, contact details and upstream navigation.
+- The original `codestorage-draft/demo-landing.md` reproduced the Code Storage
+  and Pierre Computer Company names, marketing copy, product claims, pricing,
+  SLA/security statements, API example identities, contact details and upstream
+  navigation. Those elements are retained here only as historical audit facts.
 - The official [Code Storage terms](https://code.storage/legal/terms) state that
   the company retains its service and associated intellectual-property rights
   and grants only limited service-access rights to customers.
@@ -63,19 +68,29 @@ endorsement grant.
 - The inline network SVG and pill-label wording have no preserved independent
   provenance record beyond this repository's earlier fidelity draft.
 
-### Disposition before an official release
+### Executed disposition
 
-Attribution alone is not treated as sufficient. Replace the company/product
-identity, marketing and product claims, pricing/SLA/security statements,
-contacts and upstream links with clearly Flowershow-authored demo material.
-Replace the inline SVG and branded pill wording with repository-owned assets
-and copy. Keep only the independently authored theme CSS, layout technique,
-open-font substitution and original gradient treatment unless separate written
-permission is recorded.
+The published fixture now removes the Code Storage and Pierre Computer Company
+identity, marketing copy, product claims, pricing, SLA/security statements,
+contacts and upstream navigation.
+
+- It makes no commercial performance, pricing, uptime, security, or customer claims.
+- All navigation and calls to action now point to real Flowershow demo,
+  authoring, contribution or repository destinations.
+- The unresolved inline SVG was replaced with a repository-authored CSS node mark.
+- The original gradient, independently authored layout technique, open-font
+  substitution and theme CSS remain.
+- The page visibly identifies itself as `Flowershow Theme Lab — Monospace
+  specimen` with `Preview / not released` status.
+
+This disposition is executed for the published fixture. Attribution is not
+being used as a substitute for permission; the upstream service remains named
+only in this historical provenance record and the theme ledger's inspiration
+field.
 
 ## Boundary
 
-Completing these replacements would close the content/provenance gate only. It
-would not approve a final theme name, canonical gallery/dashboard integration,
-release metadata, or a release tag. Both themes remain **Preview** until every
-readiness gate and the explicit human-promotion decision are complete.
+These replacements close the content/provenance gate only. They do not approve
+a final theme name, canonical gallery/dashboard integration, release metadata,
+or a release tag. Both themes remain **Preview** until every readiness gate and
+the explicit human-promotion decision are complete.
