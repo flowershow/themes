@@ -42,6 +42,7 @@ themes:
     readiness_record: docs/release-readiness.md#material
     visual_review_record: docs/visual-review-matrix.md
     provenance_record: docs/landing-fixture-provenance.md#material
+    landing_fixture: owned-specimen
     readiness_last_audited: 2026-08-21
     fidelity_notes: >
       Human review 2026-08-21: Rufus reviewed the current live demo and
@@ -111,6 +112,7 @@ themes:
     readiness_record: docs/release-readiness.md#codestorage
     visual_review_record: docs/visual-review-matrix.md
     provenance_record: docs/landing-fixture-provenance.md#codestorage
+    landing_fixture: owned-specimen
     readiness_last_audited: 2026-08-21
     fidelity_notes: >
       Human review 2026-08-21: Rufus reviewed the current live demo and

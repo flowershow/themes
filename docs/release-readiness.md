@@ -16,8 +16,8 @@ promotion and any release tag.
 technical and documentation foundation plus a responsive/light-dark review
 record for every currently rendered surface. Neither has a reviewed search
 surface, approved final identity, or prepared integration/release changes. The
-demo landing fixtures also need their recorded copy/trademark/icon provenance
-dispositions executed before they can become official release artifacts.
+demo landing fixtures now use Flowershow-owned specimen content and have closed
+their recorded copy/trademark/icon provenance actions.
 
 Status meanings:
 
@@ -50,11 +50,11 @@ Status meanings:
   placeholder rather than redistributing the reference site's parallax art.
 - **Known gaps:** tabbed content, previous/next pagination, and a version
   selector remain documented core/out-of-scope differences.
-- **Fixture provenance audit:** upstream copyright reuse is traceable to MIT
-  sources and the required notice is preserved, but trademark presentation,
-  inline SVG provenance, testimonials, and third-party name tiles still need
-  the approval-or-replacement disposition in the
-  [landing-fixture provenance audit](landing-fixture-provenance.md) executed.
+- **Owned landing fixture:** the published page uses Flowershow-authored copy,
+  CSS geometry, specimen cards and claims. It names Material for MkDocs only as
+  open-source inspiration, links upstream, and retains the required notice. The
+  [landing-fixture provenance audit](landing-fixture-provenance.md) records the
+  removed badge, SVGs, testimonials and third-party name tiles.
 
 ### Completed review gates
 
@@ -63,23 +63,21 @@ Status meanings:
 - [x] Home, kitchen sink, blog listing/post, navbar, sidebar, and landing
       surfaces are explicitly recorded as visually reviewed in the
       [visual review matrix](visual-review-matrix.md).
+- [x] Landing-fixture copy, trademark presentation, SVG/icon provenance, and
+      representations use the recorded Flowershow-owned specimen disposition.
 
 ### Pending gates
 
 - [ ] Search is explicitly visually reviewed once the preview site has the
       Flowershow Search feature entitlement and renders the search control.
-- [ ] Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,
-      and representations follow the recorded attribution-or-replacement
-      disposition before an official release.
 - [ ] Final public name and directory name are approved.
 - [ ] Canonical Flowershow gallery and dashboard changes are prepared.
 - [ ] Release metadata, purge coverage, version, and changelog are prepared.
 - [ ] A human explicitly authorizes promotion and the release tag.
 
-**Recommendation:** remain Preview. The responsive and mode matrix is complete;
-the next useful actions are search-surface enablement and execution of the
-landing-fixture provenance disposition. Release engineering should wait for
-their results.
+**Recommendation:** remain Preview. The landing provenance action and current
+responsive/mode matrix are complete. Search enablement, naming, integration,
+release preparation and explicit human authorization remain outstanding.
 
 ## code.storage
 
@@ -104,16 +102,16 @@ their results.
   [SIL Open Font License 1.1](https://github.com/IBM/plex/blob/master/LICENSE.txt).
 - **Hero illustration:** the 3D reference art is replaced by an original
   gradient placeholder.
-- **Preview-fixture boundary:** `demo-landing.md` deliberately reproduces
-  reference brand names, marketing copy/navigation, and an SVG motif for
-  fidelity evaluation. Those elements are not declared cleared for an official
-  release and remain a gate below.
+- **Owned landing fixture:** `demo-landing.md` now uses a Flowershow Theme Lab
+  identity, factual specimen/review copy, real Flowershow destinations and a
+  repository-authored CSS node mark. It contains no copied service identity,
+  commercial claims, pricing, contacts, upstream navigation or unresolved SVG.
 - **Known gaps:** the reference's bracketed page-copy navigation and bespoke
   3D/diagram content remain explicitly outside the CSS theme.
 - **Fixture provenance audit:** no public content-reuse license was found for
-  the copied landing material, so the
-  [landing-fixture provenance audit](landing-fixture-provenance.md) requires
-  replacement rather than attribution before official release.
+  the earlier copied landing material, so it was replaced rather than merely
+  attributed. The [landing-fixture provenance audit](landing-fixture-provenance.md)
+  records the executed disposition.
 
 ### Completed review gates
 
@@ -122,22 +120,21 @@ their results.
 - [x] Home, kitchen sink, blog listing/post, navbar, sidebar, and landing
       surfaces are explicitly recorded as visually reviewed in the
       [visual review matrix](visual-review-matrix.md).
+- [x] Landing-fixture identity, copy, claims, contacts, upstream links, and
+      unresolved SVG use the recorded Flowershow-owned specimen disposition.
 
 ### Pending gates
 
 - [ ] Search is explicitly visually reviewed once the preview site has the
       Flowershow Search feature entitlement and renders the search control.
-- [ ] Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,
-      product claims, contacts, and upstream links are replaced as required by
-      the recorded disposition before an official release.
 - [ ] Final public name and directory name are approved.
 - [ ] Canonical Flowershow gallery and dashboard changes are prepared.
 - [ ] Release metadata, purge coverage, version, and changelog are prepared.
 - [ ] A human explicitly authorizes promotion and the release tag.
 
-**Recommendation:** remain Preview. The font and hero-art substitutions support
-continued previewing; promotion still depends on search enablement, the
-recorded provenance replacements, and an explicit product/release decision.
+**Recommendation:** remain Preview. The font, hero-art and landing-content
+substitutions support continued previewing; promotion still depends on search
+enablement, naming, integration/release preparation and explicit authorization.
 
 ## Promotion boundary
 
