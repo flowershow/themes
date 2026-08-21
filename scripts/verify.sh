@@ -187,8 +187,17 @@ PYEOF
   )
 
   if [ -n "$demo_url" ]; then
-    code=$(curl -s -o /tmp/verify-demo-body.html -w "%{http_code}" --max-time 20 "$demo_url" || echo "000")
-    if [ "$code" = "200" ] && grep -q "Theme Demo Site" /tmp/verify-demo-body.html; then
+    expected_demo_content="Theme Demo Site"
+    if [ -s "$REPO_ROOT/$dir/demo-showcase.json" ]; then
+      expected_demo_content=$(python3 - "$REPO_ROOT/$dir/demo-showcase.json" <<'PYEOF'
+import json, sys
+with open(sys.argv[1]) as source:
+    print(f'data-theme-showcase="{json.load(source)["slug"]}"')
+PYEOF
+      )
+    fi
+    code=$(curl -sL -o /tmp/verify-demo-body.html -w "%{http_code}" --max-time 20 "${demo_url%/}/?verify=$RANDOM" || echo "000")
+    if [ "$code" = "200" ] && grep -Fq "$expected_demo_content" /tmp/verify-demo-body.html; then
       pass "demo site responds 200 and renders expected content ($demo_url)"
     else
       bad "demo site smoke check failed (HTTP $code) ($demo_url)"

@@ -291,6 +291,10 @@ if [ -s "$visual_review_source" ]; then
     'data-owned-fixture'
     'code stayed readable'
     'could be mistaken for its'
+    'Reusable Monospace showcase review'
+    '16 renders'
+    'single raw-HTML block'
+    'A sharper home for your Markdown'
     'Material and code.storage still remain **Preview**'
   )
   for visual_contract in "${visual_review_contracts[@]}"; do

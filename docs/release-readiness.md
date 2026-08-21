@@ -91,9 +91,9 @@ release preparation and explicit human authorization remain outstanding.
 - **Repository contract:** `codestorage-draft/theme.css` and `preview.png`
   exist; required tokens, brace balance, dark-mode declarations, and the
   preview asset pass `scripts/verify.sh`.
-- **Live surfaces:** the [demo](https://codestorage-theme-demo-rufuspollock.flowershow.me)
-  and [landing page](https://codestorage-theme-demo-rufuspollock.flowershow.me/landing)
-  pass HTTP/content smoke checks.
+- **Live surfaces:** the [demo and canonical showcase](https://codestorage-theme-demo-rufuspollock.flowershow.me/),
+  kitchen sink, blog list, post, and `/landing` compatibility path pass
+  HTTP/content smoke checks.
 - **Theme source method:** the reference is a proprietary service, so values
   were measured from the public rendered site and `theme.css` was independently
   authored; no proprietary source code is included in the stylesheet.
@@ -101,11 +101,11 @@ release preparation and explicit human authorization remain outstanding.
   substitutes IBM Plex Mono, whose upstream project uses the
   [SIL Open Font License 1.1](https://github.com/IBM/plex/blob/master/LICENSE.txt).
 - **Hero illustration:** the 3D reference art is replaced by an original
-  gradient placeholder.
-- **Owned landing fixture:** `demo-landing.md` now uses a Flowershow Theme Lab
-  identity, factual specimen/review copy, real Flowershow destinations and a
-  repository-authored CSS node mark. It contains no copied service identity,
-  commercial claims, pricing, contacts, upstream navigation or unresolved SVG.
+  CSS-authored node/orbit composition and soft geometric field.
+- **Owned landing fixture:** the shared Flowershow showcase template plus
+  `demo-showcase.json` now supplies a real product homepage with theme-owned,
+  scoped presentation CSS. It contains no copied service identity, commercial
+  claims, pricing, contacts, upstream navigation or unresolved SVG.
 - **Known gaps:** the reference's bracketed page-copy navigation and bespoke
   3D/diagram content remain explicitly outside the CSS theme.
 - **Fixture provenance audit:** no public content-reuse license was found for

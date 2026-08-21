@@ -64,7 +64,7 @@ reference to the upstream open-source project.
 - No public content-reuse license was found for the landing-page copy, brand,
   logo/motif, or other marketing material.
 - Berkeley Mono and the reference 3D artwork are not shipped. The preview uses
-  IBM Plex Mono and an original CSS gradient placeholder instead.
+  IBM Plex Mono and an original CSS node/orbit composition instead.
 - The inline network SVG and pill-label wording have no preserved independent
   provenance record beyond this repository's earlier fidelity draft.
 
@@ -80,8 +80,9 @@ contacts and upstream navigation.
 - The unresolved inline SVG was replaced with a repository-authored CSS node mark.
 - The original gradient, independently authored layout technique, open-font
   substitution and theme CSS remain.
-- The page visibly identifies itself as `Flowershow Theme Lab — Monospace
-  specimen` with `Preview / not released` status.
+- The shared Flowershow showcase visibly identifies the theme as Monospace and
+  Preview, with the headline `A sharper home for your Markdown` and no copied
+  service presentation.
 
 This disposition is executed for the published fixture. Attribution is not
 being used as a substitute for permission; the upstream service remains named
