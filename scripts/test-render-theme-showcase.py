@@ -66,19 +66,19 @@ def run_renderer(metadata, template=VALID_TEMPLATE):
 
 
 class RenderShowcaseTests(unittest.TestCase):
-    def test_repository_template_is_theme_neutral(self):
-        template = (
-            ROOT / "_demo-content/theme-showcase.template.md"
-        ).read_text(encoding="utf-8")
+    def test_monospace_owns_its_showcase_template(self):
+        template_path = ROOT / "codestorage-draft/demo-showcase.template.md"
+        self.assertTrue(template_path.is_file())
+        template = template_path.read_text(encoding="utf-8")
 
         self.assertNotIn("IBM Plex Mono", template)
         self.assertNotIn("Monospace theme specimen", template)
         self.assertIn('aria-label="A small {{name}} theme specimen"', template)
 
-    def test_repository_template_keeps_nested_html_in_one_markdown_block(self):
-        template = (
-            ROOT / "_demo-content/theme-showcase.template.md"
-        ).read_text(encoding="utf-8")
+    def test_monospace_template_keeps_nested_html_in_one_markdown_block(self):
+        template_path = ROOT / "codestorage-draft/demo-showcase.template.md"
+        self.assertTrue(template_path.is_file())
+        template = template_path.read_text(encoding="utf-8")
         html_block = template[template.index('<div class="{{wrapperClass}}') :]
 
         self.assertNotIn("\n\n", html_block)
@@ -193,6 +193,11 @@ description: "{{yaml:description}}"
             compatibility = (output / "landing.md").read_text(encoding="utf-8")
             self.assertEqual(home, compatibility)
             self.assertIn('data-theme-showcase="monospace"', home)
+            self.assertIn("ts-document", home)
+            self.assertNotIn("ts-card-grid", home)
+            self.assertNotIn("ts-benefits", home)
+            self.assertNotIn("ts-steps", home)
+            self.assertNotIn("ts-final-cta", home)
             self.assertTrue((output / "custom.css").is_file())
             self.assertTrue((output / "docs/kitchen-sink.md").is_file())
             self.assertTrue((output / "blog/first-post.md").is_file())
@@ -230,6 +235,12 @@ description: "{{yaml:description}}"
             )
             (theme_dir / "demo-showcase.json").write_text(
                 json.dumps(metadata), encoding="utf-8"
+            )
+            (theme_dir / "demo-showcase.template.md").write_text(
+                (ROOT / "codestorage-draft/demo-showcase.template.md").read_text(
+                    encoding="utf-8"
+                ),
+                encoding="utf-8",
             )
             (theme_dir / "demo-landing.css").write_text(
                 '.test-landing { background-image: url("https://example.com/art.png"); }\n',

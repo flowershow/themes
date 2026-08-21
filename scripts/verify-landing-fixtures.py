@@ -58,7 +58,6 @@ CONTRACTS = (
     ),
 )
 
-SHOWCASE_TEMPLATE = ROOT / "_demo-content/theme-showcase.template.md"
 ALLOWED_GLOBAL_SELECTORS = {
     ".site-navbar-site-name",
     ".site-navbar-site-title",
@@ -298,8 +297,11 @@ def verify_showcase(metadata_path: Path) -> tuple[str, list[str]]:
         metadata = {}
 
     css_path = metadata_path.with_name("demo-landing.css")
+    template_path = metadata_path.with_name("demo-showcase.template.md")
     if not css_path.is_file():
         return label, [f"{label}: missing demo-landing.css"]
+    if not template_path.is_file():
+        return label, [f"{label}: missing demo-showcase.template.md"]
 
     contract = FixtureContract(
         path="",
@@ -307,7 +309,7 @@ def verify_showcase(metadata_path: Path) -> tuple[str, list[str]]:
         label=label,
         required=(),
         forbidden=(),
-        template_path=str(SHOWCASE_TEMPLATE.relative_to(ROOT)),
+        template_path=str(template_path.relative_to(ROOT)),
         metadata_path=str(relative),
     )
     markdown, render_error = load_markdown(contract)
