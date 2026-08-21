@@ -164,7 +164,7 @@ if [ -s "$demo_content_source" ]; then
     '| `/docs/kitchen-sink` |' \
     '| `/blog` |' \
     '| `/blog/first-post` |' \
-    '_demo-content/theme-showcase.template.md' \
+    'THEME-DIR/demo-showcase.template.md' \
     '_demo-content/docs/kitchen-sink.md' \
     '_demo-content/blog/index.mdx' \
     '_demo-content/blog/first-post.md' \
@@ -291,10 +291,10 @@ if [ -s "$visual_review_source" ]; then
     'data-owned-fixture'
     'code stayed readable'
     'could be mistaken for its'
-    'Reusable Monospace showcase review'
-    '16 renders'
-    'single raw-HTML block'
-    'A sharper home for your Markdown'
+    'Restrained Monospace homepage correction'
+    '20 renders'
+    '18px computed H1'
+    'one text-first'
     'Material and code.storage still remain **Preview**'
   )
   for visual_contract in "${visual_review_contracts[@]}"; do

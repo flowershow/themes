@@ -105,7 +105,7 @@ themes:
       demo_site_responds: true
     demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me
     landing_repro: _repro/codestorage-landing.html   # stage-1 static reference only (unpublished) — see landing_page for the shipped version
-    landing_page: _demo-content/theme-showcase.template.md  # rendered with codestorage-draft/demo-showcase.json into the standard homepage
+    landing_page: codestorage-draft/demo-showcase.template.md  # theme-specific real-content homepage, rendered with validated metadata
     landing_metadata: codestorage-draft/demo-showcase.json
     landing_demo_url: https://codestorage-theme-demo-rufuspollock.flowershow.me/
     landing_compatibility_url: https://codestorage-theme-demo-rufuspollock.flowershow.me/landing

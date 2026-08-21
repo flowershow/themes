@@ -7,14 +7,15 @@ description: Canonical routes, sources, and ownership for Flowershow theme demos
 
 A theme demo is both a useful example website and a repeatable test surface.
 Every new theme—and every existing theme receiving a substantial refresh—uses
-the same standard pages. Shared content makes visual differences attributable
-to the theme rather than to different copy.
+the same standard routes. The homepage structure is deliberately
+theme-specific: a blogging theme may lead with posts, a documentation theme
+with docs, and a technical theme with a compact text page.
 
 ## Standard routes and canonical sources
 
 | Route | What it demonstrates | Canonical repository source |
 | --- | --- | --- |
-| `/` | Flowershow product homepage interpreted by the theme | `_demo-content/theme-showcase.template.md` + `THEME-DIR/demo-showcase.json` + `THEME-DIR/demo-landing.css` |
+| `/` | A useful, theme-specific Flowershow homepage | `THEME-DIR/demo-showcase.template.md` + `THEME-DIR/demo-showcase.json` + `THEME-DIR/demo-landing.css` |
 | `/docs/kitchen-sink` | Markdown, typography, code, tables, callouts, media, and responsive content | `_demo-content/docs/kitchen-sink.md` |
 | `/blog` | Blog listing, metadata, summaries, and repeated content | `_demo-content/blog/index.mdx` plus sibling posts |
 | `/blog/first-post` | Focused long-form article reading | `_demo-content/blog/first-post.md` |
@@ -26,15 +27,17 @@ canonical. Do not create a second navbar inside the homepage.
 
 ## What is shared and what belongs to a theme
 
-Flowershow owns the shared product story, semantic landing markup, kitchen
-sink, blog posts, navigation structure, and publishing links. Change shared
-copy only when the product message changes for every theme demo.
+Flowershow owns the factual product story, kitchen sink, blog posts, navigation
+structure, publishing links, and content/provenance rules. Themes do not share
+one mandatory homepage layout.
 
 Each theme owns:
 
 - `theme.css` for the actual site-wide theme;
+- `demo-showcase.template.md` for a homepage suited to what the theme is meant
+  to demonstrate;
 - `demo-showcase.json` for its small identity and description layer;
-- `demo-landing.css` for the shared homepage's visual interpretation; and
+- `demo-landing.css` for the homepage's scoped visual interpretation; and
 - its preview image and ledger evidence.
 
 Landing CSS is loaded site-wide as `custom.css`, so every rule must be scoped
@@ -47,7 +50,8 @@ local paths; remote and data URLs are rejected.
 
 ## Showcase metadata
 
-Create `THEME-DIR/demo-showcase.json` with exactly these fields:
+Create `THEME-DIR/demo-showcase.template.md` and a
+`THEME-DIR/demo-showcase.json` with exactly these fields:
 
 ```json
 {
@@ -72,8 +76,9 @@ contexts.
 
 ## Add a new theme
 
-1. Create `THEME-DIR/theme.css`, a stable preview image,
-   `THEME-DIR/demo-showcase.json`, and scoped `THEME-DIR/demo-landing.css`.
+1. Create `THEME-DIR/theme.css`, a stable preview image, a useful
+   `THEME-DIR/demo-showcase.template.md`, `THEME-DIR/demo-showcase.json`, and
+   scoped `THEME-DIR/demo-landing.css`.
 2. Build the theme against the standard content without publishing:
 
    ```bash
@@ -95,21 +100,22 @@ contexts.
 
 ## Refresh an existing theme
 
-Do not copy another theme's completed homepage. Add or update
-`demo-showcase.json`, retain the shared template, and rewrite only the scoped
-landing CSS needed to express the theme. If the theme still has a bespoke
-`demo-landing.md`, migrate its useful theme description into metadata, move
-general Flowershow content to the shared template, and remove duplicate
-navigation and QA/release prose.
+Do not copy another theme's completed homepage. Decide what the theme is meant
+to show, then create a restrained page from real Flowershow content using
+ordinary semantic markup. A blog-oriented theme can use a blog-like homepage;
+a documentation theme can foreground documentation. Keep generic Flowershow
+claims factual, remove duplicate navigation, and keep QA/release prose out of
+the public page.
 
 Keep an old `/landing` URL as the generated compatibility copy while recorded
 links are updated. Set `landing_demo_url` to the demo root and record the
 compatibility URL separately in `docs/features.yaml`.
 
-## Standard homepage versus exceptional fixtures
+## Shipped homepage versus research fixtures
 
-`demo-showcase.json` is the normal shipped path. `scripts/demo-site.sh`
-automatically renders it to the homepage.
+The theme-local template plus `demo-showcase.json` is the normal shipped path.
+`scripts/demo-site.sh` validates and renders it to the homepage. Monospace is
+the first worked example; it is not a universal layout to copy unchanged.
 
 `--landing-page FILE.md` remains an explicit exception for a research fixture
 whose structure cannot use the shared product template. `--landing FILE.html`
@@ -139,7 +145,8 @@ scripts/verify.sh
 
 For live verification, set `SITE_URL` to the themes preview site. A green
 structural or live check is evidence, not release authorization. The verifier
-automatically discovers every `*/demo-showcase.json`, validates its rendered
-structure and scoped CSS, then checks `/`, `/docs/kitchen-sink`, `/blog`,
+automatically discovers every `*/demo-showcase.json`, validates its local
+template, rendered structure and scoped CSS, then checks `/`,
+`/docs/kitchen-sink`, `/blog`,
 `/blog/first-post`, and any recorded `/landing` compatibility URL on each
 published demo.

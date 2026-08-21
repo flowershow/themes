@@ -4,14 +4,13 @@
 #   scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>] [--build-only <output-dir>]
 #
 # Assembles a site from (see docs/demo-site-content.md):
-#   - _demo-content/          the shared showcase template, kitchen sink, and
-#                             blog, so every theme uses identical content
+#   - _demo-content/          the shared kitchen sink and blog routes
 #   - <theme-dir>/theme.css   applied via a jsDelivr URL pinned to the current
 #                             git branch (no release/tag needed for drafts)
-#   - <theme-dir>/demo-showcase.json + demo-landing.css
-#                             the standard homepage's validated identity and
-#                             theme-scoped presentation. Rendered at / with an
-#                             identical /landing compatibility page.
+#   - <theme-dir>/demo-showcase.template.md + demo-showcase.json +
+#                             demo-landing.css: a validated theme-specific
+#                             homepage, rendered at / with an identical
+#                             /landing compatibility page.
 #   - --landing <file>        optional raw .html landing page, published as
 #                             index.html, REPLACING the site's home page. Used
 #                             for stage-1 Tailwind repros — plain HTML with no
@@ -125,16 +124,21 @@ fi
 cp -R "$REPO_ROOT/_demo-content/." "$BUILD_DIR/"
 
 SHOWCASE_METADATA="$REPO_ROOT/$THEME_DIR/demo-showcase.json"
+SHOWCASE_TEMPLATE="$REPO_ROOT/$THEME_DIR/demo-showcase.template.md"
 if [ -f "$SHOWCASE_METADATA" ] && [ -z "$LANDING" ] && [ -z "$LANDING_PAGE" ]; then
+  if [ ! -f "$SHOWCASE_TEMPLATE" ]; then
+    echo "showcase metadata requires $THEME_DIR/demo-showcase.template.md" >&2
+    exit 1
+  fi
   python3 "$REPO_ROOT/scripts/render-theme-showcase.py" \
-    "$REPO_ROOT/_demo-content/theme-showcase.template.md" \
+    "$SHOWCASE_TEMPLATE" \
     "$SHOWCASE_METADATA" \
     "$BUILD_DIR/index.md"
   cp "$BUILD_DIR/index.md" "$BUILD_DIR/landing.md"
   if [ -f "$REPO_ROOT/$THEME_DIR/demo-landing.css" ]; then
     cp "$REPO_ROOT/$THEME_DIR/demo-landing.css" "$BUILD_DIR/custom.css"
   fi
-  echo "   showcase: $THEME_DIR/demo-showcase.json -> / and /landing"
+  echo "   showcase: $THEME_DIR/demo-showcase.template.md + demo-showcase.json -> / and /landing"
 fi
 
 if [ -n "$LANDING" ]; then
@@ -176,7 +180,7 @@ fi
 # title, nav links, CTA, social links, or search is configured — so without it
 # there is no navbar on the demo at all, and a theme's navbar styling is
 # invisible. Same reason the sidebar and mode switch are enabled there.
-rm -f "$BUILD_DIR/config.base.json" "$BUILD_DIR/theme-showcase.template.md"
+rm -f "$BUILD_DIR/config.base.json"
 python3 - "$REPO_ROOT/_demo-content/config.base.json" "$THEME_URL" "$BUILD_DIR/config.json" "$SHOWCASE_METADATA" <<'PYEOF'
 import json, sys
 base_path, theme_url, out_path, metadata_path = sys.argv[1:]

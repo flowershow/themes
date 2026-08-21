@@ -15,6 +15,7 @@ RENDERER = ROOT / "scripts/render-theme-showcase.py"
 FIXTURE_VERIFIER = ROOT / "scripts/verify-landing-fixtures.py"
 ROUTE_VERIFIER = ROOT / "scripts/verify-demo-routes.py"
 FEATURE_FIELD_READER = ROOT / "scripts/read-feature-field.py"
+MONOSPACE_STYLE_VERIFIER = ROOT / "scripts/verify-monospace-style.py"
 
 VALID_METADATA = {
     "schemaVersion": 1,
@@ -66,19 +67,19 @@ def run_renderer(metadata, template=VALID_TEMPLATE):
 
 
 class RenderShowcaseTests(unittest.TestCase):
-    def test_repository_template_is_theme_neutral(self):
-        template = (
-            ROOT / "_demo-content/theme-showcase.template.md"
-        ).read_text(encoding="utf-8")
+    def test_monospace_owns_its_showcase_template(self):
+        template_path = ROOT / "codestorage-draft/demo-showcase.template.md"
+        self.assertTrue(template_path.is_file())
+        template = template_path.read_text(encoding="utf-8")
 
         self.assertNotIn("IBM Plex Mono", template)
         self.assertNotIn("Monospace theme specimen", template)
         self.assertIn('aria-label="A small {{name}} theme specimen"', template)
 
-    def test_repository_template_keeps_nested_html_in_one_markdown_block(self):
-        template = (
-            ROOT / "_demo-content/theme-showcase.template.md"
-        ).read_text(encoding="utf-8")
+    def test_monospace_template_keeps_nested_html_in_one_markdown_block(self):
+        template_path = ROOT / "codestorage-draft/demo-showcase.template.md"
+        self.assertTrue(template_path.is_file())
+        template = template_path.read_text(encoding="utf-8")
         html_block = template[template.index('<div class="{{wrapperClass}}') :]
 
         self.assertNotIn("\n\n", html_block)
@@ -193,6 +194,11 @@ description: "{{yaml:description}}"
             compatibility = (output / "landing.md").read_text(encoding="utf-8")
             self.assertEqual(home, compatibility)
             self.assertIn('data-theme-showcase="monospace"', home)
+            self.assertIn("ts-document", home)
+            self.assertNotIn("ts-card-grid", home)
+            self.assertNotIn("ts-benefits", home)
+            self.assertNotIn("ts-steps", home)
+            self.assertNotIn("ts-final-cta", home)
             self.assertTrue((output / "custom.css").is_file())
             self.assertTrue((output / "docs/kitchen-sink.md").is_file())
             self.assertTrue((output / "blog/first-post.md").is_file())
@@ -230,6 +236,20 @@ description: "{{yaml:description}}"
             )
             (theme_dir / "demo-showcase.json").write_text(
                 json.dumps(metadata), encoding="utf-8"
+            )
+            (theme_dir / "demo-showcase.template.md").write_text(
+                """---
+title: "{{yaml:name}}"
+---
+<div class="{{wrapperClass}}" data-theme-showcase="{{slug}}" data-theme-status="{{status}}">
+<h1>{{headline}}</h1>
+<p>{{description}}</p>
+<a href="/docs/kitchen-sink">Kitchen sink</a>
+<a href="/blog">Blog</a>
+<a href="https://flowershow.app/publish">Publish with Flowershow</a>
+</div>
+""",
+                encoding="utf-8",
             )
             (theme_dir / "demo-landing.css").write_text(
                 '.test-landing { background-image: url("https://example.com/art.png"); }\n',
@@ -379,6 +399,63 @@ description: "{{yaml:description}}"
 
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout, "")
+
+    def test_monospace_style_gate_rejects_later_display_overrides(self):
+        css = (ROOT / "codestorage-draft/demo-landing.css").read_text(
+            encoding="utf-8"
+        )
+        cases = {
+            "earlier higher-specificity heading": (
+                "body .cs-landing h1 { font-size: 96px; }\n" + css,
+                "font-size",
+            ),
+            "functional-pseudo heading": (
+                '.cs-landing :is(h1) { font-size: 96px; }\n' + css,
+                "font-size",
+            ),
+            "attribute-selected hero": (
+                '.cs-landing [class~="ts-hero-grid"] '
+                "{ grid-template-columns: 1fr; }\n"
+                + css,
+                "grid-template-columns",
+            ),
+            "font shorthand heading": (
+                css + "\n.cs-landing h1 { font: 96px monospace; }\n",
+                "font",
+            ),
+            "grid-template shorthand hero": (
+                css
+                + "\n.cs-landing .ts-hero-grid { grid-template: none / 1fr; }\n",
+                "grid-template",
+            ),
+            "all shorthand heading": (
+                css + "\n.cs-landing h1 { all: revert; }\n",
+                "all",
+            ),
+            "oversized heading": (
+                css + "\n.cs-landing h1 { font-size: 96px; }\n",
+                "font-size",
+            ),
+            "single desktop column": (
+                css
+                + "\n.cs-landing .ts-hero-grid { grid-template-columns: 1fr; }\n",
+                "grid-template-columns",
+            ),
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            css_path = Path(temporary) / "landing.css"
+            for label, (mutated_css, expected) in cases.items():
+                with self.subTest(label=label):
+                    css_path.write_text(mutated_css, encoding="utf-8")
+                    result = subprocess.run(
+                        ["python3", str(MONOSPACE_STYLE_VERIFIER), str(css_path)],
+                        cwd=ROOT,
+                        capture_output=True,
+                        text=True,
+                        check=False,
+                    )
+                    self.assertEqual(result.returncode, 1)
+                    self.assertIn(expected, result.stdout)
 
 
 if __name__ == "__main__":

@@ -13,9 +13,10 @@ defines route ownership, metadata, migration, publishing, and verification.
 
 Demo content is versioned here:
 
-- `_demo-content/` contains the shared showcase template, kitchen sink, and blog;
-- `THEME-DIR/demo-showcase.json` contains the theme-specific homepage identity;
-- `THEME-DIR/demo-landing.css` styles the shared homepage under its wrapper;
+- `_demo-content/` contains the shared kitchen sink and blog routes;
+- `THEME-DIR/demo-showcase.template.md` contains the theme-appropriate homepage;
+- `THEME-DIR/demo-showcase.json` contains its validated identity metadata;
+- `THEME-DIR/demo-landing.css` styles that homepage under its wrapper;
 - `scripts/demo-site.sh` assembles and publishes the demo;
 - `docs/features.yaml` records the public URL and retired-site history.
 
