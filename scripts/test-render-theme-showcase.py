@@ -15,6 +15,7 @@ RENDERER = ROOT / "scripts/render-theme-showcase.py"
 FIXTURE_VERIFIER = ROOT / "scripts/verify-landing-fixtures.py"
 ROUTE_VERIFIER = ROOT / "scripts/verify-demo-routes.py"
 FEATURE_FIELD_READER = ROOT / "scripts/read-feature-field.py"
+MONOSPACE_STYLE_VERIFIER = ROOT / "scripts/verify-monospace-style.py"
 
 VALID_METADATA = {
     "schemaVersion": 1,
@@ -237,9 +238,17 @@ description: "{{yaml:description}}"
                 json.dumps(metadata), encoding="utf-8"
             )
             (theme_dir / "demo-showcase.template.md").write_text(
-                (ROOT / "codestorage-draft/demo-showcase.template.md").read_text(
-                    encoding="utf-8"
-                ),
+                """---
+title: "{{yaml:name}}"
+---
+<div class="{{wrapperClass}}" data-theme-showcase="{{slug}}" data-theme-status="{{status}}">
+<h1>{{headline}}</h1>
+<p>{{description}}</p>
+<a href="/docs/kitchen-sink">Kitchen sink</a>
+<a href="/blog">Blog</a>
+<a href="https://flowershow.app/publish">Publish with Flowershow</a>
+</div>
+""",
                 encoding="utf-8",
             )
             (theme_dir / "demo-landing.css").write_text(
@@ -390,6 +399,36 @@ description: "{{yaml:description}}"
 
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout, "")
+
+    def test_monospace_style_gate_rejects_later_display_overrides(self):
+        css = (ROOT / "codestorage-draft/demo-landing.css").read_text(
+            encoding="utf-8"
+        )
+        cases = {
+            "oversized heading": (
+                css + "\n.cs-landing h1 { font-size: 96px; }\n",
+                "font-size",
+            ),
+            "single desktop column": (
+                css
+                + "\n.cs-landing .ts-hero-grid { grid-template-columns: 1fr; }\n",
+                "grid-template-columns",
+            ),
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            css_path = Path(temporary) / "landing.css"
+            for label, (mutated_css, expected) in cases.items():
+                with self.subTest(label=label):
+                    css_path.write_text(mutated_css, encoding="utf-8")
+                    result = subprocess.run(
+                        ["python3", str(MONOSPACE_STYLE_VERIFIER), str(css_path)],
+                        cwd=ROOT,
+                        capture_output=True,
+                        text=True,
+                        check=False,
+                    )
+                    self.assertEqual(result.returncode, 1)
+                    self.assertIn(expected, result.stdout)
 
 
 if __name__ == "__main__":

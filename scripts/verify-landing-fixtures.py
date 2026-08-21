@@ -89,6 +89,9 @@ THEME_FORBIDDEN = {
         "Stripe",
     ),
 }
+THEME_REQUIRED = {
+    "monospace": ('class="ts-node-mark"',),
+}
 
 
 def verify(contract: FixtureContract) -> list[str]:
@@ -326,8 +329,7 @@ def verify_showcase(metadata_path: Path) -> tuple[str, list[str]]:
         "Publish with Flowershow",
         "/docs/kitchen-sink",
         "/blog",
-        'class="ts-node-mark"',
-    )
+    ) + THEME_REQUIRED.get(str(slug), ())
     failures = [
         f"{label}: missing required showcase content: {value}"
         for value in required

@@ -75,11 +75,8 @@ contracts = {
     ".cs-landing .ts-document": ("min-width:0;",),
     ".cs-landing .ts-section": ("min-width:0;",),
     ".cs-landing pre": ("max-width:var(--cs-measure);", "overflow-x:auto;"),
-    ".cs-landing h1": ("font-size:18px;",),
-    ".cs-landing h2": ("font-size:16px;",),
     ".cs-landing h1::before": ('content:"#";',),
     ".cs-landing h2::before": ('content:"##";',),
-    ".cs-landing .ts-hero-grid": ("grid-template-columns:minmax(0,1fr)minmax(280px,420px);",),
 }
 
 obsolete = (".ts-card-grid", ".ts-benefits", ".ts-steps", ".ts-final-cta")
@@ -90,9 +87,16 @@ raise SystemExit(0 if all(
 ) and not any(selector in css for selector in obsolete) else 1)
 PYEOF
 then
-  pass "Monospace showcase keeps restrained type, two columns, and mobile width guards"
+  pass "Monospace showcase keeps heading markers and mobile width guards"
 else
-  bad "Monospace showcase lost restrained type, two-column structure, or width guards"
+  bad "Monospace showcase lost heading markers or mobile width guards"
+fi
+
+if python3 "$REPO_ROOT/scripts/verify-monospace-style.py" \
+  "$REPO_ROOT/codestorage-draft/demo-landing.css"; then
+  pass "Monospace showcase keeps effective restrained type and desktop columns"
+else
+  bad "Monospace showcase lost effective restrained type or desktop columns"
 fi
 
 if python3 - "$REPO_ROOT/material-draft/theme.css" <<'PYEOF'
