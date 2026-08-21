@@ -409,6 +409,16 @@ title: "{{yaml:name}}"
                 "body .cs-landing h1 { font-size: 96px; }\n" + css,
                 "font-size",
             ),
+            "functional-pseudo heading": (
+                '.cs-landing :is(h1) { font-size: 96px; }\n' + css,
+                "font-size",
+            ),
+            "attribute-selected hero": (
+                '.cs-landing [class~="ts-hero-grid"] '
+                "{ grid-template-columns: 1fr; }\n"
+                + css,
+                "grid-template-columns",
+            ),
             "oversized heading": (
                 css + "\n.cs-landing h1 { font-size: 96px; }\n",
                 "font-size",

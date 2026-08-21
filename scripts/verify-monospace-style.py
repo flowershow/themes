@@ -9,6 +9,22 @@ import sys
 
 DESKTOP_WIDTH = 1280
 
+APPROVED_DESKTOP_SELECTORS = {
+    "font-size": {
+        ".cs-landing",
+        ".cs-landing h1",
+        ".cs-landing h2",
+        ".cs-landing h3",
+        ".cs-landing pre",
+        ".cs-landing .ts-eyebrow",
+        ".cs-landing .ts-lede",
+        ".cs-landing .ts-links",
+        ".cs-landing .ts-art-label",
+        ".cs-landing .ts-status",
+    },
+    "grid-template-columns": {".cs-landing .ts-hero-grid"},
+}
+
 
 @dataclass(frozen=True)
 class Rule:
@@ -198,20 +214,20 @@ def verify(css: str) -> list[str]:
         ),
     )
     failures = []
-    for target, approved_selector, property_name, expected in contracts:
-        competing = [
+    for property_name, approved_selectors in APPROVED_DESKTOP_SELECTORS.items():
+        unreviewed = [
             rule.selector
             for rule in rules
-            if matching_target(rule.selector, target)
-            and property_name in rule.declarations
-            and re.sub(r"\s+", " ", rule.selector.strip()) != approved_selector
+            if property_name in rule.declarations
+            and re.sub(r"\s+", " ", rule.selector.strip()) not in approved_selectors
         ]
-        if competing:
+        if unreviewed:
             failures.append(
-                f"{target} {property_name} has competing desktop selector(s): "
-                + ", ".join(competing)
+                f"{property_name} has unreviewed desktop selector(s): "
+                + ", ".join(unreviewed)
             )
-            continue
+
+    for target, _approved_selector, property_name, expected in contracts:
         actual = effective_property(rules, target, property_name)
         if re.sub(r"\s+", "", actual) != re.sub(r"\s+", "", expected):
             failures.append(
