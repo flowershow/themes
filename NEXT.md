@@ -29,9 +29,11 @@ Branch: `main` after integration. Current tracking home:
 
 1. Evaluate and iterate on the parallel preview site without changing the
    canonical Flowershow reference gallery yet.
-2. Complete the pending visual-review matrix in the
-   [release-readiness record](docs/release-readiness.md) while keeping Material
-   and code.storage visibly marked preview/beta.
+2. Complete the pending visual-review matrix and landing-fixture copy,
+   trademark, SVG/icon provenance, and attribution review in the
+   [release-readiness record](docs/release-readiness.md), replacing anything
+   not cleared for release while keeping Material and code.storage visibly
+   marked preview/beta.
 3. Use the checklist evidence to decide whether either preview is ready for a
    separate promotion proposal; do not rename, list, or release either theme
    without that explicit decision.

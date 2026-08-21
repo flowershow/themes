@@ -160,16 +160,10 @@ readiness_source="$ROOT/docs/release-readiness.md"
 if [ -s "$readiness_source" ]; then
   pass "release-readiness record exists"
   for readiness_contract in \
-    'data-readiness-theme="material-draft"' \
-    'data-readiness-theme="codestorage-draft"' \
-    'data-recommendation="remain-preview"' \
     'flowershow/flowershow/issues/1367' \
     'github.com/squidfunk/mkdocs-material/blob/master/LICENSE' \
     'github.com/googlefonts/roboto-2/blob/main/LICENSE' \
     'github.com/IBM/plex/blob/master/LICENSE.txt' \
-    'Desktop and mobile visual review' \
-    'Light and dark visual review' \
-    'Landing-fixture marketing copy' \
     'human explicitly authorizes promotion'; do
     if grep -Fq "$readiness_contract" "$readiness_source"; then
       pass "readiness record includes $readiness_contract"
@@ -177,23 +171,59 @@ if [ -s "$readiness_source" ]; then
       bad "readiness record missing $readiness_contract"
     fi
   done
+
+  readiness_sections=(
+    'material-draft|## Material|## code.storage'
+    'codestorage-draft|## code.storage|## Promotion boundary'
+  )
+  pending_gates=(
+    'Desktop and mobile visual review'
+    'Light and dark visual review'
+    'Kitchen sink, blog listing/post, navbar, sidebar, search, and landing'
+    'Landing-fixture marketing copy, brand/trademark use, SVG/icon provenance,'
+    'Final public name and directory name are approved.'
+    'Canonical Flowershow gallery and dashboard changes are prepared.'
+    'Release metadata, purge coverage, version, and changelog are prepared.'
+    'A human explicitly authorizes promotion and the release tag.'
+  )
+  for readiness_spec in "${readiness_sections[@]}"; do
+    IFS='|' read -r theme_id start_heading end_heading <<< "$readiness_spec"
+    section=$(awk -v start="$start_heading" -v end="$end_heading" \
+      '$0 == start { found=1; next } $0 == end { exit } found' "$readiness_source")
+    marker="<div data-readiness-theme=\"$theme_id\" data-recommendation=\"remain-preview\"></div>"
+    if grep -Fxq "$marker" <<< "$section"; then
+      pass "$theme_id section records remain-preview"
+    else
+      bad "$theme_id section must record remain-preview on its theme marker"
+    fi
+    for pending_gate in "${pending_gates[@]}"; do
+      if grep -Fq -- "- [ ] $pending_gate" <<< "$section"; then
+        pass "$theme_id keeps pending: $pending_gate"
+      else
+        bad "$theme_id must keep unchecked pending gate: $pending_gate"
+      fi
+    done
+  done
 else
   bad "docs/release-readiness.md missing or empty"
 fi
 
-for readiness_anchor in material codestorage; do
-  if grep -Fq "readiness_record: docs/release-readiness.md#$readiness_anchor" "$ROOT/docs/features.yaml"; then
-    pass "features ledger links $readiness_anchor readiness record"
+ledger_specs=(
+  'material-draft|material'
+  'codestorage-draft|codestorage'
+)
+for ledger_spec in "${ledger_specs[@]}"; do
+  IFS='|' read -r theme_id readiness_anchor <<< "$ledger_spec"
+  theme_block=$(awk -v id="$theme_id" \
+    '$0 == "  - id: " id { found=1 } found && $0 ~ /^  - id: / && $0 != "  - id: " id { exit } found' \
+    "$ROOT/docs/features.yaml")
+  if grep -Fq '    readiness: remain-preview' <<< "$theme_block" && \
+     grep -Fq "    readiness_record: docs/release-readiness.md#$readiness_anchor" <<< "$theme_block"; then
+    pass "features ledger keeps $theme_id in Preview with its readiness record"
   else
-    bad "features ledger missing $readiness_anchor readiness record"
+    bad "features ledger must bind $theme_id remain-preview to #$readiness_anchor"
   fi
 done
-readiness_status_count=$(grep -c 'readiness: remain-preview' "$ROOT/docs/features.yaml" || true)
-if [ "$readiness_status_count" -eq 2 ]; then
-  pass "features ledger keeps both candidates in Preview"
-else
-  bad "features ledger must record two remain-preview decisions"
-fi
 
 if [ -s "$SITE_DIR/status.md" ]; then
   for entry in 'issues/1364' Material code.storage Preview; do
