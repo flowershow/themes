@@ -64,28 +64,35 @@ import re, sys
 css = open(sys.argv[1]).read()
 
 def declarations(selector):
-    match = re.search(re.escape(selector) + r"\s*\{([^}]*)\}", css)
-    return re.sub(r"\s+", "", match.group(1)) if match else ""
+    matches = re.finditer(re.escape(selector) + r"\s*\{([^}]*)\}", css)
+    return "".join(re.sub(r"\s+", "", match.group(1)) for match in matches)
 
 contracts = {
     ".cs-landing": ("min-width:0;", "overflow:hidden;"),
     ".cs-landing .ts-wrap": ("min-width:0;",),
     ".cs-landing .ts-hero-copy": ("min-width:0;",),
     ".cs-landing .ts-hero-art": ("min-width:0;",),
-    ".cs-landing .ts-card": ("min-width:0;",),
-    ".cs-landing .ts-theme-sample": ("min-width:0;",),
-    ".cs-landing .ts-theme-sample pre": ("max-width:100%;", "overflow-x:auto;"),
+    ".cs-landing .ts-document": ("min-width:0;",),
+    ".cs-landing .ts-section": ("min-width:0;",),
+    ".cs-landing pre": ("max-width:var(--cs-measure);", "overflow-x:auto;"),
+    ".cs-landing h1": ("font-size:18px;",),
+    ".cs-landing h2": ("font-size:16px;",),
+    ".cs-landing h1::before": ('content:"#";',),
+    ".cs-landing h2::before": ('content:"##";',),
+    ".cs-landing .ts-hero-grid": ("grid-template-columns:minmax(0,1fr)minmax(280px,420px);",),
 }
+
+obsolete = (".ts-card-grid", ".ts-benefits", ".ts-steps", ".ts-final-cta")
 
 raise SystemExit(0 if all(
     all(required in declarations(selector) for required in requirements)
     for selector, requirements in contracts.items()
-) else 1)
+) and not any(selector in css for selector in obsolete) else 1)
 PYEOF
 then
-  pass "Monospace showcase constrains wide content on mobile"
+  pass "Monospace showcase keeps restrained type, two columns, and mobile width guards"
 else
-  bad "Monospace showcase needs overflow and intrinsic-width guards"
+  bad "Monospace showcase lost restrained type, two-column structure, or width guards"
 fi
 
 if python3 - "$REPO_ROOT/material-draft/theme.css" <<'PYEOF'
