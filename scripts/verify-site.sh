@@ -383,7 +383,7 @@ if [ -s "$provenance_source" ] && [ -s "$third_party_notices" ]; then
   else
     bad "third-party notices must preserve the complete Material for MkDocs MIT notice"
   fi
-  if grep -Fq 'inspired the Monospace theme' "$third_party_notices"; then
+  if grep -Fq 'inspired the Material preview theme' "$third_party_notices"; then
     pass "third-party notices describe inspiration rather than copied fixture text"
   else
     bad "third-party notices must describe the current inspiration-only boundary"

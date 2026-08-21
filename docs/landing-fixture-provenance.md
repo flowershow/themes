@@ -81,8 +81,8 @@ contacts and upstream navigation.
 - The unresolved inline SVG was replaced with a repository-authored CSS node mark.
 - The original gradient, independently authored layout technique, open-font
   substitution and theme CSS remain.
-- The shared Flowershow showcase visibly identifies the theme as Monospace and
-  Preview, with the headline `A sharper home for your Markdown` and no copied
+- The theme-local Flowershow showcase visibly identifies the official theme as
+  Monospace, with the headline `A sharper home for your Markdown` and no copied
   service presentation.
 
 This disposition is executed for the published fixture. Attribution is not
@@ -92,7 +92,8 @@ field.
 
 ## Boundary
 
-These replacements close the content/provenance gate only. They do not approve
-a final theme name, canonical gallery/dashboard integration, release metadata,
-or a release tag. Both themes remain **Preview** until every readiness gate and
-the explicit human-promotion decision are complete.
+These replacements closed the content/provenance gate. Rufus subsequently
+approved the final Monospace name and promotion on 2026-08-21; its stable
+directory, gallery/dashboard integration, and release metadata are prepared.
+Material remains **Preview**. A versioned Monospace release tag is a separate
+future decision and is not created by the promotion.
