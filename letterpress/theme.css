@@ -1042,8 +1042,10 @@ body {
 ========================== */
 
 .site-navbar {
-    position: static;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 10;
     /*background-color: oklch(from var(--color-background) l c h / 80%);
     -webkit-backdrop-filter: saturate(180%) blur(5px);
