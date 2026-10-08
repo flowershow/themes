@@ -158,17 +158,19 @@
   color: var(--color-foreground-500);
 }
 
+/* :where() excludes inline #tag pills (.tag-pill) without raising specificity,
+   so they keep Flowershow's --color-tag-pill-* styling. */
 /* measured: links are primary indigo, no underline */
-.rendered-mdx:not(.is-plain) a {
+.rendered-mdx:not(.is-plain) a:where(:not(.tag-pill)) {
   color: var(--md-primary);
   text-decoration: none;
 }
-.rendered-mdx:not(.is-plain) a:hover {
+.rendered-mdx:not(.is-plain) a:where(:not(.tag-pill)):hover {
   color: var(--md-accent);
   text-decoration: underline;
 }
 
-:root[data-theme="dark"] .rendered-mdx:not(.is-plain) a {
+:root[data-theme="dark"] .rendered-mdx:not(.is-plain) a:where(:not(.tag-pill)) {
   color: var(--md-accent);
 }
 
