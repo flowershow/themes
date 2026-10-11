@@ -448,6 +448,52 @@ kbd {
   color: var(--color-foreground-500);
 }
 
+/* compact, people, featured and group headings (PR B2) */
+/* Heading margins: the theme's h2/h3 margins (em-based) would space a compact
+   row like a section and push names away from portraits */
+.list-component[data-view] .list-component-group-heading {
+  margin: 2.5rem 0 0;
+}
+
+.list-component[data-view="compact"] .list-component-group-heading {
+  margin: 2.25rem 0 0.625rem;
+}
+
+.list-component:is([data-view="grid"], [data-view="people"]) .list-component-group-heading {
+  margin-top: 1rem;
+}
+
+.list-component[data-view] .list-component-group-heading:first-child {
+  margin-top: 0;
+}
+
+.list-component[data-view="compact"] .list-component-item-content .list-component-item-headline {
+  margin: 0;
+}
+
+.list-component[data-view="people"] .list-component-item-content .list-component-item-headline {
+  margin: 0 0 0.125rem;
+}
+
+.list-component[data-view] .list-component-item--featured .list-component-item-content .list-component-item-headline {
+  margin: 0 0 0.625rem;
+}
+
+.list-component[data-view="compact"] .list-component-item-content .list-component-item-headline {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.list-component[data-view="people"] .list-component-item-content .list-component-item-headline {
+  font-size: 1.0625rem;
+}
+
+.list-component[data-view] .list-component-item--featured .list-component-item-content .list-component-item-headline {
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1.3;
+}
+
 /* =======================
     SEARCH MODAL
 ========================== */
