@@ -302,6 +302,30 @@ kbd {
   color: var(--color-foreground-400);
 }
 
+/* compact, people, featured and group headings (PR B2). Item titles drop
+   the "### " marker the theme gives every h3 (a listing row is not a section);
+   group headings keep "## ", which reads as a Markdown archive. */
+.list-component[data-view] .list-component-item-headline::before {
+  content: none;
+}
+
+.list-component[data-view] .list-component-group-heading {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-foreground-900);
+}
+
+.list-component[data-view="compact"] .list-component-item-headline {
+  font-weight: 400;
+}
+
+.list-component[data-view] .list-component-item-initials {
+  font-family: var(--font-body);
+}
+
 /* =======================
     SEARCH MODAL
 ========================== */

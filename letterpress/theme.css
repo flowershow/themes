@@ -2528,7 +2528,7 @@ body {
 
 /* Grid pages use the theme's wide layout (as the legacy list's negative
    margins did); list pages keep the reading column. */
-.layout-inner:not(.has-sidebar-and-toc, .has-sidebar, .has-toc):has(.listing-page[data-view="grid"]) {
+.layout-inner:not(.has-sidebar-and-toc, .has-sidebar, .has-toc):has(.listing-page:is([data-view="grid"], [data-view="people"])) {
     max-width: var(--width-content-toc);
 }
 
@@ -2549,6 +2549,90 @@ body {
 .list-component[data-view] .list-component-item-author {
     color: inherit;
     text-decoration: none;
+}
+
+/* compact, people, featured and group headings (PR B2). The theme's h2/h3
+   and headline type would otherwise make a compact row a heading-sized line,
+   a people name a card title and a group label a section heading. */
+.list-component[data-view] .list-component-group-heading {
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold-body);
+    line-height: var(--font-line-height-body);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-foreground-500);
+}
+
+.list-component[data-view="compact"] .list-component-group-heading {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-headings);
+    line-height: var(--font-line-height-headings);
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--color-foreground-700);
+}
+
+.list-component[data-view="compact"] .list-component-item-content .list-component-item-headline {
+    font-size: var(--font-size-body);
+    line-height: var(--font-line-height-body);
+}
+
+.list-component[data-view="compact"] .list-component-item-meta,
+.list-component[data-view="compact"] .list-component-item-eyebrow {
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    line-height: var(--font-line-height-body);
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.list-component[data-view="people"] .list-component-item-content .list-component-item-headline {
+    font-size: var(--font-size-large);
+}
+
+.list-component[data-view="people"] .list-component-item-content .list-component-item-summary {
+    font-size: var(--font-size-small);
+    line-height: var(--font-line-height-body);
+}
+
+.list-component[data-view="people"] .list-component-item-meta {
+    font-family: var(--font-body);
+}
+
+.list-component[data-view] .list-component-item--featured .list-component-item-content .list-component-item-headline {
+    font-size: var(--font-size-h3);
+}
+
+/* Heading margins: the theme's h2/h3 margins (em-based) would space a compact
+   row like a section and push names away from portraits */
+.list-component[data-view] .list-component-group-heading {
+    margin: 2.5rem 0 0;
+}
+
+.list-component[data-view="compact"] .list-component-group-heading {
+    margin: 2.25rem 0 0.625rem;
+}
+
+.list-component:is([data-view="grid"], [data-view="people"]) .list-component-group-heading {
+    margin-top: 1rem;
+}
+
+.list-component[data-view] .list-component-group-heading:first-child {
+    margin-top: 0;
+}
+
+.list-component[data-view="compact"] .list-component-item-content .list-component-item-headline {
+    margin: 0;
+}
+
+.list-component[data-view="people"] .list-component-item-content .list-component-item-headline {
+    margin: 0 0 0.125rem;
+}
+
+.list-component[data-view] .list-component-item--featured .list-component-item-content .list-component-item-headline {
+    margin: 0 0 0.625rem;
 }
 
 /* PAGINATION
