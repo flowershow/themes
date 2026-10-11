@@ -260,9 +260,34 @@ kbd {
     LIST COMPONENT
 ========================== */
 
-.list-component-item {
+.list-component:not([data-view]) .list-component-item {
   border: 1px solid var(--color-foreground-100);
   border-radius: 0;
+}
+
+/* New listing views (list blocks, layout: list): roots carry data-view. The
+   boxed item above is legacy <List /> only; the new list keeps hairline rows,
+   the grid gets square bordered cells, and nothing is rounded. */
+.list-component[data-view] {
+  --list-card-radius: 0;
+  --list-avatar-shape: 0;
+}
+
+.list-component[data-view="grid"] {
+  --list-card-border: 1px solid var(--color-foreground-100);
+}
+
+.list-component[data-view="grid"] .list-component-item-media {
+  box-shadow: none;
+  border-bottom: 1px solid var(--color-foreground-100);
+}
+
+.list-component[data-view="grid"] .list-component-item-content {
+  padding: 0 1rem 1rem;
+}
+
+.list-component[data-view] .list-component-item-monogram {
+  font-family: var(--font-body);
 }
 
 .list-component-item-headline {
