@@ -112,8 +112,6 @@
     --list-card-radius: 12px;
     --list-rule-color: color-mix(in srgb, var(--c-deep-green) 45%, transparent);
     --list-eyebrow-color: var(--c-deep-green);
-    --list-media-placeholder: var(--c-light-green);
-    --list-monogram-color: var(--c-deep-green);
 }
 
 .list-component[data-view] .list-component-item-headline {

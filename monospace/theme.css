@@ -286,10 +286,6 @@ kbd {
   padding: 0 1rem 1rem;
 }
 
-.list-component[data-view] .list-component-item-monogram {
-  font-family: var(--font-body);
-}
-
 .list-component-item-headline {
   font-family: var(--font-body);
   font-weight: 700;
