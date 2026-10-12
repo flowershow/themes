@@ -107,9 +107,10 @@
 
 /* New listing views (list blocks, layout: list): roots carry data-view.
    The bordered card above is legacy <List /> only (:not([data-view])). The
-   grid keeps Leaf's green-bordered, rounded cards; list rows use green rules. */
+   grid keeps Leaf's green-bordered cards, softened to a 2px corner; images
+   in list and magazine views are square (the core default); list rows use
+   green rules. */
 .list-component[data-view] {
-    --list-card-radius: 12px;
     --list-rule-color: color-mix(in srgb, var(--c-deep-green) 45%, transparent);
     --list-eyebrow-color: var(--c-deep-green);
     --list-media-placeholder: var(--c-light-green);
@@ -122,7 +123,7 @@
 
 .list-component[data-view="grid"] {
     --list-card-border: 1px solid var(--c-deep-green);
-    --list-card-radius: 16px;
+    --list-card-radius: 2px;
     --list-card-hover-bg: var(--c-light-green);
     gap: 1.5rem;
 }
