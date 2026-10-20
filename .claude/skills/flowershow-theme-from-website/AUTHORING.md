@@ -34,7 +34,7 @@ Use `monospace/theme.css` as the model:
   backgrounds (`--color-code-bg`, `--color-code-bg-dark`), CTA
   (`--color-cta-*`), `--color-danger`, `--color-warning`, and callouts
   (`styles/callouts.css` in core). Take each from the nearest measured
-  role, per extract-design step 6. Code blocks have a token per mode.
+  role, per EXTRACT.md step 6. Code blocks have a token per mode.
   For the others, set the dark value on `:root[data-theme="dark"]` when
   it differs.
 - **Type and shape**: `--font-heading`, `--font-body`, `--font-size-base`,

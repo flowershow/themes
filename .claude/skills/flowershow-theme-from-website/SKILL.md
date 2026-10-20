@@ -51,7 +51,7 @@ one at a time, because they share one browser.
 
 ## Phase A: extract
 
-Follow [docs/extract-design.md](../../../docs/extract-design.md). Done when
+Follow [EXTRACT.md](EXTRACT.md). Done when
 `<name>-draft/design-tokens.json` exists, you can defend every role from a
 screenshot, every font has an open source or a recorded stand-in, and the
 mode the site lacks is derived and marked `"derived": true`.

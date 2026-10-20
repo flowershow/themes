@@ -101,7 +101,7 @@ font families + weights + scale, spacing, radius, shadows, link/button/code
 treatment) and keep the OpenDesign reference artifact for side-by-side
 comparison. Answered in step 6: OpenDesign's picks are unreliable, so it captures
 evidence and `scripts/measure-site.mjs` measures the values; see
-`docs/extract-design.md`.
+`.claude/skills/flowershow-theme-from-website/EXTRACT.md`.
 
 ### Phase B — Author
 
@@ -297,7 +297,7 @@ decision** per `CLAUDE.md` — ask the user; default to this repo for now.
    Google Fonts catalogue; the css2 API answers 200 for Helvetica Neue).
    Text roles prefer elements on the page background, and consent banners
    are hidden. Tests: `scripts/test-measure-site.py` (12, fixture pages).
-   Procedure: `docs/extract-design.md`. Verified on simonwillison.net
+   Procedure: `.claude/skills/flowershow-theme-from-website/EXTRACT.md`. Verified on simonwillison.net
    (light `#fdfdfd`/`#000`/link `#0303bb`, dark `#1a1a2e`/`#e8e8e8`/
    `#7eb8ff`) and typesafe.ai (`#abbab9`/`#1e1e1e`, Die Grotesk C flagged
    as a non-Google webfont), both against screenshots. Left in OpenDesign:
@@ -310,9 +310,11 @@ decision** per `CLAUDE.md` — ask the user; default to this repo for now.
    commit), `AUTHORING.md` (phase B: token rules incl. the `[data-theme]`
    specificity trap, override rules, which sections of
    `docs/ai-theme-cloning-skill.md` still apply), and
-   `examples/leaf-coverage.yaml` (the Leaf dry-run ledger). The procedures
-   stay single-sourced in `docs/extract-design.md` and
-   `docs/coverage-ledger.md`. The cloning doc stays published on the
+   `examples/leaf-coverage.yaml` (the Leaf dry-run ledger), and `EXTRACT.md`
+   (phase A, moved from `docs/extract-design.md` on 2026-10-20 because only
+   the skill uses it). `docs/coverage-ledger.md` stays in `docs/`: `CLAUDE.md`
+   requires the ledger for any new or reworked theme, and every
+   `coverage.yaml` header points to it. The cloning doc stays published on the
    themes site (`site.sh`, `verify-site.sh` check it), so it gained a
    pointer to the skill instead of being deleted; its stale
    `--navbar-height` fact was corrected. `CLAUDE.md` points to the skill.
