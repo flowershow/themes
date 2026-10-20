@@ -16,7 +16,7 @@ Two words carry the whole procedure:
   looks nice is a bug, because unmeasured choices drift to the average of
   every site.
 - **Deliberate**: every hook group was looked at in the render and has a
-  decision in `coverage.yaml`. A decision made without looking, or made
+  decision in `coverage.md`. A decision made without looking, or made
   against an older render, doesn't count.
 
 ## Tools
@@ -27,13 +27,12 @@ each one.
 
 | Script | Phase | What it does |
 |---|---|---|
-| `od-capture.py` | A | OpenDesign capture of the site: CSS, fonts, logos. Evidence only |
 | `measure-site.mjs` | A | Measures colours, type, radii and fonts in light and dark into `design-tokens.json`. `--shots` saves reference screenshots |
 | `demo-site.sh --local` | C, D | Publishes the working-tree `theme.css` to `<name>-theme-preview` |
 | `contact-sheet.py` | D | Screenshots every demo route at desktop and mobile, in light and dark. Fails on wrong mode, non-200 or mobile overflow |
 | `hook-coverage.py` | D | Checks that the demo rendered every stable theme hook |
 | `palette-leaks.py` | D | Finds off-palette colours, unset literal tokens and inactive theme tokens |
-| `coverage-ledger.py` | D | `sync` creates `coverage.yaml`, and `check` gates it |
+| `coverage-ledger.py` | D | `sync` creates `coverage.md`, and `check` gates it |
 | `verify.sh` | E | The repo's structural done condition |
 
 Run the `browse`-based ones (contact-sheet, hook-coverage, palette-leaks)
@@ -42,8 +41,7 @@ one at a time, because they share one browser.
 ## Setup
 
 1. `scripts/init.sh` passes (`fl` is installed and logged in), the gstack
-   `browse` binary works, and the OpenDesign app is running. OpenDesign is
-   optional: without it, skip the capture and say so in the hand-off.
+   `browse` binary works.
 2. Pick the theme name: short, lowercase, describing the look rather than
    the site's brand. The draft lives in `<name>-draft/`. Put scratch output
    in a scratch directory outside the repo. Branch off an up-to-date
@@ -87,9 +85,8 @@ exists.
 
 Follow [docs/coverage-ledger.md](../../../docs/coverage-ledger.md) from its
 step 1, against the final render. A worked example (Leaf, 15 groups,
-10 gaps) is in [examples/leaf-coverage.yaml](examples/leaf-coverage.yaml).
-Done when `scripts/coverage-ledger.py check <name>-draft --leaks …` exits
-0 and every `WARN` is resolved. If you change `theme.css` here, go back to
+10 gaps) is in [examples/leaf-coverage.md](examples/leaf-coverage.md).
+Done when `scripts/coverage-ledger.py check <name>-draft` exits 0. If you change `theme.css` here, go back to
 Phase C step 1.
 
 ## Phase E: stop, then release on approval
@@ -106,8 +103,7 @@ Phase C step 1.
 Commit, push and publish nothing until the user says they're satisfied.
 Changes they ask for send you back to Phase B. After approval:
 
-1. Commit `<name>-draft/` (theme.css, design-tokens.json, coverage.yaml;
-   `reference/` is gitignored) on the `theme/<name>` branch, then push the
+1. Commit `<name>-draft/` (theme.css, design-tokens.json, coverage.md) on the `theme/<name>` branch, then push the
    branch.
 2. Publish the real demo with `scripts/demo-site.sh <name>-draft`, which
    pins the theme to the pushed commit.

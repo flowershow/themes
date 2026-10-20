@@ -207,28 +207,15 @@ if [ -n "$LANDING_PAGE" ]; then
   fi
 fi
 
-# --local: theme.css becomes custom.css. If a showcase/landing-page step
-# already wrote a custom.css (only Monospace's demo-landing.css today), the
-# theme goes FIRST — it carries the @import font rules, which CSS ignores
-# after any other rule — and it keeps the order theme.css-then-custom.css
-# that the real (non-local) demo gets.
+# --local: theme.css becomes custom.css, so it can't share it with a
+# showcase/landing step's custom.css (only Monospace's demo-landing.css today)
 if [ -n "$LOCAL" ]; then
   if [ -f "$BUILD_DIR/custom.css" ]; then
-    if grep -q '@import' "$BUILD_DIR/custom.css"; then
-      echo "custom.css from the landing step has an @import; it would be ignored after theme.css" >&2
-      exit 1
-    fi
-    {
-      cat "$REPO_ROOT/$THEME_DIR/theme.css"
-      printf '\n\n/* ---- demo-site.sh --local: landing CSS appended below ---- */\n\n'
-      cat "$BUILD_DIR/custom.css"
-    } > "$BUILD_DIR/custom.css.tmp"
-    mv "$BUILD_DIR/custom.css.tmp" "$BUILD_DIR/custom.css"
-    echo "   custom.css: $THEME_DIR/theme.css + landing CSS"
-  else
-    cp "$REPO_ROOT/$THEME_DIR/theme.css" "$BUILD_DIR/custom.css"
-    echo "   custom.css: $THEME_DIR/theme.css"
+    echo "--local can't preview a theme whose showcase or landing page writes custom.css" >&2
+    exit 2
   fi
+  cp "$REPO_ROOT/$THEME_DIR/theme.css" "$BUILD_DIR/custom.css"
+  echo "   custom.css: $THEME_DIR/theme.css"
 fi
 
 # Merge the theme URL into the shared base config rather than writing a bare

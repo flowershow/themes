@@ -20,7 +20,7 @@ Branch: `main` after integration. Readiness history and Material tracking:
 - A new theme inspired by a website is built with the
   [`flowershow-theme-from-website`](.claude/skills/flowershow-theme-from-website/SKILL.md)
   skill. It measures the site, authors the theme, publishes a `--local`
-  preview, proves coverage with a per-theme `coverage.yaml`, and stops for
+  preview, proves coverage with a per-theme `coverage.md`, and stops for
   approval. Plan and evidence:
   [`docs/plans/2026-10-17-theme-from-website-handoff.md`](docs/plans/2026-10-17-theme-from-website-handoff.md).
   First real run: typesafe.ai/blog → `sage` (not yet in the repo, awaiting

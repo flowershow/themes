@@ -60,7 +60,7 @@ that with `scripts/hook-coverage.py <url>`, and give any hook a demo can't
 render an entry with a reason in `scripts/hook-coverage-allowlist.json`.
 
 Before handing off a new or reworked theme, fill its coverage ledger
-(`<theme-dir>/coverage.yaml`), which records a deliberate decision for
+(`<theme-dir>/coverage.md`), which records a deliberate decision for
 each hook group. Follow [docs/coverage-ledger.md](docs/coverage-ledger.md),
 and `scripts/coverage-ledger.py check` must exit 0.
 

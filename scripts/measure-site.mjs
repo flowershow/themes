@@ -8,13 +8,10 @@
 // <page-slug>--<desktop|mobile>-<light|dark>.png like contact-sheet.py's.
 //
 // Phase A of the theme-from-website workflow (docs/plans/
-// 2026-10-17-theme-from-website-handoff.md). OpenDesign's brand extraction
-// (scripts/od-capture.py) is good at collecting evidence (raw CSS, font
-// files, logos, imagery) but its role picks aren't reliable: it ranks
-// colour literals by frequency across every stylesheet, so a site's dark
-// palette can win the light roles, and it reports declared fonts, not the
-// ones that render. This script is the source of truth for the values a
-// theme copies. It loads each page with prefers-color-scheme emulated as
+// 2026-10-17-theme-from-website-handoff.md). Ranking colour literals by
+// frequency across a site's stylesheets lets its dark palette win the light
+// roles, and declared fonts aren't always the ones that render. This script
+// is the source of truth for the values a theme copies. It loads each page with prefers-color-scheme emulated as
 // light and then dark and reads getComputedStyle, so every value is what
 // a visitor sees.
 //

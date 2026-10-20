@@ -20,7 +20,7 @@ colour against the theme's palette:
            color-mix() of two tokens gives). Listed, not counted.
   leak     anything else. Each one is attributed to the nearest stable
            hook on the element or an ancestor, and to that hook's group,
-           so coverage-ledger.py check --leaks can line it up with the
+           so its entries can be read per group of the coverage
            ledger. Elements under no hook count as `unhooked`.
 
 Because default tokens count as palette, a default token that hard-codes
@@ -269,7 +269,7 @@ def main() -> int:
     parser.add_argument("theme_dir")
     parser.add_argument("--route", action="append", dest="routes",
                         help="route to load (repeatable; default: the demo routes)")
-    parser.add_argument("--json", help="write the full result here (coverage-ledger.py --leaks reads it)")
+    parser.add_argument("--json", help="write the full result here (by_group lines up with the coverage ledger)")
     parser.add_argument("--core", default=str(HERE.parent.parent / "flowershow"),
                         help="Flowershow core checkout (default: ../flowershow)")
     parser.add_argument("--core-ref", default="origin/main",

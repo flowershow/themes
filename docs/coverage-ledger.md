@@ -1,6 +1,6 @@
 # Filling a theme's coverage ledger
 
-`<theme-dir>/coverage.yaml` records one **deliberate** decision for every
+`<theme-dir>/coverage.md` records one **deliberate** decision for every
 group of stable theme hooks: the theme styles it, or you looked and the
 default theme plus the theme's tokens already get it right, or it is a
 known gap. Deliberate means you saw the render. The ledger is what lets a
@@ -9,7 +9,8 @@ looking is worse than `todo`.
 
 The scripts own the mechanics. `scripts/coverage-ledger.py` creates the
 file, keeps its groups in step with core, and checks it. Its `--help`
-and header comment define the format.
+and header comment define the format: one `## <group>: <decision>`
+section per group, the note under it, and a `- Gap` line per known gap.
 
 ## Decisions
 
@@ -20,13 +21,13 @@ and header comment define the format.
   the screenshots the group reads as part of this theme: its colours,
   type and radius. The note names the routes and modes you looked at.
 - **gap**: the group, or part of it, still looks like the default theme
-  or is broken. For a part, keep the group's decision and add a `gaps:`
-  entry (hook pattern → what is wrong). Gaps pass the check, and the
+  or is broken. For a part, keep the group's decision and add a
+  `` - Gap `<hook pattern>`: what is wrong `` line under the note. Gaps pass the check, and the
   hand-off lists them. An honest gap beats a hopeful `inherits-ok`.
 
 A group can be `styled` and still have gaps, for example cards styled
 while pagination is left in the default grey. Record that as `styled`
-plus a `gaps:` entry for `list-component-pagination*`.
+plus a `` - Gap `list-component-pagination*`: … `` line.
 
 ## Steps
 
@@ -75,11 +76,11 @@ daemon. Put their output in a scratch directory rather than the repo.
 
    Done when every token in both lists is accounted for, either in
    `theme.css` or in a note.
-6. **Check.** Run `scripts/coverage-ledger.py check <dir> --leaks
-   <scratch>/leaks.json`. Done when it exits 0 and each `WARN` line is
-   resolved: either the theme now covers it, or the group's note
-   explains why the off-palette colour is right (for example, syntax
-   highlighting kept on purpose).
+6. **Check.** Run `scripts/coverage-ledger.py check <dir>`. Done when it
+   exits 0, and every `inherits-ok` group with entries in
+   `leaks.json`'s `by_group` either is now covered by the theme or has a
+   note explaining why the off-palette colour is right (for example,
+   syntax highlighting kept on purpose).
 7. **Hand off.** Include check's table and its `GAP` lines in the
    hand-off, next to the preview URL and the contact sheet.
 

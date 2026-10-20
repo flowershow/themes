@@ -54,7 +54,7 @@ Use `monospace/theme.css` as the model:
   Other classes in the markup aren't API and change without notice.
 - Write an override only for a difference you saw in a Phase C
   comparison that tokens can't fix. Each one is a decision you will also
-  record in `coverage.yaml`.
+  record in `coverage.md`.
 - Keep tokens doing the colour work: in an override, use
   `var(--color-…)` rather than a literal, so both modes follow.
 
@@ -72,7 +72,7 @@ apply:
 - "Licensing checks": open fonts only, no copied artwork or logos.
 - "When you hit Flowershow's structural ceiling": what CSS can't do
   becomes a recorded gap. For a draft, record it in the group's
-  `gaps:` in `coverage.yaml` and in the hand-off. It goes in
+  `- Gap` lines in `coverage.md` and in the hand-off. It goes in
   `features.yaml` as a `known_gap` only at release.
 - "Two caching layers": they matter after release, when the theme loads
   from jsDelivr. The `--local` preview serves `custom.css?v=<hash>`, so

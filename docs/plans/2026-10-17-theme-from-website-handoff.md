@@ -1,7 +1,14 @@
 # Handoff: "Create a Flowershow theme inspired by website X"
 
-Status: in progress. Written 2026-10-17 at the end of an exploratory session;
-steps 2–6 below are done (uncommitted); see each step for evidence.
+Status: steps 2–8 done and shipped in flowershow/themes#21; the `sage`
+theme and the 18 friction items from step 8 are still open. Written
+2026-10-17 at the end of an exploratory session; see each step for evidence.
+
+Revised in review of #21: the OpenDesign capture (`od-capture.py`) was
+dropped, since its picks were unreliable and its evidence is in the site's
+own stylesheets; the ledger became `coverage.md` (one Markdown section per
+group) instead of a YAML subset with its own parser, and `check --leaks`
+was dropped. Steps below still describe the original versions.
 Read `CLAUDE.md` (house rules) and `NEXT.md` before starting.
 
 ## Goal
