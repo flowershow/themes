@@ -209,7 +209,7 @@ description: "{{yaml:description}}"
                 config["nav"]["cta"],
                 {
                     "href": "https://flowershow.app/publish",
-                    "label": "Publish with Flowershow",
+                    "name": "Publish with Flowershow",
                 },
             )
             self.assertEqual(
@@ -221,6 +221,14 @@ description: "{{yaml:description}}"
                     {
                         "href": VALID_METADATA["sourceUrl"],
                         "name": "Theme Source",
+                    },
+                    {
+                        "name": "More",
+                        "links": [
+                            {"href": "/features", "name": "Features"},
+                            {"href": "/changelog", "name": "Changelog"},
+                            {"href": "/tags", "name": "Tags"},
+                        ],
                     },
                 ],
             )

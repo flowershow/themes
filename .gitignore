@@ -1,1 +1,4 @@
 .worktrees/
+.gstack/
+# OpenDesign evidence (scripts/od-capture.py): may hold proprietary assets
+*-draft/reference/

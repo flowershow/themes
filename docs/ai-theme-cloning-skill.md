@@ -14,6 +14,12 @@ metadata:
 
 # Cloning a site's look into a Flowershow theme
 
+**Agents building a new theme in `flowershow/themes`:** use the
+`flowershow-theme-from-website` skill in that repo
+(`.claude/skills/flowershow-theme-from-website/`). It replaces stage 1
+below with measured extraction and adds a coverage ledger. The rest of
+this page is the lessons it points to.
+
 **Placement note:** this is written as an agent-facing skill but currently
 lives in `flowershow/themes/docs/` rather than `flowershow/skills`, because
 writing it required no access outside this repo and the destination repo
@@ -130,9 +136,8 @@ stable API.
   `[data-callout-body]`. A `.callout` selector matches nothing.
 - Bare `[data-callout]` in your theme ties the base rule's specificity
   (`0,1,0`) and doesn't reliably win. Scope to `.rendered-mdx [data-callout]`.
-- `--navbar-height` is not read by `.site-navbar-inner` (hardcodes
-  `height: 4rem`) despite being documented as controlling it — override the
-  class if you need a different navbar height, not the token.
+- `--navbar-height` sets the navbar's height (`.site-navbar-inner` reads
+  it; until 2026 it was hardcoded to `4rem`).
 - `@tailwindcss/typography` injects backtick pseudo-elements on inline
   `code` with `!important`; removing them requires
   `content: none !important`, not just `content: none`.

@@ -14,6 +14,35 @@ STANDARD_ROUTES = (
     ("/blog/first-post", "The First Post"),
 )
 
+# Fixture pages that make every stable theme hook render (see
+# _demo-content/features/index.md). contact-sheet.py and hook-coverage.py
+# load these too; verify() doesn't yet, because demo sites published before
+# the fixtures existed don't have them.
+FEATURE_ROUTES = (
+    ("/features", "Features"),
+    ("/features/page-header", "Page header"),
+    ("/features/hero", "A page with a hero"),
+    ("/features/hero-full", "A full-width hero"),
+    ("/features/rich-content", "Rich content"),
+    ("/features/contents-only", "Contents only"),
+    ("/features/plain-page", "Plain page"),
+    ("/features/canvas", "canvas"),
+    ("/features/listings/stories", "Stories"),
+    ("/features/listings/stories/compost-ratios", "Getting compost ratios right"),
+    ("/features/listings/magazine", "Magazine view"),
+    ("/features/listings/grid", "Grid view"),
+    ("/features/listings/compact", "Compact view"),
+    ("/features/listings/people", "People view"),
+    ("/features/listings/states", "Empty and broken lists"),
+    ("/features/listings/legacy", "Legacy List component"),
+    ("/blog/fourth-post-with-cover-and-tags", "A post with a cover"),
+    ("/tags", "Tags"),
+    ("/tags/design", "design"),
+    ("/changelog", "Changelog"),
+    ("/changelog/2026-08-10-dark-mode", "Dark mode everywhere"),
+    ("/releases/CHANGELOG", "Changelog"),
+)
+
 
 def fetch(url: str) -> tuple[int, str]:
     request = Request(url, headers={"User-Agent": "flowershow-themes-verifier/1"})

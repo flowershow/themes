@@ -1,0 +1,26 @@
+{
+  "_comment": "Stable hooks scripts/hook-coverage.py doesn't expect a demo site to render. Every entry needs a reason; `match` is an fnmatch pattern; `transient` marks states that only sometimes get caught, so rendering them isn't worth a note. Re-check the 'not emitted' entries when core changes: hook-coverage.py notes allowlisted hooks that do render.",
+  "hooks": [
+    { "match": "search*", "reason": "Search needs a plan with the Search entitlement; the demo sites don't have it (flowershow/flowershow#1370)." },
+    { "match": "site-navbar-search-container", "reason": "Rendered only when search is available (flowershow/flowershow#1370)." },
+    { "match": "site-navbar--custom", "reason": "Premium `_navbar.html`; it replaces the default navbar site-wide, whose hooks the demos must render." },
+    { "match": "site-navbar-custom", "reason": "Premium `_navbar.html`; it replaces the default navbar site-wide, whose hooks the demos must render." },
+    { "match": "site-footer-custom", "reason": "Premium `_footer.html`; it replaces the default footer site-wide, whose hooks the demos must render." },
+    { "match": "no-nav", "reason": "Set only on a site with no navbar config at all; the demos need a navbar (a page's showNavbar: false doesn't set it)." },
+    { "match": "visitor-logout-button*", "reason": "Shown only to visitors of a password-protected site." },
+    { "match": "page-comments-container", "reason": "Needs Giscus configured against a real public repository with Discussions." },
+    { "match": "error-page*", "reason": "Server error page; demos can't trigger a 500 on purpose." },
+    { "match": "error-card*", "reason": "Server error details; demos can't trigger a 500 on purpose." },
+    { "match": "image-lightbox-spinner", "reason": "Shown only while a zoomed image loads.", "transient": true },
+    { "match": "list-component-skeleton*", "reason": "The legacy <List /> placeholder, shown only while its items load.", "transient": true },
+    { "match": "pdf-error", "reason": "Shown only when a PDF fails to load." },
+    { "match": "pdf-loading", "reason": "Shown only while a PDF loads.", "transient": true },
+    { "match": "graph-mini-panel--loading", "reason": "Shown only while the graph loads.", "transient": true },
+    { "match": "page-header-image", "reason": "Not emitted by any component on core main (git grep, 2026-10-17); styled but dead." },
+    { "match": "page-header-image-container", "reason": "Not emitted by any component on core main (git grep, 2026-10-17); styled but dead." },
+    { "match": "graph-mini-panel__label", "reason": "Not emitted by any component on core main (git grep, 2026-10-17); styled but dead." },
+    { "match": "sidebar-drawer-header", "reason": "Not emitted by any component on core main (git grep, 2026-10-17); styled but dead." },
+    { "match": "sidebar-drawer-close*", "reason": "Not emitted by any component on core main (git grep, 2026-10-17); styled but dead." },
+    { "match": "mobile-nav-tree*", "reason": "Emitted only by TreeView in components/public/nav.tsx, which nothing renders on core main (2026-10-17); styled but dead." }
+  ]
+}
