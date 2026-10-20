@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    {"id": "a", "type": "text", "text": "# Write\nNotes in Markdown", "x": 0, "y": 0, "width": 240, "height": 120},
+    {"id": "b", "type": "text", "text": "# Publish\nWith `fl` or GitHub", "x": 360, "y": 0, "width": 240, "height": 120, "color": "4"},
+    {"id": "c", "type": "text", "text": "# Theme\nOne CSS file", "x": 180, "y": 200, "width": 240, "height": 120, "color": "6"}
+  ],
+  "edges": [
+    {"id": "ab", "fromNode": "a", "fromSide": "right", "toNode": "b", "toSide": "left"},
+    {"id": "bc", "fromNode": "b", "fromSide": "bottom", "toNode": "c", "toSide": "top", "label": "styled by"}
+  ]
+}

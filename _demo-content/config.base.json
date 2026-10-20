@@ -8,17 +8,39 @@
       {
         "name": "More",
         "links": [
-          { "href": "/docs/kitchen-sink", "name": "Kitchen Sink" },
-          { "href": "/blog", "name": "Blog" }
+          { "href": "/features", "name": "Features" },
+          { "href": "/changelog", "name": "Changelog" },
+          { "href": "/tags", "name": "Tags" }
         ]
       }
     ],
-    "cta": { "href": "https://flowershow.app", "label": "Get started" }
+    "cta": { "href": "https://flowershow.app", "name": "Get started" }
   },
   "social": [
     { "label": "github", "href": "https://github.com/flowershow/themes" }
   ],
+  "footer": {
+    "navigation": [
+      {
+        "title": "Demo",
+        "links": [
+          { "name": "Kitchen Sink", "href": "/docs/kitchen-sink" },
+          { "name": "Blog", "href": "/blog" },
+          { "name": "Features", "href": "/features" }
+        ]
+      },
+      {
+        "title": "Flowershow",
+        "links": [
+          { "name": "Themes", "href": "https://github.com/flowershow/themes" },
+          { "name": "Docs", "href": "https://flowershow.app/docs" }
+        ]
+      }
+    ]
+  },
   "enableSearch": true,
+  "enableRss": true,
+  "showRawLink": true,
   "showSidebar": true,
   "theme": {
     "showModeSwitch": true,

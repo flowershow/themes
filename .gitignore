@@ -1,1 +1,4 @@
 .worktrees/
+.gstack/
+# old site captures in theme drafts: may hold proprietary assets
+*-draft/reference/

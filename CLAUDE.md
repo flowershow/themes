@@ -53,8 +53,20 @@ without ever touching the official release list.
 ## Demo sites
 
 Every theme gets a demo site, published with `fl` from the shared content
-in `_demo-content/` (a fixed kitchen-sink page + a 3-post blog, so themes
-are compared on identical content, not different content).
+in `_demo-content/` (a kitchen-sink page, a blog, and a `/features` section
+of fixture pages, so themes are compared on identical content, not
+different content). Together they render every stable theme hook; check
+that with `scripts/hook-coverage.py <url>`, and give any hook a demo can't
+render an entry with a reason in `scripts/hook-coverage-allowlist.json`.
+
+Before handing off a new or reworked theme, fill its coverage ledger
+(`<theme-dir>/coverage.md`), which records a deliberate decision for
+each hook group. Follow [docs/coverage-ledger.md](docs/coverage-ledger.md),
+and `scripts/coverage-ledger.py check` must exit 0.
+
+To build a new theme inspired by a website, follow the
+[flowershow-theme-from-website skill](.claude/skills/flowershow-theme-from-website/SKILL.md):
+extract, author, preview, coverage, then stop for approval.
 
 Use the script — don't do it by hand:
 
@@ -63,6 +75,11 @@ scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.m
 
 # theme applied to the shared demo content:
 scripts/demo-site.sh material-draft
+
+# preview the UNCOMMITTED working tree (no commit/push needed): theme.css is
+# published as custom.css with `theme` unset, to <theme>-theme-preview —
+# never to the real -theme-demo site:
+scripts/demo-site.sh material-draft --local
 
 # stage-1 raw-HTML landing repro, published as a SEPARATE site's index —
 # no theme, no nav/footer, for comparing structure/type/color against the
@@ -134,7 +151,9 @@ comparison), never inferred from the structural checks passing.
 - Where the theme-authoring tutorial and the AI theme-cloning skill
   actually live: this repo, the main `flowershow/flowershow` docs, or
   `flowershow/skills`. Deferred until both draft themes exist and there's
-  real experience to write from.
+  real experience to write from. Decided for the "theme from website"
+  workflow (user, 2026-10-19): it lives in this repo, at
+  `.claude/skills/flowershow-theme-from-website/`.
 - Canonical preview-asset convention going forward (`preview.png` vs the
   `fs-<name>-<view>-<mode>.jpg` set both currently used across the
   existing four themes) — not resolved, only newly-required for themes

@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
 # Build and publish a demo site for a theme.
 #
-#   scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>] [--build-only <output-dir>]
+#   scripts/demo-site.sh <theme-dir> [--local] [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>] [--build-only <output-dir>]
 #
 # Assembles a site from (see docs/demo-site-content.md):
 #   - _demo-content/          the shared kitchen sink and blog routes
 #   - <theme-dir>/theme.css   applied via a jsDelivr URL pinned to the current
 #                             git branch (no release/tag needed for drafts)
+#   - --local                 preview the WORKING TREE instead: theme.css is
+#                             published as the site's custom.css and `theme`
+#                             is left unset, so nothing needs committing or
+#                             pushing. Flowershow links custom.css right where
+#                             theme.css would go (validated on leaf, see
+#                             docs/plans/2026-10-17-theme-from-website-handoff.md).
+#                             Publishes to a stable <theme>-theme-preview site,
+#                             never to the real <theme>-theme-demo.
 #   - <theme-dir>/demo-showcase.template.md + demo-showcase.json +
 #                             demo-landing.css: a validated theme-specific
 #                             homepage, rendered at / with an identical
@@ -45,6 +53,7 @@ LANDING=""
 LANDING_PAGE=""
 SITE_NAME=""
 BUILD_ONLY_DIR=""
+LOCAL=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -52,13 +61,14 @@ while [ $# -gt 0 ]; do
     --landing-page) LANDING_PAGE="$2"; shift 2 ;;
     --name)         SITE_NAME="$2"; shift 2 ;;
     --build-only)   BUILD_ONLY_DIR="$2"; shift 2 ;;
+    --local)        LOCAL=1; shift ;;
     -*) echo "unknown flag: $1" >&2; exit 2 ;;
     *) THEME_DIR="$1"; shift ;;
   esac
 done
 
 if [ -z "$THEME_DIR" ]; then
-  echo "usage: scripts/demo-site.sh <theme-dir> [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>] [--build-only <output-dir>]" >&2
+  echo "usage: scripts/demo-site.sh <theme-dir> [--local] [--landing <file.html>] [--landing-page <file.md>] [--name <site-name>] [--build-only <output-dir>]" >&2
   exit 2
 fi
 
@@ -74,7 +84,18 @@ fi
 
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 SHA="$(git rev-parse HEAD)"
-SITE_NAME="${SITE_NAME:-${THEME_DIR%-draft}-theme-demo}"
+if [ -n "$LOCAL" ]; then
+  SITE_NAME="${SITE_NAME:-${THEME_DIR%-draft}-theme-preview}"
+  # --local republishes with --overwrite (below), so it must never be pointed
+  # at a real demo site — that would replace it with uncommitted CSS
+  case "$SITE_NAME" in
+    *-theme-demo)
+      echo "--local refuses to publish to a demo site ($SITE_NAME); use a -theme-preview name" >&2
+      exit 2 ;;
+  esac
+else
+  SITE_NAME="${SITE_NAME:-${THEME_DIR%-draft}-theme-demo}"
+fi
 
 # Pin to the COMMIT SHA, not the branch name.
 #
@@ -87,26 +108,37 @@ SITE_NAME="${SITE_NAME:-${THEME_DIR%-draft}-theme-demo}"
 # A SHA-pinned URL is immutable, so every commit produces a fresh URL that
 # cannot be stale. Cost: the site must be republished to pick up new CSS,
 # which is exactly what this script does.
-THEME_URL="https://cdn.jsdelivr.net/gh/flowershow/themes@${SHA}/${THEME_DIR}/theme.css"
+if [ -n "$LOCAL" ]; then
+  # empty = leave `theme` unset; theme.css goes out as custom.css instead
+  THEME_URL=""
+else
+  THEME_URL="https://cdn.jsdelivr.net/gh/flowershow/themes@${SHA}/${THEME_DIR}/theme.css"
+fi
 
 echo "== demo site: $SITE_NAME =="
 echo "   theme:  $THEME_DIR"
-echo "   branch: $BRANCH"
-echo "   commit: ${SHA:0:8}"
-echo "   css:    $THEME_URL"
+if [ -n "$LOCAL" ]; then
+  echo "   css:    working-tree $THEME_DIR/theme.css -> custom.css (--local)"
+else
+  echo "   branch: $BRANCH"
+  echo "   commit: ${SHA:0:8}"
+  echo "   css:    $THEME_URL"
+fi
 
 # jsDelivr can only serve commits that are on GitHub.
-if [ -z "$BUILD_ONLY_DIR" ] && ! git branch -r --contains "$SHA" 2>/dev/null | grep -q .; then
+if [ -z "$LOCAL" ] && [ -z "$BUILD_ONLY_DIR" ] && ! git branch -r --contains "$SHA" 2>/dev/null | grep -q .; then
   echo ""
   echo "ERROR: commit ${SHA:0:8} is not on any remote branch. jsDelivr cannot"
   echo "serve it. Push first:  git push -u origin $BRANCH"
+  echo "(or preview the working tree with --local)"
   exit 1
 fi
 
-if [ -n "$(git status --porcelain -- "$THEME_DIR")" ]; then
+if [ -z "$LOCAL" ] && [ -n "$(git status --porcelain -- "$THEME_DIR")" ]; then
   echo ""
   echo "WARNING: $THEME_DIR has uncommitted changes. The demo will be built"
-  echo "from commit ${SHA:0:8}, NOT your working tree. Commit and push first."
+  echo "from commit ${SHA:0:8}, NOT your working tree. Commit and push first,"
+  echo "or preview the working tree with --local."
 fi
 
 if [ -n "$BUILD_ONLY_DIR" ]; then
@@ -175,6 +207,17 @@ if [ -n "$LANDING_PAGE" ]; then
   fi
 fi
 
+# --local: theme.css becomes custom.css, so it can't share it with a
+# showcase/landing step's custom.css (only Monospace's demo-landing.css today)
+if [ -n "$LOCAL" ]; then
+  if [ -f "$BUILD_DIR/custom.css" ]; then
+    echo "--local can't preview a theme whose showcase or landing page writes custom.css" >&2
+    exit 2
+  fi
+  cp "$REPO_ROOT/$THEME_DIR/theme.css" "$BUILD_DIR/custom.css"
+  echo "   custom.css: $THEME_DIR/theme.css"
+fi
+
 # Merge the theme URL into the shared base config rather than writing a bare
 # config. The base config matters: Flowershow only renders the navbar if a nav
 # title, nav links, CTA, social links, or search is configured — so without it
@@ -187,7 +230,14 @@ base_path, theme_url, out_path, metadata_path = sys.argv[1:]
 with open(base_path) as f:
     cfg = json.load(f)
 theme = cfg.get("theme")
-if isinstance(theme, dict):
+if not theme_url:
+    # --local: no `theme` at all, or the default theme would be overridden
+    # by whatever the base config names instead of our custom.css
+    if isinstance(theme, dict):
+        theme.pop("theme", None)
+    else:
+        cfg.pop("theme", None)
+elif isinstance(theme, dict):
     theme["theme"] = theme_url
 else:
     cfg["theme"] = theme_url
@@ -202,10 +252,12 @@ if metadata_path and __import__("os").path.isfile(metadata_path):
             {"href": "/docs/kitchen-sink", "name": "Kitchen Sink"},
             {"href": "/blog", "name": "Blog"},
             {"href": metadata["sourceUrl"], "name": "Theme Source"},
+            # keep a dropdown: its hooks only render from a nav group
+            {"name": "More", "links": cfg["nav"]["links"][-1]["links"]},
         ],
         "cta": {
             "href": "https://flowershow.app/publish",
-            "label": "Publish with Flowershow",
+            "name": "Publish with Flowershow",
         },
     }
 with open(out_path, "w") as f:
@@ -219,8 +271,17 @@ if [ -n "$BUILD_ONLY_DIR" ]; then
 fi
 
 echo ""
-fl "$BUILD_DIR" --name "$SITE_NAME" --yes
-
-echo ""
-echo "Record the URL above in docs/features.yaml as this theme's demo_url,"
-echo "then re-run scripts/verify.sh to smoke-check it."
+if [ -n "$LOCAL" ]; then
+  # the build dir is fresh every run, so fl sees it as unlinked; --overwrite
+  # lets it replace the existing preview site instead of refusing
+  fl "$BUILD_DIR" --name "$SITE_NAME" --overwrite --yes
+  echo ""
+  echo "Preview of UNCOMMITTED $THEME_DIR/theme.css. Don't record it as demo_url."
+  echo "If a page still shows old CSS, Flowershow's page cache may be stale —"
+  echo "hard-reload or wait before assuming the CSS is wrong."
+else
+  fl "$BUILD_DIR" --name "$SITE_NAME" --yes
+  echo ""
+  echo "Record the URL above in docs/features.yaml as this theme's demo_url,"
+  echo "then re-run scripts/verify.sh to smoke-check it."
+fi

@@ -9,3 +9,4 @@ This site publishes the same fixed set of Markdown to every draft theme, so them
 
 - [Kitchen sink](/docs/kitchen-sink) — headings, code, tables, callouts, lists, images, links, all in one page
 - [Blog](/blog) — a list of posts, to exercise the List component and blog layout
+- [Features](/features) — every other part of the layout: listing views, tags, changelog, hero, post pages and more
